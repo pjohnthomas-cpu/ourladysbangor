@@ -216,30 +216,125 @@
   footer a:hover { text-decoration: underline; }
   .footer-cross { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--gold); margin-bottom: 10px; }
 
-  /* TABLET ≤900px */
+  /* ── TABLET ≤900px ─────────────────────────────────────────────── */
   @media (max-width: 900px) {
+
+    /* Header */
+    .site-title { font-size: 1.1rem; }
+
+    /* Hero */
+    .hero { height: clamp(220px, 40vw, 400px); }
+
+    /* Section padding */
+    .section { padding: 48px 20px; }
+
+    /* Mass times */
+    .masses-grid { grid-template-columns: 1fr; gap: 20px; }
+    .mass-card { padding: 22px 24px; }
+
+    /* Bulletin table — hide type column to save width */
     .schedule-table th:nth-child(2), .schedule-table td:nth-child(2) { display: none; }
     .schedule-table td, .schedule-table th { padding: 9px 12px; font-size: 0.95rem; }
+
+    /* Notices */
+    .notices-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    /* Music */
+    .music-grid { grid-template-columns: 1fr; gap: 28px; }
+    .music-img-wide { height: 180px; }
+    .music-img-tall { height: 220px; object-position: center 20%; }
+
+    /* Organ spec table — allow division name column to wrap */
+    .div-name { white-space: normal; min-width: 80px; }
+
+    /* Gallery */
+    .gallery-bg { padding: 40px 0; }
     .gallery-grid { grid-template-columns: 1fr 1fr; }
     .gallery-grid .tall { grid-row: span 1; }
     .gallery-grid img, .gallery-grid .tall img { height: 200px; }
-    .music-grid { grid-template-columns: 1fr; gap: 28px; }
-    .music-img-tall { height: 220px; object-position: center 20%; }
+
+    /* Contact */
+    .info-grid { grid-template-columns: 1fr; gap: 32px; }
+    .info-block strong { min-width: 80px; }
+
+    /* Footer */
+    footer { font-size: 0.95rem; line-height: 1.9; padding: 30px 20px; }
   }
 
-  /* MOBILE ≤640px */
+  /* ── MOBILE ≤640px ──────────────────────────────────────────────── */
   @media (max-width: 640px) {
+
+    /* Header */
     .hamburger { display: flex; }
     .nav-links { display: none; }
-    .section { padding: 38px 18px; }
-    .masses-grid { grid-template-columns: 1fr; gap: 20px; }
+    .site-title { font-size: 1rem; }
+    .site-title span { font-size: 0.78rem; }
+
+    /* Hero */
+    .hero { height: clamp(200px, 55vw, 320px); }
+    .hero-text h1 { font-size: clamp(1.35rem, 6vw, 2rem); }
+    .hero-text p { font-size: 0.82rem; }
+
+    /* Ribbon */
+    .ribbon { font-size: 0.9rem; padding: 10px 16px; }
+
+    /* Section padding */
+    .section { padding: 34px 16px; }
+    .section-title { font-size: clamp(1.5rem, 5vw, 1.9rem); }
+
+    /* Mass times */
+    .masses-grid { grid-template-columns: 1fr; gap: 16px; }
+    .mass-card { padding: 18px 18px; }
+    .mass-card h3 { font-size: 1.25rem; }
+    .mass-row { font-size: 0.97rem; }
+    .mass-day { min-width: 80px; }
+
+    /* Bulletin — switch to cards */
     .schedule-table { display: none; }
     .bulletin-cards { display: block; }
-    .notices-grid { grid-template-columns: 1fr; }
+    .bulletin-card { padding: 13px 15px; }
+    .bc-title { font-size: 1.05rem; }
+
+    /* Notices */
+    .notices-grid { grid-template-columns: 1fr; gap: 14px; }
+    .notice-card { padding: 18px 18px; }
+
+    /* Music */
+    .music-img-wide { height: 160px; }
+    .music-img-tall { height: 190px; }
+    .music-link { width: 100%; text-align: center; padding: 13px 18px; }
+
+    /* Organ spec — make scrollable rather than overflowing */
+    .organ-spec-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .organ-spec { font-size: 0.88rem; min-width: 300px; }
+    .organ-spec thead th, .organ-spec tbody td { padding: 6px 9px; }
+
+    /* Gallery */
+    .gallery-bg { padding: 28px 0; }
     .gallery-grid { grid-template-columns: 1fr; gap: 8px; }
     .gallery-grid .tall { grid-row: span 1; }
-    .gallery-grid img, .gallery-grid .tall img { height: 200px; }
-    .info-grid { grid-template-columns: 1fr; gap: 28px; }
+    .gallery-grid img, .gallery-grid .tall img { height: 190px; }
+
+    /* Contact */
+    .info-grid { grid-template-columns: 1fr; gap: 24px; }
+    .info-block strong { display: block; min-width: unset; margin-bottom: 2px; }
+    .info-block li { padding: 10px 0; font-size: 0.97rem; }
+    .quote-block { padding: 14px 16px; }
+    .quote-block p { font-size: 1rem; }
+
+    /* Footer */
+    footer { font-size: 0.88rem; line-height: 1.8; padding: 28px 16px; }
+    .footer-cross { font-size: 1.6rem; }
+  }
+
+  /* ── SMALL MOBILE ≤380px ────────────────────────────────────────── */
+  @media (max-width: 380px) {
+    body { font-size: 16px; }
+    .site-title { font-size: 0.9rem; }
+    .hero-text h1 { font-size: 1.25rem; }
+    .mass-card { padding: 14px 14px; }
+    .notice-card { padding: 14px 14px; }
+    .music-link { font-size: 0.93rem; }
   }
 </style>
 </head>
@@ -294,7 +389,7 @@
   <div class="section">
     <div class="divider"></div>
     <h2 class="section-title">Mass Times</h2>
-    <p class="section-subtitle">Regular weekly schedule &mdash; see bulletin for Holy Week &amp; Easter variations</p>
+    <p class="section-subtitle">Regular weekly schedule &mdash; see bulletin for Easter season variations</p>
     <div class="masses-grid">
       <div class="mass-card">
         <h3>Bangor &mdash; Our Lady &amp; St. James</h3>
@@ -303,11 +398,11 @@
         <div class="mass-row"><span class="mass-day">Tuesday</span><span class="mass-time">09:45 Morning Prayer; 10:00 Holy Mass</span></div>
         <div class="mass-row"><span class="mass-day">Thursday</span><span class="mass-time">12:15 &mdash; Holy Mass</span></div>
         <div class="mass-row"><span class="mass-day">Confession</span><span class="mass-time">Monday 19:30 &middot; Tuesday 10:30 &middot; Thursday 12:45</span></div>
-        <p class="mass-note">Holy Week and Easter times differ &mdash; please see the bulletin below.</p>
+        <p class="mass-note">Easter season times may vary &mdash; please see the bulletin below.</p>
       </div>
       <div class="mass-card">
         <h3>Caernarfon &mdash; St. David &amp; St. Helen</h3>
-        <div class="mass-row"><span class="mass-day">Saturday</span><span class="mass-time">17:00 Vigil Mass (18:00 from 11 Apr)</span></div>
+        <div class="mass-row"><span class="mass-day">Saturday</span><span class="mass-time">18:00 Vigil Mass</span></div>
         <div class="mass-row"><span class="mass-day">Easter Sunday</span><span class="mass-time">12:00 noon &mdash; Holy Mass</span></div>
         <div class="mass-row"><span class="mass-day">Confession</span><span class="mass-time">By arrangement with Fr. Savi</span></div>
         <div class="mass-row"><span class="mass-day">RCIA</span><span class="mass-time">Thursdays 18:30 &mdash; OL Catholic Primary School</span></div>
@@ -320,7 +415,7 @@
 <div class="schedule-bg" id="bulletin">
   <div class="section">
     <div class="divider"></div>
-    <h2 class="section-title">Holy Week &amp; Easter season calendar</h2>
+    <h2 class="section-title">Easter Season Calendar</h2>
   
     <!-- TABLE view -->
 
@@ -330,8 +425,6 @@
       <thead><tr><th style="width:155px">Date</th><th>Observance</th><th>Details</th></tr></thead>
       <tbody>
        
-        <tr><td>Monday 6 Apr</td><td><span class="badge badge-easter">Easter</span> Monday in the Octave</td><td>Bangor 10:00 Holy Mass</td></tr>
-        <tr><td>Tuesday 7 Apr</td><td><span class="badge badge-easter">Easter</span> Tuesday in the Octave</td><td>Bangor 09:45 Morning Prayer; 10:00 Holy Mass</td></tr>
         <tr><td>Thursday 9 Apr</td><td><span class="badge badge-easter">Easter</span> Thursday in the Octave</td><td>Bangor 12:15 Holy Mass</td></tr>
         <tr><td>Saturday 11 Apr</td><td>Vigil &mdash; Divine Mercy Sunday</td><td>Caernarfon 18:00 Vigil Mass (new time)</td></tr>
         <tr><td>Sunday 12 Apr</td><td><span class="badge badge-easter">Easter</span> Divine Mercy Sunday</td><td>Bangor 10:00 &amp; 17:00 Holy Mass</td></tr>
@@ -353,19 +446,8 @@
 
     <!-- CARD view (mobile) -->
     <div class="bulletin-cards">
-      <div class="bc-month">March &mdash; Holy Week</div>
-      <div class="bulletin-card"><div class="bc-date">Saturday 28 Mar</div><div class="bc-title"><span class="badge badge-lent">Lent</span> &nbsp;Vigil of Palm Sunday</div><div class="bc-detail">Caernarfon 17:00 Vigil Mass. Clocks go forward &mdash; BST begins.</div></div>
-      <div class="bulletin-card"><div class="bc-date">Saturday 28 Mar</div><div class="bc-title">Confession &amp; Adoration</div><div class="bc-detail">Bangor 11:00&ndash;12:00 in preparation for Easter.</div></div>
-      <div class="bulletin-card"><div class="bc-date">Sunday 29 Mar</div><div class="bc-title"><span class="badge badge-holy">Palm Sunday</span></div><div class="bc-detail">Bangor: Family Eucharist 10:00 &amp; 17:00 Holy Mass</div></div>
-      <div class="bulletin-card"><div class="bc-date">Monday 30 Mar</div><div class="bc-title">Monday of Holy Week</div><div class="bc-detail">Bangor 19:00 Holy Mass</div></div>
-      <div class="bulletin-card"><div class="bc-date">Tuesday 31 Mar</div><div class="bc-title">Tuesday of Holy Week</div><div class="bc-detail">Bangor 09:45 Morning Prayer; 10:00 Holy Mass; 10:30 Way of the Cross</div></div>
-      <div class="bc-month">April &mdash; Holy Week &amp; Easter</div>
-      <div class="bulletin-card"><div class="bc-date">Wednesday 1 Apr</div><div class="bc-title"><span class="badge badge-holy">Chrism Mass</span></div><div class="bc-detail">19:00 at Wrexham Cathedral &mdash; all welcome.</div></div>
-      <div class="bulletin-card"><div class="bc-date">Thursday 2 Apr</div><div class="bc-title"><span class="badge badge-holy">Holy Thursday</span></div><div class="bc-detail">Bangor 10:00 Morning Prayer with Reception &amp; Confirmation; Caernarfon 19:00 Lord&rsquo;s Supper, then Watching until 22:00.</div></div>
-      <div class="bulletin-card"><div class="bc-date">Friday 3 Apr</div><div class="bc-title"><span class="badge badge-holy">Good Friday</span></div><div class="bc-detail">Bangor 10:00 Morning Prayer; 15:00 Passion of the Lord. Fast &amp; Abstinence. Collection for Holy Land.</div></div>
-      <div class="bulletin-card"><div class="bc-date">Saturday 4 Apr</div><div class="bc-title"><span class="badge badge-holy">Holy Saturday</span></div><div class="bc-detail">Bangor 21:00 &mdash; Easter Vigil. Baptism &amp; Confirmation of the Elect.</div></div>
-      <div class="bulletin-card"><div class="bc-date">Sunday 5 Apr</div><div class="bc-title"><span class="badge badge-easter">Easter Sunday</span></div><div class="bc-detail">Bangor 10:00 &middot; Caernarfon 12:00 noon</div></div>
-      <div class="bulletin-card"><div class="bc-date">Monday–Thursday 6–9 Apr</div><div class="bc-title"><span class="badge badge-easter">Easter Octave</span></div><div class="bc-detail">Monday 10:00 &middot; Tuesday 09:45 &amp; 10:00 &middot; Thursday 12:15</div></div>
+      <div class="bc-month">April 2026 &mdash; Easter Season</div>
+      <div class="bulletin-card"><div class="bc-date">Thursday 9 Apr</div><div class="bc-title"><span class="badge badge-easter">Easter</span> Thursday in the Octave</div><div class="bc-detail">Bangor 12:15 Holy Mass</div></div>
       <div class="bulletin-card"><div class="bc-date">Saturday 11 Apr</div><div class="bc-title">Vigil &mdash; Divine Mercy Sunday</div><div class="bc-detail">Caernarfon 18:00 (note new time from Easter)</div></div>
       <div class="bulletin-card"><div class="bc-date">Sunday 12 Apr</div><div class="bc-title"><span class="badge badge-easter">Easter</span> Divine Mercy Sunday</div><div class="bc-detail">Bangor 10:00 &amp; 17:00 Holy Mass</div></div>
       <div class="bulletin-card"><div class="bc-date">Thursday 23 Apr</div><div class="bc-title"><span class="badge badge-feast">Feast</span> St George, Patron of England</div><div class="bc-detail">Bangor 12:15 Holy Mass &mdash; Solemnity</div></div>
@@ -451,7 +533,7 @@
           <p>The church is fortunate to possess an <strong>1895 three-manual organ by Bishop &amp; Son</strong>, used to accompany the choir at Sunday morning services and played at concerts and events throughout the year.</p>
           <p>To learn more, visit the <a href="https://npor.org.uk/survey/K00709" target="_blank" rel="noopener">National Pipe Organ Register</a>. To arrange a visit, contact our organist Abhay at <a href="/cdn-cgi/l/email-protection#b0d1c4c0dfc2d7d1ded9c3c48c919d9d9d9d8ef08c919d9d9d9d8ed9d3dcdfc5d49ed3dfdd">atporganist<!---->@<!---->icloud.com</a>.</p>
         </div>
-        <table class="organ-spec">
+        <div class="organ-spec-wrap"><table class="organ-spec">
           <thead><tr><th>Division</th><th>Stop</th></tr></thead>
           <tbody>
             <tr><td class="div-name" rowspan="7">Pedal</td><td>32&prime; Contra Bass</td></tr>
@@ -487,7 +569,7 @@
             <tr><td class="coupler">Tremulant</td></tr>
             <tr><td class="coupler">Swell Octave &middot; Swell Suboctave</td></tr>
           </tbody>
-        </table>
+        </table></div>
         <a class="music-link" href="https://npor.org.uk/survey/K00709" target="_blank" rel="noopener">NPOR Organ Record &nearr;</a>
       </div>
 
