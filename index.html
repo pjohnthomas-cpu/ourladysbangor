@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parish of Our Lady &amp; St. James, Bangor | St. David &amp; St. Helen, Caernarfon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:    #1a2640;
+    --gold:    #d4a843;
+    --cream:   #ffffff;
+    --stone:   #e8e8e8;
+    --text:    #0f0f0f;
+    --muted:   #0f0c0a;
+    --white:   #ffffff;
+    --red-lent:#8b1a1a;
+    --easter:  #3d6b35;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Lato', sans-serif; font-weight: 400; color: var(--text); background: var(--cream); line-height: 1.85; font-size: 18px; }
+
+  /* HEADER */
+  header { background: var(--navy); position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 12px rgba(0,0,0,0.35); }
+  .header-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; }
+  .site-title { font-family: 'Cormorant Garamond', serif; color: var(--gold); font-size: 1.25rem; font-weight: 600; line-height: 1.3; text-decoration: none; }
+  .site-title span { display: block; color: rgba(255,255,255,0.85); font-size: 0.9rem; font-weight: 400; font-family: 'Lato', sans-serif; letter-spacing: 0.05em; }
+  .nav-links { display: flex; align-items: center; }
+  .nav-links a { color: rgba(255,255,255,0.95); text-decoration: none; font-size: 1rem; letter-spacing: 0.03em; margin-left: 20px; transition: color 0.2s; font-weight: 700; }
+  .nav-links a:hover { color: var(--gold); }
+  .hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; background: none; border: none; cursor: pointer; padding: 6px; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: var(--gold); border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .mobile-nav { display: none; flex-direction: column; background: #0f1a2e; padding: 8px 0 20px; border-top: 1px solid rgba(212,168,67,0.3); }
+  .mobile-nav.open { display: flex; }
+  .mobile-nav a { color: rgba(255,255,255,0.95); text-decoration: none; font-size: 1.1rem; letter-spacing: 0.02em; padding: 16px 28px; border-bottom: 1px solid rgba(255,255,255,0.10); font-weight: 700; transition: color 0.2s, background 0.2s; }
+  .mobile-nav a:hover { color: var(--gold); background: rgba(255,255,255,0.04); }
+
+  /* HERO */
+  .hero { position: relative; height: clamp(280px, 48vw, 520px); overflow: hidden; }
+  .hero img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; display: block; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(10,18,35,0.1) 0%, rgba(10,18,35,0.72) 100%); display: flex; align-items: flex-end; padding: clamp(18px,5vw,52px) clamp(18px,5vw,44px); }
+  .hero-text h1 { font-family: 'Cormorant Garamond', serif; color: var(--white); font-size: clamp(1.6rem,4.5vw,3rem); font-weight: 700; line-height: 1.12; text-shadow: 0 2px 16px rgba(0,0,0,0.65); }
+  .hero-text p { color: rgba(255,255,255,0.85); font-size: clamp(0.78rem,2vw,1rem); margin-top: 8px; font-weight: 300; letter-spacing: 0.04em; }
+  .gold-bar { width: 50px; height: 3px; background: var(--gold); margin-bottom: 14px; }
+
+  /* RIBBON */
+  .ribbon { text-align: center; padding: 12px 20px; font-size: clamp(0.95rem,2vw,1.05rem); letter-spacing: 0.03em; font-weight: 700; color: var(--white); }
+  .ribbon-holy { background: #6b1a1a; }
+
+  /* SHARED */
+  .section { max-width: 1100px; margin: 0 auto; padding: 60px 24px; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.75rem,3.2vw,2.2rem); font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+  .section-subtitle { color: #2a2420; font-size: 1rem; letter-spacing: 0.02em; margin-bottom: 32px; font-weight: 400; }
+  .divider { width: 50px; height: 2px; background: var(--gold); margin-bottom: 12px; }
+
+  /* MASS TIMES */
+  .masses-bg { background: #f0f0f0; border-top: 1px solid #d8d8d8; border-bottom: 1px solid #d8d8d8; }
+  .masses-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .mass-card { background: #ffffff; border-left: 4px solid var(--gold); padding: 26px 30px; }
+  .mass-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; color: var(--navy); margin-bottom: 16px; font-weight: 600; }
+  .mass-row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 4px; padding: 9px 0; border-bottom: 1px solid var(--stone); font-size: 1rem; }
+  .mass-row:last-child { border-bottom: none; }
+  .mass-day { font-weight: 700; color: var(--navy); min-width: 100px; }
+  .mass-time { color: var(--text); }
+  .mass-note { font-size: 0.95rem; color: #1a1614; margin-top: 14px; font-style: italic; font-weight: 400; }
+
+  /* BULLETIN */
+  .schedule-bg { background: #000000; }
+  .schedule-bg .section-title { color: var(--white); }
+  .schedule-bg .section-subtitle { color: rgba(255,255,255,0.85); font-weight: 400; }
+  .month-heading { font-family: 'Cormorant Garamond', serif; color: var(--gold); font-size: 1.2rem; font-weight: 600; letter-spacing: 0.03em; margin: 32px 0 12px; border-bottom: 1px solid rgba(212,168,67,0.4); padding-bottom: 6px; }
+  .month-heading:first-of-type { margin-top: 0; }
+  .schedule-table { width: 100%; border-collapse: collapse; font-size: 1rem; margin-bottom: 4px; }
+  .schedule-table th { background: rgba(255,255,255,0.15); color: #f5d77a; text-align: left; padding: 11px 14px; font-weight: 700; letter-spacing: 0.03em; font-size: 0.9rem; }
+  .schedule-table td { padding: 11px 14px; border-bottom: 1px solid rgba(255,255,255,0.12); color: #ffffff; vertical-align: top; }
+  .schedule-table tr:last-child td { border-bottom: none; }
+  .schedule-table tr:hover td { background: rgba(255,255,255,0.06); }
+  .badge { display: inline-block; padding: 3px 8px; border-radius: 2px; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.03em; white-space: nowrap; }
+  .badge-lent   { background: #8b1a1a; color: #fff; }
+  .badge-holy   { background: #5c1010; color: #fff; }
+  .badge-easter { background: var(--easter); color: #fff; }
+  .badge-feast  { background: #c8962a; color: #fff; }
+  .badge-none   { background: rgba(255,255,255,0.20); color: rgba(255,255,255,0.9); }
+
+  /* Mobile cards */
+  .bulletin-cards { display: none; }
+  .bulletin-card { background: rgba(255,255,255,0.08); border-left: 3px solid var(--gold); padding: 15px 17px; margin-bottom: 10px; }
+  .bc-date { font-size: 0.88rem; font-weight: 700; color: var(--gold); letter-spacing: 0.04em; margin-bottom: 4px; }
+  .bc-title { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; color: var(--white); font-weight: 600; margin-bottom: 4px; line-height: 1.35; }
+  .bc-detail { font-size: 0.97rem; color: #ffffff; line-height: 1.65; }
+  .bc-month { font-family: 'Cormorant Garamond', serif; color: var(--gold); font-size: 1.1rem; font-weight: 600; letter-spacing: 0.03em; margin: 22px 0 10px; border-bottom: 1px solid rgba(212,168,67,0.4); padding-bottom: 5px; }
+
+  /* NOTICES */
+  .notices-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+  .notice-card { background: #ffffff; border: 1px solid #d8d8d8; padding: 24px 26px; border-top: 3px solid var(--navy); }
+  .notice-card h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; color: var(--navy); margin-bottom: 10px; font-weight: 600; }
+  .notice-card p { font-size: 1rem; color: var(--text); line-height: 1.75; }
+  .notice-card a { color: var(--navy); }
+
+  /* MUSIC */
+  .music-bg { background: var(--white); border-top: 1px solid var(--stone); }
+  .music-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+  .music-img-wide { width: 100%; height: 200px; object-fit: cover; object-position: center 35%; display: block; margin-bottom: 18px; }
+  .music-img-tall { width: 100%; height: 360px; object-fit: cover; object-position: center top; display: block; margin-bottom: 24px; }
+  .organ-spec { width: 100%; border-collapse: collapse; font-size: 0.97rem; margin-top: 18px; }
+  .organ-spec thead th { background: var(--navy); color: var(--gold); padding: 9px 12px; text-align: left; font-weight: 700; letter-spacing: 0.03em; font-size: 0.92rem; }
+
+  .organ-spec tbody td { padding: 7px 12px; border-bottom: 1px solid var(--stone); color: var(--text); vertical-align: top; }
+  .organ-spec tbody tr:last-child td { border-bottom: none; }
+  .organ-spec tbody tr:hover td { background: var(--cream); }
+  .div-name { font-weight: 700; color: var(--navy); white-space: nowrap; }
+  .coupler { color: #2a2420; font-style: italic; }
+  .music-prose p { font-size: 1rem; color: var(--text); line-height: 1.85; margin-bottom: 14px; }
+  .music-prose a { color: var(--navy); }
+  .music-link { display: inline-block; margin-top: 14px; padding: 11px 22px; background: var(--navy); color: var(--gold); text-decoration: none; font-size: 1rem; font-weight: 700; letter-spacing: 0.03em; transition: background 0.2s; }
+  .music-link:hover { background: #243352; }
+  .music-subhead { font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; color: var(--navy); margin-bottom: 12px; font-weight: 600; }
+
+  /* GALLERY */
+  .gallery-bg { background: var(--stone); padding: 56px 0; }
+  .gallery-inner { max-width: 1100px; margin: 24px auto 0; padding: 0 24px; }
+  .gallery-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 10px; }
+  .gallery-grid img { width: 100%; height: 230px; object-fit: cover; display: block; filter: brightness(0.93); transition: filter 0.3s, transform 0.3s; }
+  .gallery-grid img:hover { filter: brightness(1.05); transform: scale(1.015); }
+  .gallery-grid .tall { grid-row: span 2; }
+  .gallery-grid .tall img { height: 100%; }
+
+  /* CONTACT */
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+  .info-block p, .info-block li { font-size: 1rem; margin-bottom: 6px; }
+  .info-block ul { list-style: none; padding: 0; }
+  .info-block li { padding: 8px 0; border-bottom: 1px solid var(--stone); }
+  .info-block li:last-child { border-bottom: none; }
+  .info-block strong { color: var(--navy); font-weight: 700; display: inline-block; min-width: 100px; }
+  .info-block a { color: var(--navy); }
+  .info-subhead { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; color: var(--navy); margin: 30px 0 14px; font-weight: 600; }
+  .quote-block { margin-top: 28px; background: var(--cream); border-left: 4px solid var(--gold); padding: 18px 22px; }
+  .quote-block p { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--navy); font-style: italic; line-height: 1.7; }
+
+  /* FOOTER */
+  footer { background: #111a28; color: rgba(255,255,255,0.92); text-align: center; padding: 36px 24px; font-size: 1rem; line-height: 2; }
+  footer a { color: var(--gold); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+  .footer-cross { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--gold); margin-bottom: 10px; }
+
+  /* TABLET ≤900px */
+  @media (max-width: 900px) {
+    .schedule-table th:nth-child(2), .schedule-table td:nth-child(2) { display: none; }
+    .schedule-table td, .schedule-table th { padding: 9px 12px; font-size: 0.95rem; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-grid .tall { grid-row: span 1; }
+    .gallery-grid img, .gallery-grid .tall img { height: 200px; }
+    .music-grid { grid-template-columns: 1fr; gap: 28px; }
+    .music-img-tall { height: 220px; object-position: center 20%; }
+  }
+
+  /* MOBILE ≤640px */
+  @media (max-width: 640px) {
+    .hamburger { display: flex; }
+    .nav-links { display: none; }
+    .section { padding: 38px 18px; }
+    .masses-grid { grid-template-columns: 1fr; gap: 20px; }
+    .schedule-table { display: none; }
+    .bulletin-cards { display: block; }
+    .notices-grid { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr; gap: 8px; }
+    .gallery-grid .tall { grid-row: span 1; }
+    .gallery-grid img, .gallery-grid .tall img { height: 200px; }
+    .info-grid { grid-template-columns: 1fr; gap: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a class="site-title" href="#">
+      Parish of Our Lady &amp; St. James, Bangor
+      <span>St. David &amp; St. Helen, Caernarfon &nbsp;&middot;&nbsp; Diocese of Wrexham</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#masses">Masses</a>
+      <a href="#bulletin">Bulletin</a>
+      <a href="#notices">Notices</a>
+      <a href="#music">Music</a>
+      <a href="#gallery">Our Church</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="Open navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-hidden="true">
+    <a href="#masses"   onclick="closeMenu()">Masses</a>
+    <a href="#bulletin" onclick="closeMenu()">Bulletin</a>
+    <a href="#notices"  onclick="closeMenu()">Notices</a>
+    <a href="#music"    onclick="closeMenu()">Music</a>
+    <a href="#gallery"  onclick="closeMenu()">Our Church</a>
+    <a href="#contact"  onclick="closeMenu()">Contact</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <img src="hero-sunset.jpg" alt="Our Lady and St. James church, Bangor, at dusk">
+  <div class="hero-overlay">
+    <div class="hero-text">
+      <div class="gold-bar"></div>
+      <h1>Plwyf Ein Harglwyddes<br>&amp; Sant Iago, Bangor</h1>
+      <h1 style="font-family:'Cormorant Garamond',serif;color:var(--white);font-size:clamp(1.6rem,4.5vw,3rem);font-weight:700;line-height:1.12;text-shadow:0 2px 16px rgba(0,0,0,0.65);margin-top:6px;">Parish of Our Lady<br>&amp; St. James, Bangor</h1>
+      <p>Dewi Sant a Santes Helen &middot; St. David &amp; St. Helen &middot; Caernarfon</p>
+    </div>
+  </div>
+</div>
+
+<!-- RIBBON -->
+
+<!-- MASSES -->
+<div class="masses-bg" id="masses">
+  <div class="section">
+    <div class="divider"></div>
+    <h2 class="section-title">Mass Times</h2>
+    <p class="section-subtitle">Regular weekly schedule &mdash; see bulletin for Holy Week &amp; Easter variations</p>
+    <div class="masses-grid">
+      <div class="mass-card">
+        <h3>Bangor &mdash; Our Lady &amp; St. James</h3>
+        <div class="mass-row"><span class="mass-day">Sunday</span><span class="mass-time">10:00 &amp; 17:00 &mdash; Holy Mass</span></div>
+        <div class="mass-row"><span class="mass-day">Monday</span><span class="mass-time">19:00 &mdash; Holy Mass</span></div>
+        <div class="mass-row"><span class="mass-day">Tuesday</span><span class="mass-time">09:45 Morning Prayer; 10:00 Holy Mass</span></div>
+        <div class="mass-row"><span class="mass-day">Thursday</span><span class="mass-time">12:15 &mdash; Holy Mass</span></div>
+        <div class="mass-row"><span class="mass-day">Confession</span><span class="mass-time">Monday 19:30 &middot; Tuesday 10:30 &middot; Thursday 12:45</span></div>
+        <p class="mass-note">Holy Week and Easter times differ &mdash; please see the bulletin below.</p>
+      </div>
+      <div class="mass-card">
+        <h3>Caernarfon &mdash; St. David &amp; St. Helen</h3>
+        <div class="mass-row"><span class="mass-day">Saturday</span><span class="mass-time">17:00 Vigil Mass (18:00 from 11 Apr)</span></div>
+        <div class="mass-row"><span class="mass-day">Easter Sunday</span><span class="mass-time">12:00 noon &mdash; Holy Mass</span></div>
+        <div class="mass-row"><span class="mass-day">Confession</span><span class="mass-time">By arrangement with Fr. Savi</span></div>
+        <div class="mass-row"><span class="mass-day">RCIA</span><span class="mass-time">Thursdays 18:30 &mdash; OL Catholic Primary School</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BULLETIN -->
+<div class="schedule-bg" id="bulletin">
+  <div class="section">
+    <div class="divider"></div>
+    <h2 class="section-title">Holy Week &amp; Easter season calendar</h2>
+  
+    <!-- TABLE view -->
+
+
+    <div class="month-heading">April 2026 &mdash; Holy Week &amp; Easter</div>
+    <table class="schedule-table">
+      <thead><tr><th style="width:155px">Date</th><th>Observance</th><th>Details</th></tr></thead>
+      <tbody>
+       
+        <tr><td>Monday 6 Apr</td><td><span class="badge badge-easter">Easter</span> Monday in the Octave</td><td>Bangor 10:00 Holy Mass</td></tr>
+        <tr><td>Tuesday 7 Apr</td><td><span class="badge badge-easter">Easter</span> Tuesday in the Octave</td><td>Bangor 09:45 Morning Prayer; 10:00 Holy Mass</td></tr>
+        <tr><td>Thursday 9 Apr</td><td><span class="badge badge-easter">Easter</span> Thursday in the Octave</td><td>Bangor 12:15 Holy Mass</td></tr>
+        <tr><td>Saturday 11 Apr</td><td>Vigil &mdash; Divine Mercy Sunday</td><td>Caernarfon 18:00 Vigil Mass (new time)</td></tr>
+        <tr><td>Sunday 12 Apr</td><td><span class="badge badge-easter">Easter</span> Divine Mercy Sunday</td><td>Bangor 10:00 &amp; 17:00 Holy Mass</td></tr>
+        <tr><td>Monday 13 Apr</td><td>Easter Weekday</td><td>Bangor 19:00 Holy Mass</td></tr>
+        <tr><td>Tuesday 14 Apr</td><td>Easter Weekday</td><td>Bangor 09:45 Morning Prayer; 10:00 Holy Mass</td></tr>
+        <tr><td>Thursday 16 Apr</td><td>Easter Weekday</td><td>Bangor 12:15 Holy Mass</td></tr>
+        <tr><td>Saturday 18 Apr</td><td>Vigil &mdash; 3rd Sunday of Easter</td><td>Caernarfon 18:00 Vigil Mass</td></tr>
+        <tr><td>Sunday 19 Apr</td><td>3rd Sunday of Easter</td><td>Bangor 10:00 &amp; 17:00 Holy Mass</td></tr>
+        <tr><td>Monday 20 Apr</td><td>Easter Weekday</td><td>Bangor 19:00 Holy Mass</td></tr>
+        <tr><td>Tuesday 21 Apr</td><td>St Anselm, Bishop &amp; Doctor</td><td>Bangor 09:45 Morning Prayer; 10:00 Holy Mass</td></tr>
+        <tr><td>Thursday 23 Apr</td><td><span class="badge badge-feast">Feast</span> St George, Patron of England</td><td>Bangor 12:15 Holy Mass &mdash; Solemnity</td></tr>
+        <tr><td>Saturday 25 Apr</td><td><span class="badge badge-feast">Feast</span> St Mark, Evangelist</td><td>Caernarfon 18:00 Vigil Mass</td></tr>
+        <tr><td>Sunday 26 Apr</td><td>4th Sunday of Easter &mdash; Vocations Sunday</td><td>Bangor: Family Eucharist 10:00; 17:00 Holy Mass. World Day of Prayer for Vocations.</td></tr>
+        <tr><td>Monday 27 Apr</td><td>Easter Weekday</td><td>Bangor 19:00 Holy Mass</td></tr>
+        <tr><td>Tuesday 28 Apr</td><td>Easter Weekday</td><td>Bangor 09:45 Morning Prayer; 10:00 Holy Mass</td></tr>
+        <tr><td>Thursday 30 Apr</td><td>Easter Weekday</td><td>Bangor 12:15 Holy Mass</td></tr>
+      </tbody>
+    </table>
+
+    <!-- CARD view (mobile) -->
+    <div class="bulletin-cards">
+      <div class="bc-month">March &mdash; Holy Week</div>
+      <div class="bulletin-card"><div class="bc-date">Saturday 28 Mar</div><div class="bc-title"><span class="badge badge-lent">Lent</span> &nbsp;Vigil of Palm Sunday</div><div class="bc-detail">Caernarfon 17:00 Vigil Mass. Clocks go forward &mdash; BST begins.</div></div>
+      <div class="bulletin-card"><div class="bc-date">Saturday 28 Mar</div><div class="bc-title">Confession &amp; Adoration</div><div class="bc-detail">Bangor 11:00&ndash;12:00 in preparation for Easter.</div></div>
+      <div class="bulletin-card"><div class="bc-date">Sunday 29 Mar</div><div class="bc-title"><span class="badge badge-holy">Palm Sunday</span></div><div class="bc-detail">Bangor: Family Eucharist 10:00 &amp; 17:00 Holy Mass</div></div>
+      <div class="bulletin-card"><div class="bc-date">Monday 30 Mar</div><div class="bc-title">Monday of Holy Week</div><div class="bc-detail">Bangor 19:00 Holy Mass</div></div>
+      <div class="bulletin-card"><div class="bc-date">Tuesday 31 Mar</div><div class="bc-title">Tuesday of Holy Week</div><div class="bc-detail">Bangor 09:45 Morning Prayer; 10:00 Holy Mass; 10:30 Way of the Cross</div></div>
+      <div class="bc-month">April &mdash; Holy Week &amp; Easter</div>
+      <div class="bulletin-card"><div class="bc-date">Wednesday 1 Apr</div><div class="bc-title"><span class="badge badge-holy">Chrism Mass</span></div><div class="bc-detail">19:00 at Wrexham Cathedral &mdash; all welcome.</div></div>
+      <div class="bulletin-card"><div class="bc-date">Thursday 2 Apr</div><div class="bc-title"><span class="badge badge-holy">Holy Thursday</span></div><div class="bc-detail">Bangor 10:00 Morning Prayer with Reception &amp; Confirmation; Caernarfon 19:00 Lord&rsquo;s Supper, then Watching until 22:00.</div></div>
+      <div class="bulletin-card"><div class="bc-date">Friday 3 Apr</div><div class="bc-title"><span class="badge badge-holy">Good Friday</span></div><div class="bc-detail">Bangor 10:00 Morning Prayer; 15:00 Passion of the Lord. Fast &amp; Abstinence. Collection for Holy Land.</div></div>
+      <div class="bulletin-card"><div class="bc-date">Saturday 4 Apr</div><div class="bc-title"><span class="badge badge-holy">Holy Saturday</span></div><div class="bc-detail">Bangor 21:00 &mdash; Easter Vigil. Baptism &amp; Confirmation of the Elect.</div></div>
+      <div class="bulletin-card"><div class="bc-date">Sunday 5 Apr</div><div class="bc-title"><span class="badge badge-easter">Easter Sunday</span></div><div class="bc-detail">Bangor 10:00 &middot; Caernarfon 12:00 noon</div></div>
+      <div class="bulletin-card"><div class="bc-date">Monday–Thursday 6–9 Apr</div><div class="bc-title"><span class="badge badge-easter">Easter Octave</span></div><div class="bc-detail">Monday 10:00 &middot; Tuesday 09:45 &amp; 10:00 &middot; Thursday 12:15</div></div>
+      <div class="bulletin-card"><div class="bc-date">Saturday 11 Apr</div><div class="bc-title">Vigil &mdash; Divine Mercy Sunday</div><div class="bc-detail">Caernarfon 18:00 (note new time from Easter)</div></div>
+      <div class="bulletin-card"><div class="bc-date">Sunday 12 Apr</div><div class="bc-title"><span class="badge badge-easter">Easter</span> Divine Mercy Sunday</div><div class="bc-detail">Bangor 10:00 &amp; 17:00 Holy Mass</div></div>
+      <div class="bulletin-card"><div class="bc-date">Thursday 23 Apr</div><div class="bc-title"><span class="badge badge-feast">Feast</span> St George, Patron of England</div><div class="bc-detail">Bangor 12:15 Holy Mass &mdash; Solemnity</div></div>
+      <div class="bulletin-card"><div class="bc-date">Saturday 25 Apr</div><div class="bc-title"><span class="badge badge-feast">Feast</span> St Mark, Evangelist</div><div class="bc-detail">Caernarfon 18:00 Vigil Mass</div></div>
+      <div class="bulletin-card"><div class="bc-date">Sunday 26 Apr</div><div class="bc-title">4th Sunday of Easter &mdash; Vocations Sunday</div><div class="bc-detail">Bangor: Family Eucharist 10:00; 17:00 Holy Mass</div></div>
+      <div class="bulletin-card"><div class="bc-date">Thursday 30 Apr</div><div class="bc-title">Easter Weekday</div><div class="bc-detail">Bangor 12:15 Holy Mass</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- NOTICES -->
+<div id="notices" style="background:#f0f0f0;">
+  <div class="section">
+    <div class="divider"></div>
+    <h2 class="section-title">Notices &amp; Announcements</h2>
+    <p class="section-subtitle">Parish life &mdash; April 2026</p>
+    <div class="notices-grid">
+
+      <div class="notice-card">
+        <h4>Pope&rsquo;s Prayer Intention &mdash; April</h4>
+        <p>Pope Leo XIV asks us to pray for priests going through moments of crisis in their vocation, that they may find the accompaniment they need and that communities may support them with understanding and prayer.</p>
+      </div>
+
+      <div class="notice-card">
+        <h4>Parish Office Administrator</h4>
+        <p>We warmly welcome <strong>Miss Kelly Abrahams</strong> as the new Parish Office Administrator.<br><br>
+        <strong>Opening times:</strong> Monday 10:00&ndash;12:00 &middot; Wednesday 15:00&ndash;17:00 &middot; Friday 10:00&ndash;12:00<br><br>
+        Ty Mair, Menai Avenue, LL57 2HH. For pastoral matters please use the parish phone or email during office hours. Please avoid Fr. Savi&rsquo;s private contact except in emergencies.</p>
+      </div>
+
+      <div class="notice-card">
+        <h4>Pastoral Leadership</h4>
+        <p>The parish is currently in a period of transition regarding its pastoral leadership. Further information will be shared with parishioners in due course. Please keep the parish and its clergy in your prayers.</p>
+      </div>
+
+      <div class="notice-card">
+        <h4>Donation Machine &mdash; Out of Service</h4>
+        <p>The card-tap donation machine is currently out of order. Parishioners wishing to make an offering are kindly asked to use direct bank transfer:<br><br>
+        <strong>Bank:</strong> NatWest &nbsp;&middot;&nbsp; <strong>Sort code:</strong> 55-81-42<br>
+        <strong>Account:</strong> 08142068<br>
+        <em>Bangor and Caernarfon Catholic Church</em></p>
+      </div>
+
+      <div class="notice-card">
+        <h4>Gift Aid Envelopes</h4>
+        <p>If you are a UK taxpayer, using Gift Aid envelopes allows the government to add an extra 25% to your donation at no cost to you. Contact the parish office to receive your own numbered envelope.</p>
+      </div>
+
+      <div class="notice-card">
+        <h4>Family Eucharist &mdash; 26 April</h4>
+        <p>The 10:00 Mass on Sunday 26th April is a Family Eucharist. We will pray in a special way for parishioners marking a birthday or significant milestone in April. Drop your details into the box at the back of the church.</p>
+      </div>
+
+      <div class="notice-card">
+        <h4>Baptism</h4>
+        <p>If you would like your child to be baptised, please contact Fr. Savi to arrange a Baptism Preparation Meeting and set the date for the celebration.</p>
+      </div>
+
+      <div class="notice-card">
+        <h4>Safeguarding</h4>
+        <p>Our Safeguarding Representative is <strong>Jo Charles</strong>.<br>
+        Tel: <a href="tel:07454958980">07454 958980</a><br><br>
+        The Diocese of Wrexham is a Registered Charity No. 700426.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- MUSIC -->
+<div class="music-bg" id="music">
+  <div class="section">
+    <div class="divider"></div>
+    <h2 class="section-title">Music &amp; The Organ</h2>
+    <p class="section-subtitle">A living tradition of sacred music</p>
+    <div class="music-grid">
+
+      <!-- LEFT: organ -->
+      <div>
+        <img class="music-img-wide" src="organ-pipes.jpg" alt="The Bishop and Son organ pipes">
+        <h3 class="music-subhead">The Organ</h3>
+        <div class="music-prose">
+          <p>The church is fortunate to possess an <strong>1895 three-manual organ by Bishop &amp; Son</strong>, used to accompany the choir at Sunday morning services and played at concerts and events throughout the year.</p>
+          <p>To learn more, visit the <a href="https://npor.org.uk/survey/K00709" target="_blank" rel="noopener">National Pipe Organ Register</a>. To arrange a visit, contact our organist Abhay at <a href="mailto:atporganist<!---->@<!---->icloud.com">atporganist<!---->@<!---->icloud.com</a>.</p>
+        </div>
+        <table class="organ-spec">
+          <thead><tr><th>Division</th><th>Stop</th></tr></thead>
+          <tbody>
+            <tr><td class="div-name" rowspan="7">Pedal</td><td>32&prime; Contra Bass</td></tr>
+            <tr><td>16&prime; Violone</td></tr>
+            <tr><td>16&prime; Bourdon</td></tr>
+            <tr><td>8&prime; Bass Flute</td></tr>
+            <tr><td class="coupler">Choir to Pedal</td></tr>
+            <tr><td class="coupler">Great to Pedal</td></tr>
+            <tr><td class="coupler">Swell to Pedal</td></tr>
+            <tr><td class="div-name" rowspan="6">Choir</td><td>8&prime; Rohr Flute</td></tr>
+            <tr><td>8&prime; Dulciana</td></tr>
+            <tr><td>8&prime; Clarinet</td></tr>
+            <tr><td>4&prime; Lieblich Flute</td></tr>
+            <tr><td class="coupler">Choir Octave</td></tr>
+            <tr><td class="coupler">Swell to Choir</td></tr>
+            <tr><td class="div-name" rowspan="8">Great</td><td>16&prime; Contra Gamba</td></tr>
+            <tr><td>8&prime; Open Diapason I (display)</td></tr>
+            <tr><td>8&prime; Open Diapason II</td></tr>
+            <tr><td>8&prime; Clarabella</td></tr>
+            <tr><td>4&prime; Principal</td></tr>
+            <tr><td>4&prime; Flauto Traverso</td></tr>
+            <tr><td>2&prime; Flautina</td></tr>
+            <tr><td class="coupler">Swell to Great</td></tr>
+            <tr><td class="div-name" rowspan="11">Swell</td><td>16&prime; Double Diapason</td></tr>
+            <tr><td>8&prime; Violin Diapason</td></tr>
+            <tr><td>8&prime; Lieblich Gedact</td></tr>
+            <tr><td>8&prime; Vox Angelica</td></tr>
+            <tr><td>8&prime; Voix Celeste</td></tr>
+            <tr><td>8&prime; Cornopean</td></tr>
+            <tr><td>8&prime; Oboe</td></tr>
+            <tr><td>4&prime; Geigen Principal</td></tr>
+            <tr><td>III Mixture</td></tr>
+            <tr><td class="coupler">Tremulant</td></tr>
+            <tr><td class="coupler">Swell Octave &middot; Swell Suboctave</td></tr>
+          </tbody>
+        </table>
+        <a class="music-link" href="https://npor.org.uk/survey/K00709" target="_blank" rel="noopener">NPOR Organ Record &nearr;</a>
+      </div>
+
+      <!-- RIGHT: choir + console -->
+      <div>
+        <img class="music-img-tall" src="organ-console.jpg" alt="The organ console showing Pedal, Swell, Great and Choir manuals">
+        <h3 class="music-subhead">The Choir</h3>
+        <div class="music-prose">
+          <p>The church has a voluntary choir which sings at the 10:00 Sunday Mass each week, as well as enriching the liturgy on days of obligation and major celebrations throughout the liturgical year.</p>
+          <p>The choir sings hymns, congregational mass settings, and occasional anthems. <strong>All are welcome to join.</strong></p>
+          <p>To find out more, please speak with one of our choir members after the Sunday morning Mass, or contact our organist:<br><br>
+          <strong>Abhay </strong><br>
+          <a href="mailto:atporganist<!---->@<!---->icloud.com">atporganist<!---->@<!---->icloud.com</a></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<div class="gallery-bg" id="gallery">
+  <div class="section" style="padding-top:0;padding-bottom:0;">
+    <div class="divider"></div>
+    <h2 class="section-title">Our Churches</h2>
+    <p class="section-subtitle">Our Lady &amp; St. James, Bangor; St. David &amp; St. Helen · Caernarfon</p>
+  </div>
+  <div class="gallery-inner">
+    <div class="gallery-grid">
+      <div class="tall">
+        <img src="monstrance-altar.jpg" alt="The monstrance on the altar with stained glass behind">
+      </div>
+      <img src="nave-rainbow-light.jpg" alt="Rainbow light from the stained glass cast on the nave wall">
+      <img src="window-last-supper.jpg" alt="Last Supper stained glass window">
+      <img src="window-good-shepherd.jpg" alt="Good Shepherd stained glass window">
+      <img src="exterior-sunset-spire.jpg" alt="The church spire against a pink evening sky">
+      <img src="caernarfon-interior.jpg" alt="Interior of St. David &amp; St. Helen, Caernarfon, with pews and crucifix">
+         </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div id="contact">
+  <div class="section">
+    <div class="divider"></div>
+    <h2 class="section-title">Contact &amp; Information</h2>
+    <p class="section-subtitle">We are here to serve</p>
+    <div class="info-grid">
+
+      <div class="info-block">
+        <h3 class="info-subhead" style="margin-top:0">Parish Priest</h3>
+        <p style="margin-bottom:14px;"><strong>Fr. Savi Menachery CMI</strong><br>Parochial Administrator</p>
+        <ul>
+          <li><strong>Address</strong> Ty Mair, Menai Avenue, Bangor LL57 2HH</li>
+          <li><strong>Tel</strong> <a href="tel:01248370421">01248 370421</a></li>
+          <li><strong>Email</strong> <a href="mailto:priestbangor<!---->@<!---->rcdwxm.org.uk">priestbangor<!---->@<!---->rcdwxm.org.uk</a></li>
+          <li><strong>Parish Office</strong> Miss Kelly Abrahams &mdash; Monday, Wednesday, Friday</li>
+          <li><strong>Safeguarding</strong> Jo Charles &mdash; <a href="tel:07454958980">07454 958980</a></li>
+        </ul>
+        <div class="quote-block">
+          <p>&ldquo;Eternal rest grant unto them, O Lord,<br>and let perpetual light shine upon them.&rdquo;</p>
+        </div>
+      </div>
+
+      <div class="info-block">
+        <h3 class="info-subhead" style="margin-top:0">Confession Times</h3>
+        <ul>
+          <li><strong>Monday</strong> 19:30</li>
+          <li><strong>Tuesday</strong> 10:30</li>
+          <li><strong>Thursday</strong> 12:45</li>
+          <li><strong>Or by arrangement</strong> Contact Fr. Savi</li>
+        </ul>
+        <h3 class="info-subhead">Diocese of Wrexham</h3>
+        <ul>
+          <li><strong>Website</strong> <a href="https://www.rcdwxm.org.uk" target="_blank" rel="noopener">www.rcdwxm.org.uk</a></li>
+          <li><strong>Charity No.</strong> 700426</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-cross">&#10013;</div>
+  <p><strong style="color:rgba(255,255,255,0.85)">Parish of Our Lady &amp; St. James, Bangor</strong> &nbsp;&middot;&nbsp; St. David &amp; St. Helen, Caernarfon<br>
+  Ty Mair, Menai Avenue, Bangor, Gwynedd LL57 2HH &nbsp;&middot;&nbsp; Tel <a href="tel:01248370421">01248 370421</a><br>
+  Diocese of Wrexham &nbsp;&middot;&nbsp; Registered Charity No. 700426</p>
+</footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobile-nav');
+
+  hamburger.addEventListener('click', function () {
+    const isOpen = mobileNav.classList.toggle('open');
+    hamburger.classList.toggle('open', isOpen);
+    hamburger.setAttribute('aria-expanded', isOpen);
+    mobileNav.setAttribute('aria-hidden', !isOpen);
+  });
+
+  function closeMenu() {
+    mobileNav.classList.remove('open');
+    hamburger.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    mobileNav.setAttribute('aria-hidden', 'true');
+  }
+</script>
+</body>
+</html>
