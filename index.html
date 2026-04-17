@@ -347,7 +347,7 @@
       Parish of Our Lady &amp; St. James, Bangor
       <span>St. David &amp; St. Helen, Caernarfon &nbsp;&middot;&nbsp; Diocese of Wrexham</span>
     </a>
-    <nav class="nav-links">
+    <nav class="nav-links" aria-label="Main navigation">
       <a href="#masses">Masses</a>
       <a href="#bulletin">Bulletin</a>
       <a href="#notices">Notices</a>
@@ -359,7 +359,7 @@
       <span></span><span></span><span></span>
     </button>
   </div>
-  <nav class="mobile-nav" id="mobile-nav" aria-hidden="true">
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" aria-hidden="true">
     <a href="#masses"   onclick="closeMenu()">Masses</a>
     <a href="#bulletin" onclick="closeMenu()">Bulletin</a>
     <a href="#notices"  onclick="closeMenu()">Notices</a>
@@ -376,7 +376,7 @@
     <div class="hero-text">
       <div class="gold-bar"></div>
       <h1>Plwyf Ein Harglwyddes<br>&amp; Sant Iago, Bangor</h1>
-      <h1 style="font-family:'Cormorant Garamond',serif;color:var(--white);font-size:clamp(1.6rem,4.5vw,3rem);font-weight:700;line-height:1.12;text-shadow:0 2px 16px rgba(0,0,0,0.65);margin-top:6px;">Parish of Our Lady<br>&amp; St. James, Bangor</h1>
+      <p style="font-family:'Cormorant Garamond',serif;color:var(--white);font-size:clamp(1.6rem,4.5vw,3rem);font-weight:700;line-height:1.12;text-shadow:0 2px 16px rgba(0,0,0,0.65);margin-top:6px;">Parish of Our Lady<br>&amp; St. James, Bangor</p>
       <p>Dewi Sant a Santes Helen &middot; St. David &amp; St. Helen &middot; Caernarfon</p>
     </div>
   </div>
@@ -671,4 +671,15 @@ other pastoral needs — please contact the Parish Office at these times using t
     const isOpen = mobileNav.classList.toggle('open');
     hamburger.classList.toggle('open', isOpen);
     hamburger.setAttribute('aria-expanded', isOpen);
-    mobile
+    mobileNav.setAttribute('aria-hidden', !isOpen);
+  });
+
+  function closeMenu() {
+    mobileNav.classList.remove('open');
+    hamburger.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    mobileNav.setAttribute('aria-hidden', 'true');
+  }
+</script>
+</body>
+</html>
