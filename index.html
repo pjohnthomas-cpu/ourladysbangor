@@ -170,6 +170,24 @@
   .notice-card p { font-size: 1rem; color: var(--text); line-height: 1.75; }
   .notice-card a { color: var(--navy); }
 
+  /* FORMS */
+  .forms-bg { background: var(--navy); border-top: 1px solid #0d1a30; }
+  .forms-bg .section-title { color: var(--white); }
+  .forms-bg .section-subtitle { color: rgba(255,255,255,0.75); }
+  .forms-bg .divider { background: var(--gold); }
+  .forms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .form-card { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-left: 4px solid var(--gold); padding: 22px 24px; display: flex; flex-direction: column; gap: 10px; transition: background 0.2s; }
+  .form-card:hover { background: rgba(255,255,255,0.11); }
+  .form-card h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--gold); font-weight: 600; margin: 0; }
+  .form-card p { font-size: 0.97rem; color: rgba(255,255,255,0.82); line-height: 1.65; margin: 0; flex-grow: 1; }
+  .form-download { display: inline-block; margin-top: 4px; padding: 9px 18px; background: var(--gold); color: var(--navy); text-decoration: none; font-size: 0.92rem; font-weight: 700; letter-spacing: 0.03em; align-self: flex-start; transition: background 0.2s; }
+  .form-download:hover { background: #e0b84e; }
+  .forms-note { margin-top: 28px; font-size: 0.95rem; color: rgba(255,255,255,0.65); font-style: italic; }
+  @media (max-width: 640px) {
+    .forms-grid { grid-template-columns: 1fr; gap: 14px; }
+    .form-card { padding: 17px 18px; }
+  }
+
   /* MUSIC */
   .music-bg { background: var(--white); border-top: 1px solid var(--stone); }
   .music-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
@@ -352,6 +370,7 @@
       <a href="#bulletin">Bulletin</a>
       <a href="#notices">Notices</a>
       <a href="#music">Music</a>
+      <a href="#forms">Forms</a>
       <a href="#gallery">Our Church</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -364,6 +383,7 @@
     <a href="#bulletin" onclick="closeMenu()">Bulletin</a>
     <a href="#notices"  onclick="closeMenu()">Notices</a>
     <a href="#music"    onclick="closeMenu()">Music</a>
+    <a href="#forms"    onclick="closeMenu()">Forms</a>
     <a href="#gallery"  onclick="closeMenu()">Our Church</a>
     <a href="#contact"  onclick="closeMenu()">Contact</a>
   </nav>
@@ -514,6 +534,49 @@
       </div>
 
     </div>
+  </div>
+</div>
+
+<!-- FORMS -->
+<div class="forms-bg" id="forms">
+  <div class="section">
+    <div class="divider"></div>
+    <h2 class="section-title">Parish Forms</h2>
+    <p class="section-subtitle">Download, print, and return to the parish office or the box at the back of the church</p>
+    <div class="forms-grid">
+
+      <div class="form-card">
+        <h4>Baptism</h4>
+        <p>Application form for the Baptism of a child. Includes details for parents, godparents, and marital status. Please contact Fr. Savi to arrange a preparation meeting before submitting.</p>
+        <a class="form-download" href="Baptism_registration_form.pdf" download>Download &darr;</a>
+      </div>
+
+      <div class="form-card">
+        <h4>First Holy Communion</h4>
+        <p>Registration form for children preparing to receive their First Holy Communion. Includes faith formation questions and a parental commitment to attend preparation sessions.</p>
+        <a class="form-download" href="First-Holy-Communion_Registration.pdf" download>Download &darr;</a>
+      </div>
+
+      <div class="form-card">
+        <h4>Altar Server Registration</h4>
+        <p>For children wishing to serve at the altar, or already serving. Provides contact details for scheduling, training, and parish events. Parental consent required.</p>
+        <a class="form-download" href="Altar_Server-Registration.pdf" download>Download &darr;</a>
+      </div>
+
+      <div class="form-card">
+        <h4>RCIA &mdash; Becoming Catholic</h4>
+        <p>Registration form for the Rite of Christian Initiation for Adults. For anyone exploring the Catholic faith or wishing to be received into the Church. Sessions are held on Thursday evenings.</p>
+        <a class="form-download" href="RCIA-Registration_Form.pdf" download>Download &darr;</a>
+      </div>
+
+      <div class="form-card">
+        <h4>Marriage &mdash; Guide &amp; Procedure</h4>
+        <p>A step-by-step guide to arranging a Catholic marriage at the parish, covering documentation, marriage preparation, mixed-marriage permissions, and civil requirements. Please contact Fr. Savi at least 6&ndash;12 months in advance.</p>
+        <a class="form-download" href="Marriage-A_preliminary_Guideline_of_Procedure.pdf" download>Download &darr;</a>
+      </div>
+
+    </div>
+    <p class="forms-note">All forms should be returned to the parish office or placed in the box at the back of the church. For queries, contact the Parish Office: <strong style="color:rgba(255,255,255,0.85)">01248 370421</strong> or speak with Fr. Savi after Mass.</p>
   </div>
 </div>
 
