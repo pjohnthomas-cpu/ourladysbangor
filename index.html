@@ -116,6 +116,13 @@
   .hero-text p { color: rgba(255,255,255,0.85); font-size: clamp(0.78rem,2vw,1rem); margin-top: 8px; font-weight: 300; letter-spacing: 0.04em; }
   .gold-bar { width: 50px; height: 3px; background: var(--gold); margin-bottom: 14px; }
 
+  /* IMPORTANT ANNOUNCEMENT */
+  .announcement-wrap { background: #fff6e6; border-top: 1px solid rgba(139,26,26,0.18); border-bottom: 1px solid rgba(139,26,26,0.18); }
+  .announcement-box { max-width: 1100px; margin: 0 auto; padding: 26px 24px; border-left: 6px solid #8b1a1a; }
+  .announcement-label { display: inline-block; margin-bottom: 10px; padding: 4px 10px; background: #8b1a1a; color: var(--white); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+  .announcement-box h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.6rem, 3.2vw, 2.1rem); color: #5c1010; margin-bottom: 10px; line-height: 1.15; }
+  .announcement-box p { font-size: 1.02rem; color: #231815; line-height: 1.8; max-width: 980px; }
+
   /* RIBBON */
   .ribbon { text-align: center; padding: 12px 20px; font-size: clamp(0.95rem,2vw,1.05rem); letter-spacing: 0.03em; font-weight: 700; color: var(--white); }
   .ribbon-holy { background: #6b1a1a; }
@@ -248,6 +255,8 @@
     /* Section padding */
     .section { padding: 48px 20px; }
 
+    .announcement-box { padding: 22px 20px; }
+
     /* Mass times */
     .masses-grid { grid-template-columns: 1fr; gap: 20px; }
     .mass-card { padding: 22px 24px; }
@@ -301,6 +310,9 @@
     /* Section padding */
     .section { padding: 34px 16px; }
     .section-title { font-size: clamp(1.5rem, 5vw, 1.9rem); }
+
+    .announcement-box { padding: 20px 16px; border-left-width: 5px; }
+    .announcement-box p { font-size: 0.98rem; }
 
     /* Mass times */
     .masses-grid { grid-template-columns: 1fr; gap: 16px; }
@@ -401,6 +413,14 @@
     </div>
   </div>
 </div>
+
+<section class="announcement-wrap" aria-label="Important announcement">
+  <div class="announcement-box">
+    <div class="announcement-label">Important Announcement</div>
+    <h2>Evening Mass at 5 pm today has moved</h2>
+    <p>As many of you are aware, we had to evacuate the church building mid-way through the morning mass. As we wait for the fire service and technical team to give the all clear to resume use of the building, Fr. Savi has decided, after consultation, to move the evening mass at 5 pm today to Our Lady&rsquo;s Primary School in Caernarfon Road, Bangor.</p>
+  </div>
+</section>
 
 <!-- RIBBON -->
 
