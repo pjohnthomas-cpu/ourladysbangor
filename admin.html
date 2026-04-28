@@ -64,7 +64,6 @@
       color: #2c2c2c;
       outline: none;
       transition: border-color 0.15s;
-      -webkit-text-security: disc;
       font-family: Arial, sans-serif;
     }
     .pin-row input:focus { border-color: #7a5c38; }
@@ -140,6 +139,7 @@
     .toggle-row input[type="checkbox"] {
       width: 1rem; height: 1rem;
       accent-color: #7a5c38;
+      flex-shrink: 0;
     }
     .toggle-row span {
       font-size: 0.88rem;
@@ -201,7 +201,6 @@
 <!-- ═══ PIN SCREEN ═══ -->
 <div class="card" id="pin-screen">
   <div class="logo">
-    <!-- Cross SVG -->
     <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect x="19" y="4"  width="6" height="36" rx="2" fill="#7a5c38"/>
       <rect x="4"  y="17" width="36" height="6"  rx="2" fill="#7a5c38"/>
@@ -241,12 +240,12 @@
   <div class="field">
     <label for="ann-body">Announcement Body</label>
     <textarea id="ann-body" placeholder="Enter the announcement text here…"></textarea>
-    <p class="hint">Basic HTML is supported — e.g. &lt;br&gt; for line breaks, &lt;strong&gt; for bold.</p>
+    <p class="hint">Use &lt;br&gt; for line breaks and &lt;strong&gt; for bold text.</p>
   </div>
 
   <div class="toggle-row">
     <input type="checkbox" id="ann-hide">
-    <span>Hide announcement (keep text saved but don't show it on the site)</span>
+    <span>Hide announcement (keeps the text saved but removes it from the site)</span>
   </div>
 
   <hr class="divider">
@@ -254,7 +253,7 @@
   <div class="field">
     <label for="gh-token">GitHub Personal Access Token</label>
     <input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
-    <p class="hint">Needs <strong>Contents: Read &amp; Write</strong> permission on the repo. Never stored — paste fresh each session.</p>
+    <p class="hint">Needs <strong>Contents: Read &amp; Write</strong> on the repo. Not stored anywhere — paste fresh each session.</p>
   </div>
 
   <button class="btn" id="save-btn">Save &amp; Publish</button>
@@ -265,18 +264,15 @@
   // ─── Configuration ────────────────────────────────────────────────────────
   const PIN_HASH = 'ec54e99514663edb97adef400fbf34a77daae108303d3da8008a7dfb4cdf0f52';
   const REPO     = 'pjohnthomas-cpu/ourladysbangor';
-  const FILE     = 'index.html';
-  const BRANCH   = 'main'; // change to 'master' if needed
+  const JSON_FILE = 'announcement.json';
+  const BRANCH   = 'main';
   // ─────────────────────────────────────────────────────────────────────────
 
-  // ── Helpers ──────────────────────────────────────────────────────────────
+  // ── Helpers ───────────────────────────────────────────────────────────────
   async function sha256(str) {
-    const buf  = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
     return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
   }
-
-  function show(el)  { el.style.display = ''; }
-  function hide(el)  { el.style.display = 'none'; }
 
   function setStatus(el, type, msg) {
     el.className = 'status-msg ' + type;
@@ -285,32 +281,25 @@
   }
 
   // ── PIN screen ────────────────────────────────────────────────────────────
-  const pinInputs  = [0,1,2,3].map(i => document.getElementById('p' + i));
-  const pinError   = document.getElementById('pin-error');
-  const pinScreen  = document.getElementById('pin-screen');
-  const pinRow     = document.getElementById('pin-row');
+  const pinInputs    = [0,1,2,3].map(i => document.getElementById('p' + i));
+  const pinError     = document.getElementById('pin-error');
+  const pinScreen    = document.getElementById('pin-screen');
   const editorScreen = document.getElementById('editor-screen');
 
   pinInputs[0].focus();
 
   pinInputs.forEach((input, idx) => {
-    // Only allow digits
     input.addEventListener('input', () => {
       input.value = input.value.replace(/\D/g, '').slice(-1);
       if (input.value && idx < 3) pinInputs[idx + 1].focus();
       if (pinInputs.every(p => p.value)) checkPin();
     });
-
     input.addEventListener('keydown', e => {
       if (e.key === 'Backspace' && !input.value && idx > 0) {
         pinInputs[idx - 1].value = '';
         pinInputs[idx - 1].focus();
       }
-      // Allow paste into first box
-      if ((e.ctrlKey || e.metaKey) && e.key === 'v' && idx === 0) return;
     });
-
-    // Handle paste of full 4-digit PIN into first box
     if (idx === 0) {
       input.addEventListener('paste', e => {
         const text = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g,'');
@@ -328,9 +317,9 @@
     if (entered.length < 4) return;
     const hash = await sha256(entered);
     if (hash === PIN_HASH) {
-      hide(pinScreen);
-      show(editorScreen);
-      loadCurrentAnnouncement();
+      pinScreen.style.display  = 'none';
+      editorScreen.style.display = '';
+      loadAnnouncement();
     } else {
       pinError.textContent = 'Incorrect PIN — please try again.';
       pinInputs.forEach(p => { p.value = ''; p.classList.add('shake'); });
@@ -344,113 +333,48 @@
     pinInputs.forEach(p => p.value = '');
     document.getElementById('gh-token').value = '';
     pinError.textContent = '\u00a0';
-    hide(editorScreen);
-    show(pinScreen);
+    editorScreen.style.display = 'none';
+    pinScreen.style.display    = '';
     pinInputs[0].focus();
   });
 
-  // ── GitHub API ────────────────────────────────────────────────────────────
-  async function ghGet(token) {
-    const res = await fetch(
-      `https://api.github.com/repos/${REPO}/contents/${FILE}?ref=${BRANCH}`,
-      { headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github.v3+json' } }
-    );
-    if (!res.ok) throw new Error(`GitHub error ${res.status}: ${(await res.json()).message}`);
-    return res.json();
-  }
-
-  async function ghPut(token, content, sha, message) {
-    const res = await fetch(
-      `https://api.github.com/repos/${REPO}/contents/${FILE}`,
-      {
-        method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: 'application/vnd.github.v3+json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ message, content: btoa(unescape(encodeURIComponent(content))), sha, branch: BRANCH })
-      }
-    );
-    if (!res.ok) throw new Error(`GitHub error ${res.status}: ${(await res.json()).message}`);
-    return res.json();
-  }
-
-  // ── Parse announcement from HTML ──────────────────────────────────────────
-  // Matches the whole <section class="announcement-wrap" ...> ... </section>
-  const SECTION_RE = /(<section[^>]*class="announcement-wrap"[^>]*>)([\s\S]*?)(<\/section>)/i;
-  const TITLE_RE   = /<h2[^>]*>([\s\S]*?)<\/h2>/i;
-  const BODY_RE    = /<p[^>]*>([\s\S]*?)<\/p>/i;
-
-  function parseAnnouncement(html) {
-    const sectionMatch = SECTION_RE.exec(html);
-    if (!sectionMatch) return null;
-    const inner  = sectionMatch[2];
-    const hidden = /\bhidden\b/.test(sectionMatch[1]);
-    const title  = (TITLE_RE.exec(inner)  || [])[1]?.trim() ?? '';
-    const body   = (BODY_RE.exec(inner)   || [])[1]?.trim() ?? '';
-    return { title, body, hidden };
-  }
-
-  function buildSection(title, body, hidden) {
-    const hiddenAttr = hidden ? ' hidden' : '';
-    return `<section class="announcement-wrap"${hiddenAttr} aria-label="Important announcement">
-  <div class="announcement-box">
-    <div class="announcement-label">Important Announcement</div>
-    <h2>${title}</h2>
-    <p>${body}</p>
-  </div>
-</section>`;
-  }
-
-  // ── Load current announcement ─────────────────────────────────────────────
-  let _fileSha = null;
-
-  async function loadCurrentAnnouncement() {
+  // ── Load announcement from GitHub (public, no token needed) ───────────────
+  async function loadAnnouncement() {
     const loadStatus = document.getElementById('load-status');
-    setStatus(loadStatus, 'info', 'Loading current announcement from GitHub…');
-
+    setStatus(loadStatus, 'info', 'Loading current announcement…');
     try {
-      // Fetch raw file without auth (public repo)
-      const rawUrl = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/${FILE}`;
-      const res = await fetch(rawUrl + '?t=' + Date.now());
-      if (!res.ok) throw new Error('Could not fetch index.html (' + res.status + ')');
-      const html = await res.text();
-
-      const ann = parseAnnouncement(html);
-      if (!ann) throw new Error('Could not find the announcement section in index.html. Has it been removed or renamed?');
-
-      document.getElementById('ann-title').value = ann.title;
-      document.getElementById('ann-body').value  = ann.body;
-      document.getElementById('ann-hide').checked = ann.hidden;
-
-      setStatus(loadStatus, 'success', 'Current announcement loaded successfully.');
-      setTimeout(() => { loadStatus.style.display = 'none'; }, 2500);
+      const res = await fetch(
+        `https://raw.githubusercontent.com/${REPO}/${BRANCH}/${JSON_FILE}?t=` + Date.now()
+      );
+      if (!res.ok) throw new Error('Could not fetch announcement.json (' + res.status + ')');
+      const ann = await res.json();
+      document.getElementById('ann-title').value  = ann.title  || '';
+      document.getElementById('ann-body').value   = ann.body   || '';
+      document.getElementById('ann-hide').checked = !!ann.hidden;
+      setStatus(loadStatus, 'success', 'Current announcement loaded.');
+      setTimeout(() => { loadStatus.style.display = 'none'; }, 2000);
     } catch (err) {
-      setStatus(loadStatus, 'error', 'Could not load current announcement: ' + err.message);
+      setStatus(loadStatus, 'error', 'Could not load announcement: ' + err.message);
     }
   }
 
-  // ── Save ──────────────────────────────────────────────────────────────────
+  // ── Save via GitHub API ───────────────────────────────────────────────────
   document.getElementById('save-btn').addEventListener('click', async () => {
-    const btn       = document.getElementById('save-btn');
-    const statusEl  = document.getElementById('save-status');
-    const token     = document.getElementById('gh-token').value.trim();
-    const title     = document.getElementById('ann-title').value.trim();
-    const body      = document.getElementById('ann-body').value.trim();
-    const hideAnn   = document.getElementById('ann-hide').checked;
+    const btn      = document.getElementById('save-btn');
+    const statusEl = document.getElementById('save-status');
+    const token    = document.getElementById('gh-token').value.trim();
+    const title    = document.getElementById('ann-title').value.trim();
+    const body     = document.getElementById('ann-body').value.trim();
+    const hidden   = document.getElementById('ann-hide').checked;
 
     if (!token) {
-      setStatus(statusEl, 'error', 'Please paste your GitHub Personal Access Token before saving.');
-      return;
+      setStatus(statusEl, 'error', 'Please paste your GitHub Personal Access Token before saving.'); return;
     }
-    if (!title) {
-      setStatus(statusEl, 'error', 'Please enter an announcement title.');
-      return;
+    if (!title && !hidden) {
+      setStatus(statusEl, 'error', 'Please enter an announcement title.'); return;
     }
-    if (!body) {
-      setStatus(statusEl, 'error', 'Please enter announcement body text.');
-      return;
+    if (!body && !hidden) {
+      setStatus(statusEl, 'error', 'Please enter announcement body text.'); return;
     }
 
     btn.disabled = true;
@@ -458,25 +382,48 @@
     setStatus(statusEl, 'info', 'Fetching current file from GitHub…');
 
     try {
-      // Get latest file content + SHA (needed for the PUT)
-      const fileData   = await ghGet(token);
-      const currentHtml = decodeURIComponent(escape(atob(fileData.content.replace(/\n/g,''))));
-      const fileSha     = fileData.sha;
+      // GET the file to obtain its SHA (required for the PUT)
+      const getRes = await fetch(
+        `https://api.github.com/repos/${REPO}/contents/${JSON_FILE}?ref=${BRANCH}`,
+        { headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github.v3+json' } }
+      );
+      if (!getRes.ok) {
+        const err = await getRes.json();
+        throw new Error(`GitHub error ${getRes.status}: ${err.message}`);
+      }
+      const fileData = await getRes.json();
 
-      if (!SECTION_RE.test(currentHtml)) {
-        throw new Error('Could not find the announcement section in index.html.');
+      // Build the new JSON content
+      const newAnn = { hidden, title, body };
+      const newContent = JSON.stringify(newAnn, null, 2) + '\n';
+
+      setStatus(statusEl, 'info', 'Publishing to GitHub…');
+
+      // PUT the updated file
+      const putRes = await fetch(
+        `https://api.github.com/repos/${REPO}/contents/${JSON_FILE}`,
+        {
+          method: 'PUT',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            message: hidden ? 'admin: hide announcement' : 'admin: update announcement',
+            content: btoa(unescape(encodeURIComponent(newContent))),
+            sha: fileData.sha,
+            branch: BRANCH
+          })
+        }
+      );
+      if (!putRes.ok) {
+        const err = await putRes.json();
+        throw new Error(`GitHub error ${putRes.status}: ${err.message}`);
       }
 
-      const newSection = buildSection(title, body, hideAnn);
-      const updatedHtml = currentHtml.replace(SECTION_RE, newSection);
-
-      setStatus(statusEl, 'info', 'Committing changes to GitHub…');
-
-      const action = hideAnn ? 'hide' : 'update';
-      await ghPut(token, updatedHtml, fileSha, `admin: ${action} announcement via editor`);
-
-      setStatus(statusEl, 'success', hideAnn
-        ? 'Saved! The announcement is now hidden on the site.'
+      setStatus(statusEl, 'success', hidden
+        ? 'Saved. The announcement is now hidden on the site.'
         : 'Published! The announcement has been updated on the site.');
     } catch (err) {
       setStatus(statusEl, 'error', 'Error: ' + err.message);
