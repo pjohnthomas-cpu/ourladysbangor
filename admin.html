@@ -318,7 +318,7 @@
     const hash = await sha256(entered);
     if (hash === PIN_HASH) {
       pinScreen.style.display  = 'none';
-      editorScreen.style.display = '';
+      editorScreen.style.display = 'block';
       loadAnnouncement();
     } else {
       pinError.textContent = 'Incorrect PIN — please try again.';
