@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parish Admin — Announcement Editor</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      background: #f5f0eb;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #2c2c2c;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid #d6cfc6;
+      border-radius: 6px;
+      padding: 2.5rem 2rem;
+      width: 100%;
+      max-width: 520px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 1.6rem;
+    }
+    .logo svg { width: 44px; height: 44px; opacity: 0.75; }
+    .logo h1 {
+      font-size: 1.15rem;
+      font-weight: normal;
+      color: #5a3e28;
+      margin-top: 0.5rem;
+      letter-spacing: 0.02em;
+    }
+    .logo p {
+      font-size: 0.8rem;
+      color: #888;
+      font-family: Arial, sans-serif;
+      margin-top: 0.25rem;
+    }
+
+    /* ── PIN screen ── */
+    .pin-row {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      margin: 1.5rem 0 1rem;
+    }
+    .pin-row input {
+      width: 3rem;
+      height: 3.5rem;
+      text-align: center;
+      font-size: 1.6rem;
+      border: 2px solid #c8b99a;
+      border-radius: 4px;
+      background: #faf8f5;
+      color: #2c2c2c;
+      outline: none;
+      transition: border-color 0.15s;
+      font-family: Arial, sans-serif;
+    }
+    .pin-row input:focus { border-color: #7a5c38; }
+    .pin-row input.shake {
+      animation: shake 0.35s ease;
+      border-color: #c0392b;
+    }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20%      { transform: translateX(-6px); }
+      40%      { transform: translateX(6px); }
+      60%      { transform: translateX(-4px); }
+      80%      { transform: translateX(4px); }
+    }
+
+    .pin-error {
+      text-align: center;
+      color: #c0392b;
+      font-size: 0.85rem;
+      font-family: Arial, sans-serif;
+      min-height: 1.2em;
+      margin-bottom: 0.5rem;
+    }
+
+    /* ── Shared editor / setup styles ── */
+    #editor-screen, #setup-screen { display: none; }
+
+    .field { margin-bottom: 1.25rem; }
+    label {
+      display: block;
+      font-size: 0.78rem;
+      font-family: Arial, sans-serif;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #7a5c38;
+      margin-bottom: 0.4rem;
+    }
+    input[type="text"],
+    input[type="password"],
+    textarea {
+      width: 100%;
+      padding: 0.6rem 0.75rem;
+      border: 1px solid #c8b99a;
+      border-radius: 4px;
+      background: #faf8f5;
+      font-family: Georgia, serif;
+      font-size: 0.95rem;
+      color: #2c2c2c;
+      outline: none;
+      transition: border-color 0.15s;
+      resize: vertical;
+    }
+    input[type="text"]:focus,
+    input[type="password"]:focus,
+    textarea:focus { border-color: #7a5c38; }
+
+    textarea { min-height: 140px; line-height: 1.55; }
+
+    .hint {
+      font-size: 0.75rem;
+      font-family: Arial, sans-serif;
+      color: #999;
+      margin-top: 0.3rem;
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1.25rem;
+    }
+    .toggle-row input[type="checkbox"] {
+      width: 1rem; height: 1rem;
+      accent-color: #7a5c38;
+      flex-shrink: 0;
+    }
+    .toggle-row span {
+      font-size: 0.88rem;
+      font-family: Arial, sans-serif;
+      color: #555;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid #e8e0d6;
+      margin: 1.5rem 0;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 0.75rem;
+      background: #7a5c38;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-family: Arial, sans-serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      transition: background 0.15s, opacity 0.15s;
+    }
+    .btn:hover:not(:disabled) { background: #5a3e28; }
+    .btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+    .btn-secondary {
+      background: #e8e0d6;
+      color: #5a3e28;
+      margin-top: 0.6rem;
+    }
+    .btn-secondary:hover:not(:disabled) { background: #d6cfc6; }
+
+    .status-msg {
+      margin-top: 0.9rem;
+      padding: 0.6rem 0.75rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-family: Arial, sans-serif;
+      display: none;
+    }
+    .status-msg.success { background: #eaf6ea; color: #2d7a2d; border: 1px solid #b6dfb6; display: block; }
+    .status-msg.error   { background: #fdecea; color: #c0392b; border: 1px solid #f5c6c1; display: block; }
+    .status-msg.info    { background: #edf3fb; color: #2a5fa8; border: 1px solid #bcd0f0; display: block; }
+
+    .logout-btn {
+      background: none;
+      border: none;
+      color: #aaa;
+      font-size: 0.78rem;
+      font-family: Arial, sans-serif;
+      cursor: pointer;
+      float: right;
+      margin-top: -0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .logout-btn:hover { color: #c0392b; }
+
+    /* ── Setup screen specifics ── */
+    .setup-blob {
+      width: 100%;
+      padding: 0.6rem 0.75rem;
+      border: 1px solid #c8b99a;
+      border-radius: 4px;
+      background: #f0ebe4;
+      font-family: monospace;
+      font-size: 0.78rem;
+      color: #2c2c2c;
+      word-break: break-all;
+      white-space: pre-wrap;
+      min-height: 3rem;
+      user-select: all;
+    }
+    .step-num {
+      display: inline-block;
+      width: 1.4rem; height: 1.4rem;
+      background: #7a5c38;
+      color: #fff;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 1.4rem;
+      font-size: 0.75rem;
+      font-family: Arial, sans-serif;
+      font-weight: bold;
+      margin-right: 0.4rem;
+      flex-shrink: 0;
+    }
+    .step-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      font-size: 0.88rem;
+      font-family: Arial, sans-serif;
+      color: #444;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ PIN SCREEN ═══ -->
+<div class="card" id="pin-screen">
+  <div class="logo">
+    <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="19" y="4"  width="6" height="36" rx="2" fill="#7a5c38"/>
+      <rect x="4"  y="17" width="36" height="6"  rx="2" fill="#7a5c38"/>
+    </svg>
+    <h1>Parish of Our Lady &amp; St. James</h1>
+    <p>Announcement Editor — Admin Access</p>
+  </div>
+
+  <div class="pin-row" id="pin-row">
+    <input type="tel" maxlength="1" id="p0" inputmode="numeric" pattern="[0-9]*" autocomplete="off">
+    <input type="tel" maxlength="1" id="p1" inputmode="numeric" pattern="[0-9]*" autocomplete="off">
+    <input type="tel" maxlength="1" id="p2" inputmode="numeric" pattern="[0-9]*" autocomplete="off">
+    <input type="tel" maxlength="1" id="p3" inputmode="numeric" pattern="[0-9]*" autocomplete="off">
+  </div>
+  <p class="pin-error" id="pin-error">&nbsp;</p>
+</div>
+
+<!-- ═══ SETUP SCREEN (first-time only) ═══ -->
+<div class="card" id="setup-screen">
+  <div class="logo">
+    <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="19" y="4"  width="6" height="36" rx="2" fill="#7a5c38"/>
+      <rect x="4"  y="17" width="36" height="6"  rx="2" fill="#7a5c38"/>
+    </svg>
+    <h1>First-Time Setup</h1>
+    <p>Store your GitHub token securely</p>
+  </div>
+
+  <div class="step-row"><span class="step-num">1</span><span>Paste your GitHub Personal Access Token below. It will be encrypted with your PIN and never stored in plaintext.</span></div>
+
+  <div class="field">
+    <label for="setup-token">GitHub Personal Access Token</label>
+    <input type="password" id="setup-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
+  </div>
+
+  <button class="btn" id="encrypt-btn">Encrypt &amp; Generate Code</button>
+  <div class="status-msg" id="setup-status"></div>
+
+  <div id="setup-result" style="display:none; margin-top:1.25rem;">
+    <hr class="divider" style="margin-top:0;">
+    <div class="step-row"><span class="step-num">2</span><span>Copy the line below and open <strong>admin.html</strong> in a text editor (or GitHub's web editor). Replace the line <code>const ENCRYPTED_TOKEN = ''</code> with this:</span></div>
+    <div class="setup-blob" id="setup-blob"></div>
+    <button class="btn btn-secondary" id="copy-btn" style="margin-top:0.75rem;">Copy to clipboard</button>
+    <div class="step-row" style="margin-top:1rem;"><span class="step-num">3</span><span>Save and push <strong>admin.html</strong>. From then on, your PIN alone will unlock the editor — no token entry needed.</span></div>
+  </div>
+</div>
+
+<!-- ═══ EDITOR SCREEN ═══ -->
+<div class="card" id="editor-screen">
+  <div class="logo">
+    <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="19" y="4"  width="6" height="36" rx="2" fill="#7a5c38"/>
+      <rect x="4"  y="17" width="36" height="6"  rx="2" fill="#7a5c38"/>
+    </svg>
+    <h1>Edit Announcement</h1>
+    <p>Our Lady &amp; St. James — Parish Admin</p>
+  </div>
+  <button class="logout-btn" id="logout-btn">Log out</button>
+
+  <div id="load-status" class="status-msg info">Loading current announcement…</div>
+
+  <div class="field">
+    <label for="ann-title">Announcement Title</label>
+    <input type="text" id="ann-title" placeholder="e.g. Important Notice">
+  </div>
+
+  <div class="field">
+    <label for="ann-body">Announcement Body</label>
+    <textarea id="ann-body" placeholder="Enter the announcement text here…"></textarea>
+    <p class="hint">Use &lt;br&gt; for line breaks and &lt;strong&gt; for bold text.</p>
+  </div>
+
+  <div class="toggle-row">
+    <input type="checkbox" id="ann-hide">
+    <span>Hide announcement (keeps the text saved but removes it from the site)</span>
+  </div>
+
+  <button class="btn" id="save-btn">Save &amp; Publish</button>
+  <div class="status-msg" id="save-status"></div>
+</div>
+
+<script>
+  // ─── Configuration ────────────────────────────────────────────────────────
+  const PIN_HASH       = 'ec54e99514663edb97adef400fbf34a77daae108303d3da8008a7dfb4cdf0f52';
+  const ENCRYPTED_TOKEN = '3Zpj4KLAib1f6ZtAIxYs5KMfiCllcdk0NJbinXIdRrfSCFnnCXRcQqIPE1MFp3opjbbK0r5RGRdeWn9wScZfkFzvUBI6fcvIqLzGbJUoAlbUmHsu4Vwy5cbJkNzkoVuMS6OTPg62aDuh4Yz6Tc4jQ1J2xZWSmbcDpA=='; // ← replaced with encrypted blob after first-time setup
+  const REPO           = 'pjohnthomas-cpu/ourladysbangor';
+  const JSON_FILE      = 'announcement.json';
+  const BRANCH         = 'main';
+  // ─────────────────────────────────────────────────────────────────────────
+
+  // ── Crypto helpers ────────────────────────────────────────────────────────
+  const PBKDF2_SALT       = new TextEncoder().encode('parish-admin-salt-v1');
+  const PBKDF2_ITERATIONS = 200000;
+
+  async function sha256(str) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+  }
+
+  async function deriveKey(pin) {
+    const keyMaterial = await crypto.subtle.importKey(
+      'raw', new TextEncoder().encode(pin), 'PBKDF2', false, ['deriveKey']
+    );
+    return crypto.subtle.deriveKey(
+      { name: 'PBKDF2', salt: PBKDF2_SALT, iterations: PBKDF2_ITERATIONS, hash: 'SHA-256' },
+      keyMaterial,
+      { name: 'AES-GCM', length: 256 },
+      false,
+      ['encrypt', 'decrypt']
+    );
+  }
+
+  async function encryptToken(pin, token) {
+    const key = await deriveKey(pin);
+    const iv  = crypto.getRandomValues(new Uint8Array(12));
+    const ct  = await crypto.subtle.encrypt(
+      { name: 'AES-GCM', iv },
+      key,
+      new TextEncoder().encode(token)
+    );
+    // Combine iv + ciphertext, base64-encode
+    const combined = new Uint8Array(iv.byteLength + ct.byteLength);
+    combined.set(iv, 0);
+    combined.set(new Uint8Array(ct), iv.byteLength);
+    return btoa(String.fromCharCode(...combined));
+  }
+
+  async function decryptToken(pin, blob) {
+    const combined = Uint8Array.from(atob(blob), c => c.charCodeAt(0));
+    const iv = combined.slice(0, 12);
+    const ct = combined.slice(12);
+    const key = await deriveKey(pin);
+    const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, ct);
+    return new TextDecoder().decode(plain);
+  }
+
+  // ── UI helpers ────────────────────────────────────────────────────────────
+  function setStatus(el, type, msg) {
+    el.className = 'status-msg ' + type;
+    el.textContent = msg;
+    el.style.display = 'block';
+  }
+
+  function showScreen(id) {
+    ['pin-screen','setup-screen','editor-screen'].forEach(s => {
+      document.getElementById(s).style.display = (s === id) ? 'block' : 'none';
+    });
+  }
+
+  // ── PIN screen ────────────────────────────────────────────────────────────
+  const pinInputs = [0,1,2,3].map(i => document.getElementById('p' + i));
+  const pinError  = document.getElementById('pin-error');
+  let   unlockedPin = '';
+
+  pinInputs[0].focus();
+
+  pinInputs.forEach((input, idx) => {
+    input.addEventListener('input', () => {
+      input.value = input.value.replace(/\D/g, '').slice(-1);
+      if (input.value && idx < 3) pinInputs[idx + 1].focus();
+      if (pinInputs.every(p => p.value)) checkPin();
+    });
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Backspace' && !input.value && idx > 0) {
+        pinInputs[idx - 1].value = '';
+        pinInputs[idx - 1].focus();
+      }
+    });
+    if (idx === 0) {
+      input.addEventListener('paste', e => {
+        const text = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g,'');
+        if (text.length === 4) {
+          e.preventDefault();
+          pinInputs.forEach((p, i) => p.value = text[i] || '');
+          checkPin();
+        }
+      });
+    }
+  });
+
+  async function checkPin() {
+    const entered = pinInputs.map(p => p.value).join('');
+    if (entered.length < 4) return;
+    const hash = await sha256(entered);
+    if (hash === PIN_HASH) {
+      unlockedPin = entered;
+      if (!ENCRYPTED_TOKEN) {
+        // No token stored yet — go to setup
+        showScreen('setup-screen');
+      } else {
+        showScreen('editor-screen');
+        loadAnnouncement();
+      }
+    } else {
+      pinError.textContent = 'Incorrect PIN — please try again.';
+      pinInputs.forEach(p => { p.value = ''; p.classList.add('shake'); });
+      setTimeout(() => pinInputs.forEach(p => p.classList.remove('shake')), 400);
+      pinInputs[0].focus();
+    }
+  }
+
+  // ── First-time setup ──────────────────────────────────────────────────────
+  document.getElementById('encrypt-btn').addEventListener('click', async () => {
+    const token    = document.getElementById('setup-token').value.trim();
+    const statusEl = document.getElementById('setup-status');
+    if (!token) {
+      setStatus(statusEl, 'error', 'Please paste your GitHub token first.'); return;
+    }
+    if (!token.startsWith('ghp_') && !token.startsWith('github_pat_')) {
+      setStatus(statusEl, 'error', 'That doesn\'t look like a GitHub token (should start with ghp_ or github_pat_).'); return;
+    }
+    try {
+      const blob = await encryptToken(unlockedPin, token);
+      const line = `const ENCRYPTED_TOKEN = '${blob}';`;
+      document.getElementById('setup-blob').textContent = line;
+      document.getElementById('setup-result').style.display = 'block';
+      setStatus(statusEl, 'success', 'Token encrypted successfully.');
+    } catch (e) {
+      setStatus(statusEl, 'error', 'Encryption failed: ' + e.message);
+    }
+  });
+
+  document.getElementById('copy-btn').addEventListener('click', () => {
+    const text = document.getElementById('setup-blob').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      document.getElementById('copy-btn').textContent = 'Copied!';
+      setTimeout(() => { document.getElementById('copy-btn').textContent = 'Copy to clipboard'; }, 2000);
+    });
+  });
+
+  // ── Logout ────────────────────────────────────────────────────────────────
+  document.getElementById('logout-btn').addEventListener('click', () => {
+    pinInputs.forEach(p => p.value = '');
+    pinError.textContent = '\u00a0';
+    unlockedPin = '';
+    showScreen('pin-screen');
+    pinInputs[0].focus();
+  });
+
+  // ── Load announcement ─────────────────────────────────────────────────────
+  async function loadAnnouncement() {
+    const loadStatus = document.getElementById('load-status');
+    setStatus(loadStatus, 'info', 'Loading current announcement…');
+    try {
+      const res = await fetch(
+        `https://raw.githubusercontent.com/${REPO}/${BRANCH}/${JSON_FILE}?t=` + Date.now()
+      );
+      if (!res.ok) throw new Error('Could not fetch announcement.json (' + res.status + ')');
+      const ann = await res.json();
+      document.getElementById('ann-title').value   = ann.title  || '';
+      document.getElementById('ann-body').value    = ann.body   || '';
+      document.getElementById('ann-hide').checked  = !!ann.hidden;
+      setStatus(loadStatus, 'success', 'Current announcement loaded.');
+      setTimeout(() => { loadStatus.style.display = 'none'; }, 2000);
+    } catch (err) {
+      setStatus(loadStatus, 'error', 'Could not load announcement: ' + err.message);
+    }
+  }
+
+  // ── Save via GitHub API ───────────────────────────────────────────────────
+  document.getElementById('save-btn').addEventListener('click', async () => {
+    const btn      = document.getElementById('save-btn');
+    const statusEl = document.getElementById('save-status');
+    const title    = document.getElementById('ann-title').value.trim();
+    const body     = document.getElementById('ann-body').value.trim();
+    const hidden   = document.getElementById('ann-hide').checked;
+
+    if (!title && !hidden) {
+      setStatus(statusEl, 'error', 'Please enter an announcement title.'); return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Saving…';
+    setStatus(statusEl, 'info', 'Decrypting token…');
+
+    let token;
+    try {
+      token = await decryptToken(unlockedPin, ENCRYPTED_TOKEN);
+    } catch (e) {
+      setStatus(statusEl, 'error', 'Could not decrypt token. Try logging out and back in.');
+      btn.disabled = false; btn.textContent = 'Save & Publish'; return;
+    }
+
+    setStatus(statusEl, 'info', 'Fetching current file from GitHub…');
+
+    try {
+      const getRes = await fetch(
+        `https://api.github.com/repos/${REPO}/contents/${JSON_FILE}?ref=${BRANCH}`,
+        { headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github.v3+json' } }
+      );
+      if (!getRes.ok) {
+        const err = await getRes.json();
+        throw new Error(`GitHub ${getRes.status}: ${err.message}`);
+      }
+      const fileData = await getRes.json();
+
+      const newContent = JSON.stringify({ hidden, title, body }, null, 2) + '\n';
+
+      setStatus(statusEl, 'info', 'Publishing to GitHub…');
+
+      const putRes = await fetch(
+        `https://api.github.com/repos/${REPO}/contents/${JSON_FILE}`,
+        {
+          method: 'PUT',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            message: hidden ? 'admin: hide announcement' : 'admin: update announcement',
+            content: btoa(unescape(encodeURIComponent(newContent))),
+            sha: fileData.sha,
+            branch: BRANCH
+          })
+        }
+      );
+      if (!putRes.ok) {
+        const err = await putRes.json();
+        throw new Error(`GitHub ${putRes.status}: ${err.message}`);
+      }
+
+      setStatus(statusEl, 'success', hidden
+        ? 'Saved. The announcement is now hidden on the site.'
+        : 'Published! The announcement has been updated.');
+    } catch (err) {
+      setStatus(statusEl, 'error', 'Error: ' + err.message);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Save & Publish';
+    }
+  });
+</script>
+</body>
+</html>
