@@ -175,6 +175,17 @@
   .notice-card p { font-size: 1rem; color: var(--text); line-height: 1.75; }
   .notice-card a { color: var(--navy); }
 
+  /* PHOTOESSAY FEATURE */
+  .photoessay-bg { background: #ffffff; border-top: 1px solid var(--stone); border-bottom: 1px solid var(--stone); }
+  #photoessay { scroll-margin-top: 92px; }
+  .photoessay-feature { display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 0.85fr); gap: 34px; align-items: center; }
+  .photoessay-copy p { font-size: 1rem; color: var(--text); line-height: 1.8; margin-bottom: 16px; }
+  .photoessay-link { display: inline-block; padding: 11px 22px; background: var(--navy); color: var(--gold); text-decoration: none; font-size: 1rem; font-weight: 700; letter-spacing: 0.03em; transition: background 0.2s; }
+  .photoessay-link:hover { background: #243352; }
+  .photoessay-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .photoessay-strip img { width: 100%; height: 190px; object-fit: cover; display: block; filter: brightness(0.95); }
+  .photoessay-strip img:first-child { grid-row: span 2; height: 390px; object-position: center 35%; }
+
   /* FORMS */
   .forms-bg { background: var(--navy); border-top: 1px solid #0d1a30; }
   .forms-bg .section-title { color: var(--white); }
@@ -268,6 +279,11 @@
     /* Notices */
     .notices-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
 
+    /* Photoessay */
+    .photoessay-feature { grid-template-columns: 1fr; gap: 24px; }
+    .photoessay-strip img { height: 180px; }
+    .photoessay-strip img:first-child { height: 370px; }
+
     /* Music */
     .music-grid { grid-template-columns: 1fr; gap: 28px; }
     .music-img-wide { height: 180px; }
@@ -329,6 +345,11 @@
     .notices-grid { grid-template-columns: 1fr; gap: 14px; }
     .notice-card { padding: 18px 18px; }
 
+    /* Photoessay */
+    .photoessay-strip { grid-template-columns: 1fr; gap: 8px; }
+    .photoessay-strip img, .photoessay-strip img:first-child { height: 210px; grid-row: span 1; }
+    .photoessay-link { width: 100%; text-align: center; padding: 13px 18px; }
+
     /* Music */
     .music-img-wide { height: 160px; }
     .music-img-tall { height: 190px; }
@@ -381,6 +402,7 @@
       <a href="#masses">Masses</a>
       <a href="#bulletin">Bulletin</a>
       <a href="#notices">Notices</a>
+      <a href="#photoessay">Photoessay</a>
       <a href="#music">Music</a>
       <a href="#forms">Forms</a>
       <a href="#gallery">Our Church</a>
@@ -394,6 +416,7 @@
     <a href="#masses"   onclick="closeMenu()">Masses</a>
     <a href="#bulletin" onclick="closeMenu()">Bulletin</a>
     <a href="#notices"  onclick="closeMenu()">Notices</a>
+    <a href="#photoessay" onclick="closeMenu()">Photoessay</a>
     <a href="#music"    onclick="closeMenu()">Music</a>
     <a href="#forms"    onclick="closeMenu()">Forms</a>
     <a href="#gallery"  onclick="closeMenu()">Our Church</a>
@@ -421,6 +444,26 @@
     <p id="announcement-body"></p>
   </div>
 </section>
+
+<!-- PHOTOESSAY -->
+<div class="photoessay-bg" id="photoessay">
+  <div class="section">
+    <div class="photoessay-feature">
+      <div class="photoessay-copy">
+        <div class="divider"></div>
+        <h2 class="section-title">Family Eucharist Photoessay</h2>
+        <p class="section-subtitle">Sunday 3 May 2026 &mdash; Our Lady &amp; St. James, Bangor</p>
+        <p>A new photoessay follows the Family Eucharist from the entrance procession through the Liturgy of the Word, the altar, Communion, and the whole parish gathered in Eastertide.</p>
+        <a class="photoessay-link" href="family-eucharist-2026-05-03.html">View the Photoessay</a>
+      </div>
+      <div class="photoessay-strip" aria-label="Preview photos from the Family Eucharist photoessay">
+        <img src="family-eucharist-2026-05-03/01-img-9883.jpeg" alt="The entrance procession during the Family Eucharist">
+        <img src="family-eucharist-2026-05-03/14-img-9907.jpeg" alt="Altar servers standing beside the sanctuary">
+        <img src="family-eucharist-2026-05-03/23-img-9943.jpeg" alt="Families receiving Communion during the Family Eucharist">
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- RIBBON -->
 
