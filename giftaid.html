@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gift Aid Declaration – Our Lady &amp; St James, Bangor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <!-- jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+
+  <style>
+    /* ── Design tokens ─────────────────────────────────────────── */
+    :root {
+      --burgundy:      #6B1E2E;
+      --burgundy-dark: #4E1522;
+      --burgundy-light:#8B2E3F;
+      --gold:          #B89A3A;
+      --gold-light:    #D4B96A;
+      --cream:         #FAF7F2;
+      --cream-dark:    #F0EBE0;
+      --ink:           #1C1C1C;
+      --mid:           #4A4A4A;
+      --muted:         #7A7A7A;
+      --border:        #D0C5B0;
+      --border-focus:  #6B1E2E;
+      --error:         #B03030;
+      --success:       #2A6B3A;
+      --field-bg:      #FFFFFF;
+      --radius:        3px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 1.05rem;
+      line-height: 1.65;
+      min-height: 100vh;
+    }
+
+    /* ── Page shell ─────────────────────────────────────────────── */
+    .page-header {
+      background: var(--burgundy);
+      padding: 2rem 1.5rem 1.75rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 40px,
+        rgba(255,255,255,0.02) 40px,
+        rgba(255,255,255,0.02) 41px
+      );
+      pointer-events: none;
+    }
+    .header-rule {
+      width: 60px;
+      height: 2px;
+      background: var(--gold);
+      margin: 0.6rem auto;
+    }
+    .page-header h1 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      font-weight: 500;
+      color: #fff;
+      letter-spacing: 0.03em;
+      line-height: 1.3;
+    }
+    .page-header .subtitle {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.0rem;
+      font-style: italic;
+      color: var(--gold-light);
+      margin-top: 0.25rem;
+    }
+    .page-header .charity-line {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.6);
+      margin-top: 0.5rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    /* ── Main layout ─────────────────────────────────────────────── */
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 4rem;
+    }
+
+    /* ── Gift Aid banner ─────────────────────────────────────────── */
+    .ga-banner {
+      background: var(--burgundy-dark);
+      color: #fff;
+      padding: 1.1rem 1.4rem;
+      border-left: 4px solid var(--gold);
+      margin-bottom: 1.75rem;
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    .ga-banner strong {
+      font-size: 1.0rem;
+      display: block;
+      margin-bottom: 0.2rem;
+      color: var(--gold-light);
+    }
+    .ga-banner p {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      opacity: 0.9;
+    }
+
+    /* ── Section headings ────────────────────────────────────────── */
+    .section-label {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--burgundy);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.4rem;
+      margin: 1.75rem 0 1.1rem;
+    }
+
+    /* ── Declaration block ───────────────────────────────────────── */
+    .declaration-box {
+      background: var(--cream-dark);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--burgundy);
+      padding: 1.25rem 1.4rem;
+      margin-bottom: 1.4rem;
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    .declaration-box p {
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: var(--mid);
+      margin-bottom: 0.7rem;
+    }
+    .declaration-box p:last-child { margin-bottom: 0; }
+    .declaration-box .purpose {
+      font-style: italic;
+      color: var(--burgundy);
+      font-weight: 500;
+    }
+
+    /* ── Form fields ─────────────────────────────────────────────── */
+    .field-group {
+      margin-bottom: 1.25rem;
+    }
+    .field-row {
+      display: grid;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    .field-row.cols-2 { grid-template-columns: 1fr 1fr; }
+    .field-row.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+    .field-row.col-title-first { grid-template-columns: 140px 1fr 1fr; }
+
+    label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+    label .req {
+      color: var(--burgundy);
+      margin-left: 2px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 0.6rem 0.75rem;
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 1rem;
+      color: var(--ink);
+      background: var(--field-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      appearance: none;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 2px rgba(107,30,46,0.12);
+    }
+    input.error-field, select.error-field { border-color: var(--error); }
+    input[readonly] {
+      background: var(--cream-dark);
+      color: var(--muted);
+      cursor: not-allowed;
+    }
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B1E2E' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.8rem center;
+      padding-right: 2rem;
+    }
+
+    /* Amount field */
+    .amount-wrap {
+      position: relative;
+    }
+    .amount-wrap::before {
+      content: '£';
+      position: absolute;
+      left: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1rem;
+      color: var(--burgundy);
+      font-weight: 600;
+      pointer-events: none;
+    }
+    .amount-wrap input {
+      padding-left: 1.6rem;
+    }
+
+    /* ── Checkbox styles ─────────────────────────────────────────── */
+    .check-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7rem;
+      padding: 1rem 1.2rem;
+      background: var(--cream-dark);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 1.25rem;
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .check-row:hover { border-color: var(--burgundy); }
+    .check-row input[type="checkbox"] {
+      width: 1.1rem;
+      height: 1.1rem;
+      min-width: 1.1rem;
+      margin-top: 0.2rem;
+      accent-color: var(--burgundy);
+      cursor: pointer;
+    }
+    .check-row label {
+      font-size: 0.92rem;
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--mid);
+      margin-bottom: 0;
+      cursor: pointer;
+      font-weight: 400;
+      line-height: 1.55;
+    }
+    .check-row label strong {
+      color: var(--ink);
+    }
+    .check-row.required-check { border-color: var(--border); }
+    .check-row.required-check.error-check { border-color: var(--error); background: #fff5f5; }
+
+    /* ── Copy section ────────────────────────────────────────────── */
+    #copy-email-section {
+      display: none;
+      margin-top: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+    #copy-email-section.visible { display: block; }
+
+    /* ── Privacy notice ─────────────────────────────────────────── */
+    .privacy-notice {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-style: italic;
+      border-top: 1px solid var(--border);
+      padding-top: 0.85rem;
+      margin-bottom: 1.75rem;
+      line-height: 1.55;
+    }
+
+    /* ── Submit button ───────────────────────────────────────────── */
+    .submit-btn {
+      display: block;
+      width: 100%;
+      padding: 0.9rem 1.5rem;
+      background: var(--burgundy);
+      color: #fff;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.2rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      text-align: center;
+    }
+    .submit-btn:hover:not(:disabled) {
+      background: var(--burgundy-light);
+    }
+    .submit-btn:active:not(:disabled) { transform: scale(0.99); }
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .submit-btn .btn-sub {
+      display: block;
+      font-family: 'EB Garamond', serif;
+      font-size: 0.78rem;
+      opacity: 0.75;
+      font-weight: 400;
+      margin-top: 0.1rem;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Status messages ─────────────────────────────────────────── */
+    #status-msg {
+      display: none;
+      padding: 1rem 1.2rem;
+      border-radius: var(--radius);
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+    #status-msg.success {
+      display: block;
+      background: #EAF4ED;
+      border: 1px solid #A8D0B5;
+      color: var(--success);
+    }
+    #status-msg.error {
+      display: block;
+      background: #FAEAEA;
+      border: 1px solid #E0AAAA;
+      color: var(--error);
+    }
+    #status-msg.sending {
+      display: block;
+      background: var(--cream-dark);
+      border: 1px solid var(--border);
+      color: var(--mid);
+    }
+
+    /* ── Success screen ──────────────────────────────────────────── */
+    #success-screen {
+      display: none;
+      text-align: center;
+      padding: 3rem 1rem;
+    }
+    #success-screen .check-icon {
+      font-size: 3rem;
+      color: var(--success);
+      margin-bottom: 1rem;
+    }
+    #success-screen h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 500;
+      color: var(--burgundy);
+      margin-bottom: 0.5rem;
+    }
+    #success-screen p {
+      color: var(--mid);
+      font-size: 0.95rem;
+      max-width: 440px;
+      margin: 0 auto 1.5rem;
+      line-height: 1.6;
+    }
+    #download-btn {
+      display: inline-block;
+      padding: 0.7rem 1.6rem;
+      background: transparent;
+      border: 1px solid var(--burgundy);
+      color: var(--burgundy);
+      font-family: 'EB Garamond', serif;
+      font-size: 1rem;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+    #download-btn:hover {
+      background: var(--burgundy);
+      color: #fff;
+    }
+
+    /* ── Validation errors ───────────────────────────────────────── */
+    .field-error {
+      font-size: 0.78rem;
+      color: var(--error);
+      margin-top: 0.3rem;
+      display: none;
+    }
+    .field-error.show { display: block; }
+
+    /* ── Page footer ─────────────────────────────────────────────── */
+    .page-footer {
+      text-align: center;
+      padding: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .page-footer a { color: var(--burgundy); text-decoration: none; }
+    .page-footer a:hover { text-decoration: underline; }
+
+    /* ── Responsive ──────────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .field-row.cols-2,
+      .field-row.cols-3,
+      .field-row.col-title-first { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ HEADER -->
+<header class="page-header">
+  <div class="header-rule"></div>
+  <h1>Gift Aid Declaration</h1>
+  <p class="subtitle">Our Lady &amp; St James, Bangor · Sound System Appeal</p>
+  <p class="charity-line">Wrexham Diocesan Trust · Registered Charity No. 700426</p>
+  <div class="header-rule"></div>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════ MAIN -->
+<main>
+
+  <!-- Success screen (hidden until submission) -->
+  <div id="success-screen">
+    <div class="check-icon">✓</div>
+    <h2>Thank you for your generosity</h2>
+    <p>Your Gift Aid declaration has been received by the parish. Your PDF copy has downloaded automatically to your device — please keep it for your records. God bless you for your support of the sound system appeal.</p>
+    <button id="download-btn">Download PDF again</button>
+  </div>
+
+  <!-- ── The form ────────────────────────────────────────────── -->
+  <div id="form-wrapper">
+
+    <div class="ga-banner">
+      <strong>Boost your donation by 25p for every £1</strong>
+      <p>Gift Aid is reclaimed by the charity from the tax you pay for the current tax year. Your address is needed to identify you as a current UK taxpayer.</p>
+    </div>
+
+    <form id="ga-form" novalidate>
+
+      <!-- DECLARATION -->
+      <p class="section-label">Declaration</p>
+
+      <div class="declaration-box">
+        <p>I want to Gift Aid my donation of
+          <strong id="decl-amount-display">£ ____</strong>
+          <span class="purpose">for the upgrade of the Sound System in Our Lady &amp; St James Church, LL57 2EE, Bangor.</span>
+        </p>
+        <p><strong>Name of Charity:</strong> Wrexham Diocesan Trust – Registered Charity No. 700426</p>
+        <p>I am a UK taxpayer and understand that if I pay less Income Tax and/or Capital Gains Tax than the amount of Gift Aid claimed on all my donations in that tax year it is my responsibility to pay any difference.</p>
+      </div>
+
+      <!-- Donation amount -->
+      <div class="field-group">
+        <label for="donation-amount">Donation amount <span class="req">*</span></label>
+        <div class="amount-wrap">
+          <input type="number" id="donation-amount" name="donation_amount"
+                 min="1" step="0.01" placeholder="0.00" required />
+        </div>
+        <span class="field-error" id="err-amount">Please enter the donation amount.</span>
+      </div>
+
+      <!-- Declaration tick -->
+      <label class="section-label" style="margin-top:1.4rem">Confirm</label>
+
+      <div class="check-row required-check" id="decl-check-row" onclick="toggleCheck('declaration')">
+        <input type="checkbox" id="declaration" name="declaration" />
+        <label for="declaration" onclick="event.stopPropagation()">
+          <strong>I confirm the declaration above.</strong> I am a UK taxpayer and understand my Gift Aid responsibilities as stated.
+        </label>
+      </div>
+      <span class="field-error" id="err-decl">You must tick this box to proceed.</span>
+
+      <!-- MY DETAILS -->
+      <p class="section-label">My Details</p>
+
+      <div class="field-row col-title-first">
+        <div>
+          <label for="title">Title <span class="req">*</span></label>
+          <select id="title" name="title" required>
+            <option value="">—</option>
+            <option>Mr</option>
+            <option>Mrs</option>
+            <option>Ms</option>
+            <option>Miss</option>
+            <option>Dr</option>
+            <option>Rev</option>
+            <option>Prof</option>
+            <option>Other</option>
+          </select>
+          <span class="field-error" id="err-title">Required.</span>
+        </div>
+        <div>
+          <label for="first-name">First name / Initials <span class="req">*</span></label>
+          <input type="text" id="first-name" name="first_name" autocomplete="given-name" required />
+          <span class="field-error" id="err-fname">Required.</span>
+        </div>
+        <div>
+          <label for="surname">Surname <span class="req">*</span></label>
+          <input type="text" id="surname" name="surname" autocomplete="family-name" required />
+          <span class="field-error" id="err-sname">Required.</span>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label for="address1">House number / name &amp; street <span class="req">*</span></label>
+        <input type="text" id="address1" name="address1" autocomplete="address-line1" required />
+        <span class="field-error" id="err-addr1">Required.</span>
+      </div>
+
+      <div class="field-group">
+        <label for="address2">Address line 2</label>
+        <input type="text" id="address2" name="address2" autocomplete="address-line2" />
+      </div>
+
+      <div class="field-row cols-2">
+        <div>
+          <label for="town">Town / City <span class="req">*</span></label>
+          <input type="text" id="town" name="town" autocomplete="address-level2" required />
+          <span class="field-error" id="err-town">Required.</span>
+        </div>
+        <div>
+          <label for="county">County</label>
+          <input type="text" id="county" name="county" autocomplete="address-level1" />
+        </div>
+      </div>
+
+      <div class="field-row cols-2">
+        <div>
+          <label for="postcode">Postcode <span class="req">*</span></label>
+          <input type="text" id="postcode" name="postcode" autocomplete="postal-code"
+                 maxlength="8" placeholder="e.g. LL57 2EE" required />
+          <span class="field-error" id="err-post">Please enter a valid UK postcode.</span>
+        </div>
+        <div>
+          <label for="sub-date">Date</label>
+          <input type="text" id="sub-date" name="submission_date" readonly />
+        </div>
+      </div>
+
+      <div class="field-row cols-2">
+        <div>
+          <label for="donor-email">Email address</label>
+          <input type="email" id="donor-email" name="donor_email" autocomplete="email"
+                 placeholder="Optional" />
+          <span class="field-error" id="err-email">Please enter a valid email address.</span>
+        </div>
+        <div>
+          <label for="donor-tel">Telephone</label>
+          <input type="tel" id="donor-tel" name="donor_tel" autocomplete="tel"
+                 placeholder="Optional" />
+        </div>
+      </div>
+
+      <!-- COPY TO DONOR -->
+      <p class="section-label">Copy of Declaration</p>
+
+      <div class="check-row" id="copy-check-row" onclick="toggleCheck('send-copy')">
+        <input type="checkbox" id="send-copy" name="send_copy" />
+        <label for="send-copy" onclick="event.stopPropagation()">
+          Please send me a copy of this declaration by email.
+        </label>
+      </div>
+
+      <div id="copy-email-section">
+        <label for="copy-email">Email address for your copy <span class="req">*</span></label>
+        <input type="email" id="copy-email" name="copy_email" placeholder="your@email.com" />
+        <span class="field-error" id="err-copy-email">Please enter a valid email address.</span>
+      </div>
+
+      <!-- PRIVACY -->
+      <p class="privacy-notice">
+        Your personal data (name and home address) will be held by Our Lady &amp; St James Parish, Bangor, for HMRC Gift Aid purposes only, for a minimum of six years as required by HMRC. It will not be shared with any third parties. To cancel this declaration or update your details, contact the parish office: <a href="mailto:priestbangor@rcdwxm.org.uk">priestbangor@rcdwxm.org.uk</a> · 01248 370421.
+      </p>
+
+      <!-- SUBMIT -->
+      <button type="submit" class="submit-btn" id="submit-btn">
+        Submit Gift Aid Declaration
+        <span class="btn-sub">A PDF will be sent to the parish and optionally to you</span>
+      </button>
+
+      <div id="status-msg"></div>
+
+    </form>
+  </div><!-- /#form-wrapper -->
+
+</main>
+
+<footer class="page-footer">
+  <p><a href="/">← Return to parish website</a></p>
+  <p style="margin-top:0.5rem">Our Lady &amp; St James, Bangor &amp; St David &amp; St Helen, Caernarfon · Diocese of Wrexham</p>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════ SCRIPT -->
+<script>
+/* ─────────────────────────────────────────────────────────────────
+   CONFIGURATION
+   Paste your Google Apps Script web app URL below after deploying
+   Code.gs (see setup instructions).
+   ──────────────────────────────────────────────────────────────── */
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbyJTqHn2iQoIkANooZi5aNHKG0weuBQSp3XjDU10alSfzYYTmzse6p2reI_HDhuhcg/exec';  
+
+/* ── Auto-populate date ───────────────────────────────────────── */
+(function () {
+  const d = new Date();
+  const opts = { day: '2-digit', month: 'long', year: 'numeric' };
+  document.getElementById('sub-date').value =
+    d.toLocaleDateString('en-GB', opts);
+})();
+
+/* ── Live donation amount in declaration text ─────────────────── */
+document.getElementById('donation-amount').addEventListener('input', function () {
+  const v = parseFloat(this.value);
+  const disp = document.getElementById('decl-amount-display');
+  disp.textContent = v > 0 ? '£' + v.toFixed(2) : '£ ____';
+});
+
+/* ── Toggle checkboxes ────────────────────────────────────────── */
+function toggleCheck(id) {
+  const cb = document.getElementById(id);
+  cb.checked = !cb.checked;
+  if (id === 'send-copy') handleCopyToggle();
+}
+
+function handleCopyToggle() {
+  const checked = document.getElementById('send-copy').checked;
+  const sec = document.getElementById('copy-email-section');
+  if (checked) {
+    sec.classList.add('visible');
+    // Pre-fill from donor email if given
+    const donorEmail = document.getElementById('donor-email').value.trim();
+    if (donorEmail) document.getElementById('copy-email').value = donorEmail;
+  } else {
+    sec.classList.remove('visible');
+  }
+}
+document.getElementById('send-copy').addEventListener('change', handleCopyToggle);
+
+/* ── Postcode validation ──────────────────────────────────────── */
+function validPostcode(p) {
+  return /^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$/i.test(p.trim());
+}
+
+/* ── Email validation ─────────────────────────────────────────── */
+function validEmail(e) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.trim());
+}
+
+/* ── Show / clear field error ─────────────────────────────────── */
+function setErr(id, show) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.toggle('show', show);
+}
+function markField(id, err) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.toggle('error-field', err);
+}
+
+/* ── Validate ─────────────────────────────────────────────────── */
+function validate() {
+  let ok = true;
+
+  // Amount
+  const amt = parseFloat(document.getElementById('donation-amount').value);
+  const amtOk = !isNaN(amt) && amt > 0;
+  setErr('err-amount', !amtOk); markField('donation-amount', !amtOk);
+  if (!amtOk) ok = false;
+
+  // Declaration
+  const decl = document.getElementById('declaration').checked;
+  setErr('err-decl', !decl);
+  document.getElementById('decl-check-row').classList.toggle('error-check', !decl);
+  if (!decl) ok = false;
+
+  // Title
+  const title = document.getElementById('title').value;
+  const titleOk = title !== '';
+  setErr('err-title', !titleOk); markField('title', !titleOk);
+  if (!titleOk) ok = false;
+
+  // First name
+  const fn = document.getElementById('first-name').value.trim();
+  setErr('err-fname', !fn); markField('first-name', !fn);
+  if (!fn) ok = false;
+
+  // Surname
+  const sn = document.getElementById('surname').value.trim();
+  setErr('err-sname', !sn); markField('surname', !sn);
+  if (!sn) ok = false;
+
+  // Address 1
+  const a1 = document.getElementById('address1').value.trim();
+  setErr('err-addr1', !a1); markField('address1', !a1);
+  if (!a1) ok = false;
+
+  // Town
+  const town = document.getElementById('town').value.trim();
+  setErr('err-town', !town); markField('town', !town);
+  if (!town) ok = false;
+
+  // Postcode
+  const pc = document.getElementById('postcode').value.trim();
+  const pcOk = validPostcode(pc);
+  setErr('err-post', !pcOk); markField('postcode', !pcOk);
+  if (!pcOk) ok = false;
+
+  // Donor email (if provided, must be valid)
+  const demail = document.getElementById('donor-email').value.trim();
+  const demailOk = demail === '' || validEmail(demail);
+  setErr('err-email', !demailOk); markField('donor-email', !demailOk);
+  if (!demailOk) ok = false;
+
+  // Copy email (if "send copy" checked)
+  const sendCopy = document.getElementById('send-copy').checked;
+  if (sendCopy) {
+    const cemail = document.getElementById('copy-email').value.trim();
+    const cemailOk = validEmail(cemail);
+    setErr('err-copy-email', !cemailOk); markField('copy-email', !cemailOk);
+    if (!cemailOk) ok = false;
+  }
+
+  return ok;
+}
+
+/* ── Collect form data ────────────────────────────────────────── */
+function collectData() {
+  const g = id => document.getElementById(id).value.trim();
+  const lines = [g('address1'), g('address2'), g('town'), g('county')]
+    .filter(Boolean);
+  return {
+    title:         g('title'),
+    first_name:    g('first-name'),
+    surname:       g('surname'),
+    full_name:     [g('title'), g('first-name'), g('surname')].filter(Boolean).join(' '),
+    address_line1: g('address1'),
+    address_line2: g('address2'),
+    town:          g('town'),
+    county:        g('county'),
+    postcode:      g('postcode').toUpperCase(),
+    full_address:  lines.join(', ') + '\n' + g('postcode').toUpperCase(),
+    date:          g('sub-date'),
+    donor_email:   g('donor-email'),
+    donor_tel:     g('donor-tel'),
+    amount:        parseFloat(document.getElementById('donation-amount').value).toFixed(2),
+    send_copy:     document.getElementById('send-copy').checked,
+    copy_email:    g('copy-email') || g('donor-email'),
+  };
+}
+
+/* ── Generate PDF ─────────────────────────────────────────────── */
+function generatePDF(data) {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+
+  const W = 210, ML = 20, MR = 190, CW = MR - ML;
+  let y = 20;
+
+  // ── Helper functions ──────────────────────────────────
+  function rule(yPos, color) {
+    doc.setDrawColor(...(color || [107, 30, 46]));
+    doc.setLineWidth(0.4);
+    doc.line(ML, yPos, MR, yPos);
+  }
+  function textWrap(text, x, yStart, maxW, lineH) {
+    const lines = doc.splitTextToSize(text, maxW);
+    doc.text(lines, x, yStart);
+    return yStart + lines.length * lineH;
+  }
+  function section(title, yPos) {
+    doc.setFillColor(107, 30, 46);
+    doc.rect(ML, yPos - 4, CW, 7, 'F');
+    doc.setTextColor(255, 255, 255);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(8);
+    doc.text(title.toUpperCase(), ML + 3, yPos + 0.5);
+    doc.setTextColor(28, 28, 28);
+    return yPos + 9;
+  }
+  function labelValue(label, value, xL, xV, yPos, widthV) {
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(7.5);
+    doc.setTextColor(100, 100, 100);
+    doc.text(label, xL, yPos);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9.5);
+    doc.setTextColor(28, 28, 28);
+    const lines = doc.splitTextToSize(value || '—', widthV || 80);
+    doc.text(lines, xV, yPos);
+    return yPos + lines.length * 5;
+  }
+
+  // ── Header ────────────────────────────────────────────
+  doc.setFillColor(107, 30, 46);
+  doc.rect(0, 0, W, 30, 'F');
+
+  doc.setTextColor(255, 255, 255);
+  doc.setFont('times', 'bold');
+  doc.setFontSize(16);
+  doc.text('Gift Aid Declaration', W / 2, 11, { align: 'center' });
+
+  doc.setFont('times', 'italic');
+  doc.setFontSize(10);
+  doc.text('Our Lady & St James, Bangor · Sound System Appeal', W / 2, 18, { align: 'center' });
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(7.5);
+  doc.setTextColor(212, 185, 106);
+  doc.text('Wrexham Diocesan Trust · Registered Charity No. 700426', W / 2, 24.5, { align: 'center' });
+
+  y = 38;
+
+  // ── Gift Aid banner ───────────────────────────────────
+  doc.setFillColor(242, 238, 230);
+  doc.rect(ML, y - 4, CW, 11, 'F');
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(8.5);
+  doc.setTextColor(107, 30, 46);
+  doc.text('Boost your donation by 25p of Gift Aid for every £1 you donate', ML + 3, y + 0.5);
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(7.5);
+  doc.setTextColor(74, 74, 74);
+  doc.text('Gift Aid is reclaimed by the charity from the tax you pay for the current tax year.', ML + 3, y + 4.5);
+  y += 14;
+
+  // ── Declaration ───────────────────────────────────────
+  y = section('Declaration', y);
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(9);
+  doc.setTextColor(28, 28, 28);
+
+  const declText = `I want to Gift Aid my donation of £${data.amount} for the upgrade of the Sound System in Our Lady & St James Church, LL57 2EE, Bangor.`;
+  y = textWrap(declText, ML + 3, y, CW - 6, 5) + 3;
+
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(8);
+  doc.setTextColor(74, 74, 74);
+  doc.text('Name of Charity:', ML + 3, y);
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(9);
+  doc.setTextColor(28, 28, 28);
+  doc.text('Wrexham Diocesan Trust – Registered Charity No. 700426', ML + 38, y);
+  y += 6;
+
+  const taxText = 'I am a UK taxpayer and understand that if I pay less Income Tax and/or Capital Gains Tax than the amount of Gift Aid claimed on all my donations in that tax year it is my responsibility to pay any difference.';
+  y = textWrap(taxText, ML + 3, y, CW - 6, 4.8) + 6;
+
+  // ── Donor details ─────────────────────────────────────
+  y = section('Donor Details', y);
+
+  const colL = ML + 3, colV = ML + 38;
+
+  y = labelValue('Title:', data.title, colL, colV, y, 30) + 1;
+  y = labelValue('First Name / Initials:', data.first_name, colL, colV, y, 80) + 1;
+  y = labelValue('Surname:', data.surname, colL, colV, y, 80) + 1;
+  rule(y); y += 4;
+
+  // Address
+  const addrLines = [data.address_line1, data.address_line2, data.town, data.county]
+    .filter(Boolean);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(7.5);
+  doc.setTextColor(100, 100, 100);
+  doc.text('Full Home Address:', colL, y);
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(9.5);
+  doc.setTextColor(28, 28, 28);
+  addrLines.forEach(line => {
+    doc.text(line, colV, y);
+    y += 5;
+  });
+  y += 1;
+
+  y = labelValue('Postcode:', data.postcode, colL, colV, y, 40) + 1;
+  y = labelValue('Date:', data.date, colL, colV, y, 60) + 1;
+
+  if (data.donor_email) {
+    y = labelValue('Email:', data.donor_email, colL, colV, y, 80) + 1;
+  }
+  if (data.donor_tel) {
+    y = labelValue('Tel:', data.donor_tel, colL, colV, y, 60) + 1;
+  }
+  y += 4;
+
+  // ── Confirmation tick ─────────────────────────────────
+  doc.setFillColor(240, 235, 225);
+  doc.rect(ML, y - 2, CW, 9, 'F');
+  doc.setTextColor(107, 30, 46);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(8.5);
+  doc.text('✓  I confirm I am a UK taxpayer and this declaration is correct.', ML + 3, y + 4);
+  y += 14;
+
+  // ── Donor obligations ─────────────────────────────────
+  y = section('Important – Please Notify the Parish If You:', y);
+
+  const notices = [
+    'Want to cancel this declaration',
+    'Change your name or home address',
+    'No longer pay sufficient tax on your income and/or capital gains',
+  ];
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(8.5);
+  doc.setTextColor(74, 74, 74);
+  notices.forEach(n => {
+    doc.text('•  ' + n, ML + 3, y);
+    y += 5;
+  });
+  y += 2;
+
+  const hrNote = 'If you pay Income Tax at the higher or additional rate and want to receive the additional tax relief due to you, you must include all your Gift Aid donations on your Self-Assessment tax return or ask HMRC to adjust your tax code.';
+  doc.setFontSize(8);
+  y = textWrap(hrNote, ML + 3, y, CW - 6, 4.5) + 6;
+
+  // ── Bank details ──────────────────────────────────────
+  y = section('Bank Transfer Details', y);
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(8.5);
+  doc.setTextColor(74, 74, 74);
+  const bankLines = [
+    'Account name: Bangor and Caernarfon Catholic Church',
+    'Bank: NatWest   |   Sort code: 55-81-42   |   Account number: 08142068',
+    'N.B. If you make a direct bank transfer, kindly inform the parish office.',
+  ];
+  bankLines.forEach(l => {
+    doc.text(l, ML + 3, y);
+    y += 4.8;
+  });
+  y += 3;
+
+  // ── Parish contact ────────────────────────────────────
+  rule(y, [184, 154, 58]); y += 5;
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(7.5);
+  doc.setTextColor(100, 100, 100);
+  doc.text('Parish contact: priestbangor@rcdwxm.org.uk  ·  Tel. 01248 370421', W / 2, y, { align: 'center' });
+  y += 5;
+
+  // ── Footer ────────────────────────────────────────────
+  doc.setFillColor(107, 30, 46);
+  doc.rect(0, 285, W, 12, 'F');
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(7);
+  doc.setTextColor(212, 185, 106);
+  doc.text('Our Lady & St James, Bangor  ·  Diocese of Wrexham  ·  ourladysbangor.org', W / 2, 292, { align: 'center' });
+
+  return doc;
+}
+
+/* ── Store PDF for re-download ────────────────────────────────── */
+let _lastPdfDoc = null;
+let _lastFileName = null;
+
+/* ── Form submission ──────────────────────────────────────────── */
+document.getElementById('ga-form').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  if (!validate()) {
+    const firstErr = document.querySelector('.error-field, .error-check');
+    if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
+  const btn = document.getElementById('submit-btn');
+  const statusEl = document.getElementById('status-msg');
+
+  btn.disabled = true;
+  statusEl.className = 'sending';
+  statusEl.style.display = 'block';
+  statusEl.textContent = 'Sending your declaration to the parish…';
+
+  const data = collectData();
+
+  // Generate PDF
+  const doc = generatePDF(data);
+  _lastPdfDoc = doc;
+  _lastFileName = `GiftAid_${data.surname}_${data.date.replace(/\s/g,'_')}.pdf`;
+
+  // Get base64 string for sending (strip data URI prefix)
+  const pdfBase64 = doc.output('datauristring').split(',')[1];
+
+  // Build payload for Google Apps Script
+  const payload = {
+    full_name:      data.full_name,
+    title:          data.title,
+    first_name:     data.first_name,
+    surname:        data.surname,
+    address_line1:  data.address_line1,
+    address_line2:  data.address_line2,
+    town:           data.town,
+    county:         data.county,
+    postcode:       data.postcode,
+    date:           data.date,
+    donor_email:    data.donor_email  || '',
+    donor_tel:      data.donor_tel    || '',
+    amount:         data.amount,
+    send_copy:      data.send_copy,
+    copy_email:     data.copy_email   || '',
+    pdf_base64:     pdfBase64,
+    pdf_filename:   _lastFileName,
+  };
+
+  try {
+    // Send via Google Apps Script
+    // (form-encoded to avoid CORS preflight)
+    const formData = new URLSearchParams();
+    formData.append('payload', JSON.stringify(payload));
+
+    const resp = await fetch(GAS_URL, {
+      method: 'POST',
+      body: formData,
+    });
+    const result = await resp.json();
+
+    if (result.status !== 'ok') throw new Error(result.message || 'Unknown error');
+
+    // Auto-download PDF to donor's device
+    doc.save(_lastFileName);
+
+    // Show success screen
+    document.getElementById('form-wrapper').style.display = 'none';
+    document.getElementById('success-screen').style.display = 'block';
+    document.getElementById('success-screen').scrollIntoView({ behavior: 'smooth' });
+
+  } catch (err) {
+    console.error('GAS error:', err);
+    statusEl.className = 'error';
+    statusEl.innerHTML =
+      'Sorry, there was a problem sending your declaration. Please try again, or contact the parish directly at ' +
+      '<a href="mailto:priestbangor@rcdwxm.org.uk">priestbangor@rcdwxm.org.uk</a>.';
+    btn.disabled = false;
+  }
+});
+
+/* ── Re-download button on success screen ────────────────────── */
+document.getElementById('download-btn').addEventListener('click', function () {
+  if (_lastPdfDoc && _lastFileName) {
+    _lastPdfDoc.save(_lastFileName);
+  }
+});
+</script>
+</body>
+</html>
