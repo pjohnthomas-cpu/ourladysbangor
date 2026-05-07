@@ -619,7 +619,7 @@
       <label class="section-label" style="margin-top:1.4rem">Confirm</label>
 
       <div class="check-row required-check" id="decl-check-row" onclick="toggleCheck('declaration')">
-        <input type="checkbox" id="declaration" name="declaration" />
+        <input type="checkbox" id="declaration" name="declaration" onclick="event.stopPropagation()" />
         <label for="declaration" onclick="event.stopPropagation()">
           <strong>I confirm the declaration above.</strong> I am a UK taxpayer and understand my Gift Aid responsibilities as stated.
         </label>
@@ -711,7 +711,7 @@
       <p class="section-label">Copy of Declaration</p>
 
       <div class="check-row" id="copy-check-row" onclick="toggleCheck('send-copy')">
-        <input type="checkbox" id="send-copy" name="send_copy" />
+        <input type="checkbox" id="send-copy" name="send_copy" onclick="event.stopPropagation(); handleCopyToggle();" />
         <label for="send-copy" onclick="event.stopPropagation()">
           Please send me a copy of this declaration by email.
         </label>
