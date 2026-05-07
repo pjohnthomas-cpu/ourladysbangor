@@ -402,6 +402,57 @@
       color: #fff;
     }
 
+    /* ── Payment reference box ───────────────────────────────────── */
+    .ref-box {
+      background: var(--burgundy-dark);
+      border: 2px solid var(--gold);
+      border-radius: var(--radius);
+      padding: 1.2rem 1.4rem;
+      margin-bottom: 1.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .ref-box-text { flex: 1; }
+    .ref-box-text strong {
+      display: block;
+      color: var(--gold-light);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.3rem;
+    }
+    .ref-code {
+      font-family: 'Courier New', monospace;
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.12em;
+    }
+    .ref-box-hint {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.65);
+      margin-top: 0.35rem;
+      line-height: 1.45;
+    }
+    .copy-btn {
+      background: var(--gold);
+      color: var(--burgundy-dark);
+      border: none;
+      border-radius: var(--radius);
+      padding: 0.5rem 1rem;
+      font-family: 'EB Garamond', serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .copy-btn:hover { background: var(--gold-light); }
+    .copy-btn.copied { background: #4CAF50; color: #fff; }
+
     /* ── Validation errors ───────────────────────────────────────── */
     .field-error {
       font-size: 0.78rem;
@@ -458,6 +509,17 @@
     <div class="ga-banner">
       <strong>Boost your donation by 25p for every £1</strong>
       <p>Gift Aid is reclaimed by the charity from the tax you pay for the current tax year. Your address is needed to identify you as a current UK taxpayer.</p>
+    </div>
+
+    <!-- PAYMENT REFERENCE -->
+    <p class="section-label">Your Payment Reference</p>
+    <div class="ref-box">
+      <div class="ref-box-text">
+        <strong>Quote this reference in your BACS transfer</strong>
+        <span class="ref-code" id="ref-code">OLJ-····</span>
+        <span class="ref-box-hint">Use this as the payment reference when making your bank transfer. It links your payment to this Gift Aid declaration so the parish can match them.</span>
+      </div>
+      <button type="button" class="copy-btn" id="copy-ref-btn" onclick="copyRef()">Copy</button>
     </div>
 
     <form id="ga-form" novalidate>
@@ -600,7 +662,7 @@
       <!-- SUBMIT -->
       <button type="submit" class="submit-btn" id="submit-btn">
         Submit Gift Aid Declaration
-        <span class="btn-sub">A PDF will be sent to the parish and optionally to you</span>
+        <span class="btn-sub">PDF sent to the parish · your reference links it to your BACS payment</span>
       </button>
 
       <div id="status-msg"></div>
@@ -622,7 +684,31 @@
    Paste your Google Apps Script web app URL below after deploying
    Code.gs (see setup instructions).
    ──────────────────────────────────────────────────────────────── */
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbyJTqHn2iQoIkANooZi5aNHKG0weuBQSp3XjDU10alSfzYYTmzse6p2reI_HDhuhcg/exec';  
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbyJTqHn2iQoIkANooZi5aNHKG0weuBQSp3XjDU10alSfzYYTmzse6p2reI_HDhuhcg/exec';
+
+/* ── Generate unique payment reference ────────────────────────── */
+const _REF_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // no 0/O/1/I
+function generateRef() {
+  let r = 'OLJ-';
+  for (let i = 0; i < 4; i++)
+    r += _REF_CHARS[Math.floor(Math.random() * _REF_CHARS.length)];
+  return r;
+}
+const PAYMENT_REF = generateRef();
+document.getElementById('ref-code').textContent = PAYMENT_REF;
+
+/* ── Copy reference to clipboard ──────────────────────────────── */
+function copyRef() {
+  navigator.clipboard.writeText(PAYMENT_REF).then(function () {
+    const btn = document.getElementById('copy-ref-btn');
+    btn.textContent = 'Copied ✓';
+    btn.classList.add('copied');
+    setTimeout(function () {
+      btn.textContent = 'Copy';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
 
 /* ── Auto-populate date ───────────────────────────────────────── */
 (function () {
@@ -770,6 +856,7 @@ function collectData() {
     amount:        parseFloat(document.getElementById('donation-amount').value).toFixed(2),
     send_copy:     document.getElementById('send-copy').checked,
     copy_email:    g('copy-email') || g('donor-email'),
+    payment_ref:   PAYMENT_REF,
   };
 }
 
@@ -835,7 +922,18 @@ function generatePDF(data) {
 
   y = 38;
 
-  // ── Gift Aid banner ───────────────────────────────────
+  // ── Payment reference ─────────────────────────────────
+  doc.setFillColor(184, 154, 58); // gold
+  doc.rect(ML, y - 4, CW, 14, 'F');
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(7.5);
+  doc.setTextColor(78, 21, 34);
+  doc.text('BACS PAYMENT REFERENCE — quote this in your bank transfer', ML + 3, y + 0.5);
+  doc.setFont('courier', 'bold');
+  doc.setFontSize(18);
+  doc.setTextColor(78, 21, 34);
+  doc.text(data.payment_ref, W / 2, y + 7.5, { align: 'center' });
+  y += 18;
   doc.setFillColor(242, 238, 230);
   doc.rect(ML, y - 4, CW, 11, 'F');
   doc.setFont('helvetica', 'bold');
@@ -1022,6 +1120,7 @@ document.getElementById('ga-form').addEventListener('submit', async function (e)
     amount:         data.amount,
     send_copy:      data.send_copy,
     copy_email:     data.copy_email   || '',
+    payment_ref:    data.payment_ref,
     pdf_base64:     pdfBase64,
     pdf_filename:   _lastFileName,
   };
