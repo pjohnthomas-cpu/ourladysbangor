@@ -402,6 +402,56 @@
       color: #fff;
     }
 
+    /* ── Bank details box ────────────────────────────────────────── */
+    .bank-box {
+      background: var(--cream-dark);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1.2rem 1.4rem;
+      margin-bottom: 1.75rem;
+    }
+    .bank-intro {
+      font-size: 0.9rem;
+      color: var(--mid);
+      margin-bottom: 1rem;
+      line-height: 1.55;
+    }
+    .bank-grid {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 0.45rem 1rem;
+      margin-bottom: 1rem;
+    }
+    .bank-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      padding-top: 0.15rem;
+    }
+    .bank-value {
+      font-size: 1rem;
+      color: var(--ink);
+      font-weight: 500;
+    }
+    .bank-value.ref-inline {
+      font-family: 'Courier New', monospace;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--burgundy);
+      letter-spacing: 0.1em;
+    }
+    .bank-note {
+      font-size: 0.82rem;
+      color: var(--mid);
+      border-top: 1px solid var(--border);
+      padding-top: 0.85rem;
+      line-height: 1.55;
+    }
+    .bank-note a { color: var(--burgundy); }
+
     /* ── Payment reference box ───────────────────────────────────── */
     .ref-box {
       background: var(--burgundy-dark);
@@ -520,6 +570,25 @@
         <span class="ref-box-hint">Use this as the payment reference when making your bank transfer. It links your payment to this Gift Aid declaration so the parish can match them.</span>
       </div>
       <button type="button" class="copy-btn" id="copy-ref-btn" onclick="copyRef()">Copy</button>
+    </div>
+
+    <!-- BANK TRANSFER DETAILS -->
+    <p class="section-label">Bank Transfer Instructions</p>
+    <div class="bank-box">
+      <p class="bank-intro">Please make your BACS transfer using the details below, quoting your unique reference above so the parish can match your payment to this declaration.</p>
+      <div class="bank-grid">
+        <span class="bank-label">Account name</span>
+        <span class="bank-value">Bangor and Caernarfon Catholic Church</span>
+        <span class="bank-label">Sort code</span>
+        <span class="bank-value">55-81-42</span>
+        <span class="bank-label">Account number</span>
+        <span class="bank-value">08142068</span>
+        <span class="bank-label">Bank</span>
+        <span class="bank-value">NatWest</span>
+        <span class="bank-label">Payment reference</span>
+        <span class="bank-value ref-inline" id="ref-inline">OLJ-····</span>
+      </div>
+      <p class="bank-note">⚠ Please ensure the payment reference exactly matches the code shown above. If you have already made a transfer without it, please contact the parish office: <a href="mailto:priestbangor@rcdwxm.org.uk">priestbangor@rcdwxm.org.uk</a> · 01248 370421.</p>
     </div>
 
     <form id="ga-form" novalidate>
@@ -696,6 +765,7 @@ function generateRef() {
 }
 const PAYMENT_REF = generateRef();
 document.getElementById('ref-code').textContent = PAYMENT_REF;
+document.getElementById('ref-inline').textContent = PAYMENT_REF;
 
 /* ── Copy reference to clipboard ──────────────────────────────── */
 function copyRef() {
