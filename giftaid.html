@@ -277,14 +277,6 @@
     .check-row.required-check { border-color: var(--border); }
     .check-row.required-check.error-check { border-color: var(--error); background: #fff5f5; }
 
-    /* ── Copy section ────────────────────────────────────────────── */
-    #copy-email-section {
-      display: none;
-      margin-top: 0.5rem;
-      margin-bottom: 1.25rem;
-    }
-    #copy-email-section.visible { display: block; }
-
     /* ── Privacy notice ─────────────────────────────────────────── */
     .privacy-notice {
       font-size: 0.82rem;
@@ -618,8 +610,8 @@
       <!-- Declaration tick -->
       <label class="section-label" style="margin-top:1.4rem">Confirm</label>
 
-      <div class="check-row required-check" id="decl-check-row" onclick="toggleCheck('declaration')">
-        <input type="checkbox" id="declaration" name="declaration" onclick="event.stopPropagation()" />
+      <div class="check-row required-check" id="decl-check-row" onclick="document.getElementById('declaration').checked=!document.getElementById('declaration').checked">
+        <input type="checkbox" id="declaration" name="declaration" />
         <label for="declaration" onclick="event.stopPropagation()">
           <strong>I confirm the declaration above.</strong> I am a UK taxpayer and understand my Gift Aid responsibilities as stated.
         </label>
@@ -707,22 +699,6 @@
         </div>
       </div>
 
-      <!-- COPY TO DONOR -->
-      <p class="section-label">Copy of Declaration</p>
-
-      <div class="check-row" id="copy-check-row" onclick="toggleCheck('send-copy')">
-        <input type="checkbox" id="send-copy" name="send_copy" onclick="event.stopPropagation(); handleCopyToggle();" />
-        <label for="send-copy" onclick="event.stopPropagation()">
-          Please send me a copy of this declaration by email.
-        </label>
-      </div>
-
-      <div id="copy-email-section">
-        <label for="copy-email">Email address for your copy <span class="req">*</span></label>
-        <input type="email" id="copy-email" name="copy_email" placeholder="your@email.com" />
-        <span class="field-error" id="err-copy-email">Please enter a valid email address.</span>
-      </div>
-
       <!-- PRIVACY -->
       <p class="privacy-notice">
         Your personal data (name and home address) will be held by Our Lady &amp; St James Parish, Bangor, for HMRC Gift Aid purposes only, for a minimum of six years as required by HMRC. It will not be shared with any third parties. To cancel this declaration or update your details, contact the parish office: <a href="mailto:priestbangor@rcdwxm.org.uk">priestbangor@rcdwxm.org.uk</a> · 01248 370421.
@@ -794,27 +770,6 @@ document.getElementById('donation-amount').addEventListener('input', function ()
   const disp = document.getElementById('decl-amount-display');
   disp.textContent = v > 0 ? '£' + v.toFixed(2) : '£ ____';
 });
-
-/* ── Toggle checkboxes ────────────────────────────────────────── */
-function toggleCheck(id) {
-  const cb = document.getElementById(id);
-  cb.checked = !cb.checked;
-  if (id === 'send-copy') handleCopyToggle();
-}
-
-function handleCopyToggle() {
-  const checked = document.getElementById('send-copy').checked;
-  const sec = document.getElementById('copy-email-section');
-  if (checked) {
-    sec.classList.add('visible');
-    // Pre-fill from donor email if given
-    const donorEmail = document.getElementById('donor-email').value.trim();
-    if (donorEmail) document.getElementById('copy-email').value = donorEmail;
-  } else {
-    sec.classList.remove('visible');
-  }
-}
-document.getElementById('send-copy').addEventListener('change', handleCopyToggle);
 
 /* ── Postcode validation ──────────────────────────────────────── */
 function validPostcode(p) {
@@ -892,15 +847,6 @@ function validate() {
   setErr('err-email', !demailOk); markField('donor-email', !demailOk);
   if (!demailOk) ok = false;
 
-  // Copy email (if "send copy" checked)
-  const sendCopy = document.getElementById('send-copy').checked;
-  if (sendCopy) {
-    const cemail = document.getElementById('copy-email').value.trim();
-    const cemailOk = validEmail(cemail);
-    setErr('err-copy-email', !cemailOk); markField('copy-email', !cemailOk);
-    if (!cemailOk) ok = false;
-  }
-
   return ok;
 }
 
@@ -924,8 +870,8 @@ function collectData() {
     donor_email:   g('donor-email'),
     donor_tel:     g('donor-tel'),
     amount:        parseFloat(document.getElementById('donation-amount').value).toFixed(2),
-    send_copy:     document.getElementById('send-copy').checked,
-    copy_email:    g('copy-email') || g('donor-email'),
+    send_copy:     true,
+    copy_email:    g('donor-email'),
     payment_ref:   PAYMENT_REF,
   };
 }
@@ -950,6 +896,11 @@ function generatePDF(data) {
     return yStart + lines.length * lineH;
   }
   function section(title, yPos) {
+    // Guard: if close to footer, start a new page
+    if (yPos > 260) {
+      doc.addPage();
+      yPos = 20;
+    }
     doc.setFillColor(107, 30, 46);
     doc.rect(ML, yPos - 4, CW, 7, 'F');
     doc.setTextColor(255, 255, 255);
