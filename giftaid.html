@@ -611,7 +611,7 @@
       <label class="section-label" style="margin-top:1.4rem">Confirm</label>
 
       <div class="check-row required-check" id="decl-check-row" onclick="document.getElementById('declaration').checked=!document.getElementById('declaration').checked">
-        <input type="checkbox" id="declaration" name="declaration" />
+        <input type="checkbox" id="declaration" name="declaration" checked onclick="event.stopPropagation()" />
         <label for="declaration" onclick="event.stopPropagation()">
           <strong>I confirm the declaration above.</strong> I am a UK taxpayer and understand my Gift Aid responsibilities as stated.
         </label>
