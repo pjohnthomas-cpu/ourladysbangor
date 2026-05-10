@@ -223,13 +223,112 @@
   .music-link:hover { background: #243352; }
   .music-subhead { font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; color: var(--navy); margin-bottom: 12px; font-weight: 600; }
 
-  /* GALLERY */
-  .gallery-bg { background: var(--stone); padding: 56px 0; }
+  /* GALLERY & LIGHTBOX */
+  .gallery-bg { background: var(--stone); padding: 56px 0; border-top: 1px solid #d8d8d8; border-bottom: 1px solid #d8d8d8; }
   .gallery-inner { max-width: 1100px; margin: 24px auto 0; padding: 0 24px; }
-  .gallery-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 10px; }
-  .gallery-grid img { width: 100%; height: 230px; object-fit: cover; display: block; filter: brightness(0.93); transition: filter 0.3s, transform 0.3s; }
-  .gallery-grid img:hover { filter: brightness(1.05); transform: scale(1.015); }
-  .gallery-grid .tall { grid-row: span 2; }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 8px;
+  }
+
+  .gallery-grid figure {
+    margin: 0;
+    overflow: hidden;
+    border-radius: 2px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    aspect-ratio: 1 / 1;
+    background: #f5f5f5;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+  }
+
+  .gallery-grid figure:hover {
+    opacity: 0.85;
+    transform: scale(1.02);
+  }
+
+  .gallery-grid figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Lightbox overlay */
+  #lb-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.88);
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    box-sizing: border-box;
+  }
+
+  #lb-overlay.active {
+    display: flex;
+  }
+
+  #lb-img {
+    max-width: 90vw;
+    max-height: 88vh;
+    border-radius: 2px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+    object-fit: contain;
+    display: block;
+  }
+
+  #lb-caption {
+    position: absolute;
+    bottom: 16px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: rgba(255,255,255,0.75);
+    font-size: 13px;
+    pointer-events: none;
+  }
+
+  #lb-close {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 32px;
+    line-height: 1;
+    cursor: pointer;
+    opacity: 0.7;
+    padding: 0;
+    transition: opacity 0.15s;
+  }
+
+  #lb-close:hover { opacity: 1; }
+
+  .lb-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 40px;
+    line-height: 1;
+    cursor: pointer;
+    opacity: 0.5;
+    padding: 12px;
+    transition: opacity 0.15s;
+    user-select: none;
+  }
+
+  .lb-nav:hover { opacity: 1; }
+  #lb-prev { left: 8px; }
+  #lb-next { right: 8px; }
   .gallery-grid .tall img { height: 100%; }
 
   /* CONTACT */
@@ -465,7 +564,42 @@
   </div>
 </div>
 
-<!-- RIBBON -->
+<!-- GALLERY -->
+<div class="gallery-bg" id="gallery">
+  <div class="section" style="padding-top:0;padding-bottom:0;">
+    <div class="divider"></div>
+    <h2 class="section-title">Happy Birthday</h2>
+    <p class="section-subtitle">Blessings and best wishes for our dedicated altar server celebrating this birthday this week.</p>
+  </div>
+  <div class="gallery-inner">
+    <div class="gallery-grid" id="gallery-thumbs">
+      <figure data-caption="Church interior">
+        <img src="IMG_9997.jpeg" alt="Church interior" loading="lazy">
+      </figure>
+      <figure data-caption="Church detail">
+        <img src="IMG_9995 2.jpeg" alt="Church detail" loading="lazy">
+      </figure>
+      <figure data-caption="Architectural feature">
+        <img src="IMG_9993 2.jpeg" alt="Architectural feature" loading="lazy">
+      </figure>
+      <figure data-caption="Church setting">
+        <img src="IMG_9992 3.jpeg" alt="Church setting" loading="lazy">
+      </figure>
+      <figure data-caption="Church view">
+        <img src="IMG_9993.jpeg" alt="Church view" loading="lazy">
+      </figure>
+    </div>
+  </div>
+</div>
+
+<!-- Lightbox overlay -->
+<div id="lb-overlay" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <button id="lb-close" aria-label="Close">&times;</button>
+  <button class="lb-nav" id="lb-prev" aria-label="Previous image">&#8249;</button>
+  <img id="lb-img" src="" alt="">
+  <button class="lb-nav" id="lb-next" aria-label="Next image">&#8250;</button>
+  <p id="lb-caption"></p>
+</div>
 
 <!-- MASSES -->
 <div class="masses-bg" id="masses">
@@ -784,28 +918,6 @@
   </div>
 </div>
 
-<!-- GALLERY -->
-<div class="gallery-bg" id="gallery">
-  <div class="section" style="padding-top:0;padding-bottom:0;">
-    <div class="divider"></div>
-    <h2 class="section-title">Our Churches</h2>
-    <p class="section-subtitle">Our Lady &amp; St. James, Bangor; St. David &amp; St. Helen · Caernarfon</p>
-  </div>
-  <div class="gallery-inner">
-    <div class="gallery-grid">
-      <div class="tall">
-        <img src="ourlady.jpg" alt = "Picture of our lady">
-        <img src="monstrance-altar.jpg" alt="The monstrance on the altar with stained glass behind">
-      </div>
-      <img src="nave-rainbow-light.jpg" alt="Rainbow light from the stained glass cast on the nave wall">
-      <img src="window-last-supper.jpg" alt="Last Supper stained glass window">
-      <img src="window-good-shepherd.jpg" alt="Good Shepherd stained glass window">
-      <img src="exterior-sunset-spire.jpg" alt="The church spire against a pink evening sky">
-      <img src="caernarfon-interior.jpg" alt="Interior of St. David &amp; St. Helen, Caernarfon, with pews and crucifix">
-         </div>
-  </div>
-</div>
-
 <!-- CONTACT -->
 <div id="contact">
   <div class="section">
@@ -902,5 +1014,64 @@ other pastoral needs — please contact the Parish Office at these times using t
       if (section) section.hidden = true;
     });
 </script>
-</body>
+
+<script>
+  /* ── Lightbox Gallery ── */
+  (function () {
+    const gallery  = document.getElementById('gallery-thumbs');
+    const overlay  = document.getElementById('lb-overlay');
+    const lbImg    = document.getElementById('lb-img');
+    const lbCap    = document.getElementById('lb-caption');
+    const btnClose = document.getElementById('lb-close');
+    const btnPrev  = document.getElementById('lb-prev');
+    const btnNext  = document.getElementById('lb-next');
+
+    const figures  = Array.from(gallery.querySelectorAll('figure'));
+    let current    = 0;
+
+    function open(index) {
+      current = index;
+      const fig = figures[current];
+      lbImg.src = fig.querySelector('img').src;
+      lbImg.alt = fig.querySelector('img').alt;
+      lbCap.textContent = fig.dataset.caption || '';
+      overlay.classList.add('active');
+      btnPrev.style.display = figures.length < 2 ? 'none' : '';
+      btnNext.style.display = figures.length < 2 ? 'none' : '';
+      lbImg.focus();
+    }
+
+    function close() {
+      overlay.classList.remove('active');
+      lbImg.src = '';
+    }
+
+    function step(dir) {
+      current = (current + dir + figures.length) % figures.length;
+      const fig = figures[current];
+      lbImg.src = fig.querySelector('img').src;
+      lbImg.alt = fig.querySelector('img').alt;
+      lbCap.textContent = fig.dataset.caption || '';
+    }
+
+    figures.forEach((fig, i) => {
+      fig.addEventListener('click', () => open(i));
+      fig.setAttribute('tabindex', '0');
+      fig.addEventListener('keydown', e => { if (e.key === 'Enter') open(i); });
+    });
+
+    btnClose.addEventListener('click', close);
+    btnPrev.addEventListener('click', () => step(-1));
+    btnNext.addEventListener('click', () => step(1));
+
+    overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
+
+    document.addEventListener('keydown', e => {
+      if (!overlay.classList.contains('active')) return;
+      if (e.key === 'Escape')     close();
+      if (e.key === 'ArrowLeft')  step(-1);
+      if (e.key === 'ArrowRight') step(1);
+    });
+  })();
+</script>
 </html>
