@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bishop Peter Leads Mass · Parish of Our Lady &amp; St. James, Bangor</title>
+  <meta name="description" content="On the eve of the school community's move to its new building, Bishop Peter came to give thanks to 135 years of Catholic education, faith, and service offered within the school walls. These photographs record the day for all who were part of it.">
+  <style>
+    /* ── Reset & base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      background: #f5f2eb;
+      color: #2a2420;
+      line-height: 1.6;
+    }
+
+    /* ── Header ── */
+    .site-header {
+      background: #1e1208;
+      color: #f5f2eb;
+      text-align: center;
+      padding: 2.5rem 1.5rem 2rem;
+      border-bottom: 4px solid #8b1a1a;
+    }
+    .site-header .cross {
+      font-size: 1.6rem;
+      color: #c8a96e;
+      letter-spacing: 0.3em;
+      margin-bottom: 0.8rem;
+    }
+    .site-header h1 {
+      font-size: clamp(1.5rem, 4vw, 2.4rem);
+      font-weight: normal;
+      letter-spacing: 0.05em;
+      color: #f5f2eb;
+      margin-bottom: 0.4rem;
+    }
+    .site-header .subtitle {
+      font-size: clamp(0.85rem, 2vw, 1.05rem);
+      color: #c8a96e;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+    .site-header .description {
+      max-width: 640px;
+      margin: 0 auto 1.2rem;
+      font-size: 0.95rem;
+      color: #d4cfc5;
+      font-style: italic;
+    }
+    .site-header .meta {
+      font-size: 0.82rem;
+      color: #998870;
+      letter-spacing: 0.08em;
+    }
+    .site-header .meta a {
+      color: #c8a96e;
+      text-decoration: none;
+    }
+    .site-header .meta a:hover { text-decoration: underline; }
+
+    /* ── Count bar ── */
+    .count-bar {
+      background: #2c1810;
+      color: #c8a96e;
+      text-align: center;
+      padding: 0.55rem 1rem;
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── Gallery grid ── */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 6px;
+      padding: 6px;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+    .gi {
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      cursor: pointer;
+      background: #2a2420;
+      position: relative;
+    }
+    .gi img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease, filter 0.3s ease;
+      filter: brightness(0.92);
+    }
+    .gi:hover img, .gi:focus img {
+      transform: scale(1.04);
+      filter: brightness(1);
+    }
+    .gi:focus { outline: 3px solid #c8a96e; outline-offset: -3px; }
+
+    /* ── Lightbox ── */
+    .lb {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 6, 3, 0.96);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    .lb.open { display: flex; }
+
+    .lb-img-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      flex: 1;
+      padding: 3rem 4rem;
+    }
+    #lb-img {
+      max-width: 100%;
+      max-height: calc(100vh - 8rem);
+      object-fit: contain;
+      display: block;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+    }
+
+    .lb-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(200, 169, 110, 0.15);
+      border: 1px solid rgba(200, 169, 110, 0.3);
+      color: #c8a96e;
+      font-size: 2.2rem;
+      line-height: 1;
+      width: 3rem;
+      height: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background 0.2s;
+      user-select: none;
+    }
+    .lb-btn:hover { background: rgba(200, 169, 110, 0.35); }
+    .lb-prev { left: 0.6rem; }
+    .lb-next { right: 0.6rem; }
+
+    .lb-close {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(200, 169, 110, 0.15);
+      border: 1px solid rgba(200, 169, 110, 0.3);
+      color: #c8a96e;
+      font-size: 1.6rem;
+      width: 2.6rem;
+      height: 2.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background 0.2s;
+    }
+    .lb-close:hover { background: rgba(200, 169, 110, 0.35); }
+
+    .lb-footer {
+      background: rgba(0,0,0,0.5);
+      width: 100%;
+      text-align: center;
+      padding: 0.6rem 1rem;
+      color: #c8a96e;
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+    }
+    .lb-spinner {
+      position: absolute;
+      color: #c8a96e;
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      display: none;
+    }
+    .lb-spinner.show { display: block; }
+
+    /* ── Footer ── */
+    .site-footer {
+      background: #1e1208;
+      color: #998870;
+      text-align: center;
+      padding: 1.8rem 1rem;
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      margin-top: 1rem;
+      border-top: 4px solid #8b1a1a;
+    }
+    .site-footer a { color: #c8a96e; text-decoration: none; }
+    .site-footer a:hover { text-decoration: underline; }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .gallery { grid-template-columns: repeat(2, 1fr); gap: 4px; padding: 4px; }
+      .lb-img-wrap { padding: 3.5rem 2.8rem; }
+      .lb-btn { width: 2.4rem; height: 2.4rem; font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="cross">✠</div>
+    <h1>Bishop Peter Leads Mass</h1>
+    <p class="subtitle">135 Years of Catholic Education · A Bishop's Blessing</p>
+    <p class="description">On the eve of the school community's move to its new building, Bishop Peter came to give thanks to 135 years of Catholic education, faith, and service offered within the school walls. These photographs record the day for all who were part of it.</p>
+    <p class="meta">
+      24 May 2025 &nbsp;·&nbsp;
+      <a href="https://ourladysbangor.org">Parish of Our Lady &amp; St. James, Bangor</a>
+    </p>
+  </header>
+
+  <div class="count-bar">194 photographs</div>
+
+  <main class="gallery" id="gallery" aria-label="Photo gallery">
+    <figure class="gi" onclick="openLb(0)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(0)" aria-label="Photo 1 of 194">
+      <img src="thumbs/001.jpg" loading="lazy" alt="Photo 1">
+    </figure>
+    <figure class="gi" onclick="openLb(1)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(1)" aria-label="Photo 2 of 194">
+      <img src="thumbs/002.jpg" loading="lazy" alt="Photo 2">
+    </figure>
+    <figure class="gi" onclick="openLb(2)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(2)" aria-label="Photo 3 of 194">
+      <img src="thumbs/003.jpg" loading="lazy" alt="Photo 3">
+    </figure>
+    <figure class="gi" onclick="openLb(3)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(3)" aria-label="Photo 4 of 194">
+      <img src="thumbs/004.jpg" loading="lazy" alt="Photo 4">
+    </figure>
+    <figure class="gi" onclick="openLb(4)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(4)" aria-label="Photo 5 of 194">
+      <img src="thumbs/005.jpg" loading="lazy" alt="Photo 5">
+    </figure>
+    <figure class="gi" onclick="openLb(5)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(5)" aria-label="Photo 6 of 194">
+      <img src="thumbs/006.jpg" loading="lazy" alt="Photo 6">
+    </figure>
+    <figure class="gi" onclick="openLb(6)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(6)" aria-label="Photo 7 of 194">
+      <img src="thumbs/007.jpg" loading="lazy" alt="Photo 7">
+    </figure>
+    <figure class="gi" onclick="openLb(7)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(7)" aria-label="Photo 8 of 194">
+      <img src="thumbs/008.jpg" loading="lazy" alt="Photo 8">
+    </figure>
+    <figure class="gi" onclick="openLb(8)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(8)" aria-label="Photo 9 of 194">
+      <img src="thumbs/009.jpg" loading="lazy" alt="Photo 9">
+    </figure>
+    <figure class="gi" onclick="openLb(9)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(9)" aria-label="Photo 10 of 194">
+      <img src="thumbs/010.jpg" loading="lazy" alt="Photo 10">
+    </figure>
+    <figure class="gi" onclick="openLb(10)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(10)" aria-label="Photo 11 of 194">
+      <img src="thumbs/011.jpg" loading="lazy" alt="Photo 11">
+    </figure>
+    <figure class="gi" onclick="openLb(11)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(11)" aria-label="Photo 12 of 194">
+      <img src="thumbs/012.jpg" loading="lazy" alt="Photo 12">
+    </figure>
+    <figure class="gi" onclick="openLb(12)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(12)" aria-label="Photo 13 of 194">
+      <img src="thumbs/013.jpg" loading="lazy" alt="Photo 13">
+    </figure>
+    <figure class="gi" onclick="openLb(13)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(13)" aria-label="Photo 14 of 194">
+      <img src="thumbs/014.jpg" loading="lazy" alt="Photo 14">
+    </figure>
+    <figure class="gi" onclick="openLb(14)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(14)" aria-label="Photo 15 of 194">
+      <img src="thumbs/015.jpg" loading="lazy" alt="Photo 15">
+    </figure>
+    <figure class="gi" onclick="openLb(15)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(15)" aria-label="Photo 16 of 194">
+      <img src="thumbs/016.jpg" loading="lazy" alt="Photo 16">
+    </figure>
+    <figure class="gi" onclick="openLb(16)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(16)" aria-label="Photo 17 of 194">
+      <img src="thumbs/017.jpg" loading="lazy" alt="Photo 17">
+    </figure>
+    <figure class="gi" onclick="openLb(17)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(17)" aria-label="Photo 18 of 194">
+      <img src="thumbs/018.jpg" loading="lazy" alt="Photo 18">
+    </figure>
+    <figure class="gi" onclick="openLb(18)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(18)" aria-label="Photo 19 of 194">
+      <img src="thumbs/019.jpg" loading="lazy" alt="Photo 19">
+    </figure>
+    <figure class="gi" onclick="openLb(19)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(19)" aria-label="Photo 20 of 194">
+      <img src="thumbs/020.jpg" loading="lazy" alt="Photo 20">
+    </figure>
+    <figure class="gi" onclick="openLb(20)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(20)" aria-label="Photo 21 of 194">
+      <img src="thumbs/021.jpg" loading="lazy" alt="Photo 21">
+    </figure>
+    <figure class="gi" onclick="openLb(21)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(21)" aria-label="Photo 22 of 194">
+      <img src="thumbs/022.jpg" loading="lazy" alt="Photo 22">
+    </figure>
+    <figure class="gi" onclick="openLb(22)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(22)" aria-label="Photo 23 of 194">
+      <img src="thumbs/023.jpg" loading="lazy" alt="Photo 23">
+    </figure>
+    <figure class="gi" onclick="openLb(23)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(23)" aria-label="Photo 24 of 194">
+      <img src="thumbs/024.jpg" loading="lazy" alt="Photo 24">
+    </figure>
+    <figure class="gi" onclick="openLb(24)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(24)" aria-label="Photo 25 of 194">
+      <img src="thumbs/025.jpg" loading="lazy" alt="Photo 25">
+    </figure>
+    <figure class="gi" onclick="openLb(25)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(25)" aria-label="Photo 26 of 194">
+      <img src="thumbs/026.jpg" loading="lazy" alt="Photo 26">
+    </figure>
+    <figure class="gi" onclick="openLb(26)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(26)" aria-label="Photo 27 of 194">
+      <img src="thumbs/027.jpg" loading="lazy" alt="Photo 27">
+    </figure>
+    <figure class="gi" onclick="openLb(27)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(27)" aria-label="Photo 28 of 194">
+      <img src="thumbs/028.jpg" loading="lazy" alt="Photo 28">
+    </figure>
+    <figure class="gi" onclick="openLb(28)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(28)" aria-label="Photo 29 of 194">
+      <img src="thumbs/029.jpg" loading="lazy" alt="Photo 29">
+    </figure>
+    <figure class="gi" onclick="openLb(29)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(29)" aria-label="Photo 30 of 194">
+      <img src="thumbs/030.jpg" loading="lazy" alt="Photo 30">
+    </figure>
+    <figure class="gi" onclick="openLb(30)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(30)" aria-label="Photo 31 of 194">
+      <img src="thumbs/031.jpg" loading="lazy" alt="Photo 31">
+    </figure>
+    <figure class="gi" onclick="openLb(31)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(31)" aria-label="Photo 32 of 194">
+      <img src="thumbs/032.jpg" loading="lazy" alt="Photo 32">
+    </figure>
+    <figure class="gi" onclick="openLb(32)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(32)" aria-label="Photo 33 of 194">
+      <img src="thumbs/033.jpg" loading="lazy" alt="Photo 33">
+    </figure>
+    <figure class="gi" onclick="openLb(33)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(33)" aria-label="Photo 34 of 194">
+      <img src="thumbs/034.jpg" loading="lazy" alt="Photo 34">
+    </figure>
+    <figure class="gi" onclick="openLb(34)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(34)" aria-label="Photo 35 of 194">
+      <img src="thumbs/035.jpg" loading="lazy" alt="Photo 35">
+    </figure>
+    <figure class="gi" onclick="openLb(35)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(35)" aria-label="Photo 36 of 194">
+      <img src="thumbs/036.jpg" loading="lazy" alt="Photo 36">
+    </figure>
+    <figure class="gi" onclick="openLb(36)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(36)" aria-label="Photo 37 of 194">
+      <img src="thumbs/037.jpg" loading="lazy" alt="Photo 37">
+    </figure>
+    <figure class="gi" onclick="openLb(37)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(37)" aria-label="Photo 38 of 194">
+      <img src="thumbs/038.jpg" loading="lazy" alt="Photo 38">
+    </figure>
+    <figure class="gi" onclick="openLb(38)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(38)" aria-label="Photo 39 of 194">
+      <img src="thumbs/039.jpg" loading="lazy" alt="Photo 39">
+    </figure>
+    <figure class="gi" onclick="openLb(39)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(39)" aria-label="Photo 40 of 194">
+      <img src="thumbs/040.jpg" loading="lazy" alt="Photo 40">
+    </figure>
+    <figure class="gi" onclick="openLb(40)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(40)" aria-label="Photo 41 of 194">
+      <img src="thumbs/041.jpg" loading="lazy" alt="Photo 41">
+    </figure>
+    <figure class="gi" onclick="openLb(41)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(41)" aria-label="Photo 42 of 194">
+      <img src="thumbs/042.jpg" loading="lazy" alt="Photo 42">
+    </figure>
+    <figure class="gi" onclick="openLb(42)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(42)" aria-label="Photo 43 of 194">
+      <img src="thumbs/043.jpg" loading="lazy" alt="Photo 43">
+    </figure>
+    <figure class="gi" onclick="openLb(43)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(43)" aria-label="Photo 44 of 194">
+      <img src="thumbs/044.jpg" loading="lazy" alt="Photo 44">
+    </figure>
+    <figure class="gi" onclick="openLb(44)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(44)" aria-label="Photo 45 of 194">
+      <img src="thumbs/045.jpg" loading="lazy" alt="Photo 45">
+    </figure>
+    <figure class="gi" onclick="openLb(45)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(45)" aria-label="Photo 46 of 194">
+      <img src="thumbs/046.jpg" loading="lazy" alt="Photo 46">
+    </figure>
+    <figure class="gi" onclick="openLb(46)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(46)" aria-label="Photo 47 of 194">
+      <img src="thumbs/047.jpg" loading="lazy" alt="Photo 47">
+    </figure>
+    <figure class="gi" onclick="openLb(47)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(47)" aria-label="Photo 48 of 194">
+      <img src="thumbs/048.jpg" loading="lazy" alt="Photo 48">
+    </figure>
+    <figure class="gi" onclick="openLb(48)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(48)" aria-label="Photo 49 of 194">
+      <img src="thumbs/049.jpg" loading="lazy" alt="Photo 49">
+    </figure>
+    <figure class="gi" onclick="openLb(49)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(49)" aria-label="Photo 50 of 194">
+      <img src="thumbs/050.jpg" loading="lazy" alt="Photo 50">
+    </figure>
+    <figure class="gi" onclick="openLb(50)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(50)" aria-label="Photo 51 of 194">
+      <img src="thumbs/051.jpg" loading="lazy" alt="Photo 51">
+    </figure>
+    <figure class="gi" onclick="openLb(51)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(51)" aria-label="Photo 52 of 194">
+      <img src="thumbs/052.jpg" loading="lazy" alt="Photo 52">
+    </figure>
+    <figure class="gi" onclick="openLb(52)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(52)" aria-label="Photo 53 of 194">
+      <img src="thumbs/053.jpg" loading="lazy" alt="Photo 53">
+    </figure>
+    <figure class="gi" onclick="openLb(53)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(53)" aria-label="Photo 54 of 194">
+      <img src="thumbs/054.jpg" loading="lazy" alt="Photo 54">
+    </figure>
+    <figure class="gi" onclick="openLb(54)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(54)" aria-label="Photo 55 of 194">
+      <img src="thumbs/055.jpg" loading="lazy" alt="Photo 55">
+    </figure>
+    <figure class="gi" onclick="openLb(55)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(55)" aria-label="Photo 56 of 194">
+      <img src="thumbs/056.jpg" loading="lazy" alt="Photo 56">
+    </figure>
+    <figure class="gi" onclick="openLb(56)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(56)" aria-label="Photo 57 of 194">
+      <img src="thumbs/057.jpg" loading="lazy" alt="Photo 57">
+    </figure>
+    <figure class="gi" onclick="openLb(57)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(57)" aria-label="Photo 58 of 194">
+      <img src="thumbs/058.jpg" loading="lazy" alt="Photo 58">
+    </figure>
+    <figure class="gi" onclick="openLb(58)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(58)" aria-label="Photo 59 of 194">
+      <img src="thumbs/059.jpg" loading="lazy" alt="Photo 59">
+    </figure>
+    <figure class="gi" onclick="openLb(59)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(59)" aria-label="Photo 60 of 194">
+      <img src="thumbs/060.jpg" loading="lazy" alt="Photo 60">
+    </figure>
+    <figure class="gi" onclick="openLb(60)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(60)" aria-label="Photo 61 of 194">
+      <img src="thumbs/061.jpg" loading="lazy" alt="Photo 61">
+    </figure>
+    <figure class="gi" onclick="openLb(61)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(61)" aria-label="Photo 62 of 194">
+      <img src="thumbs/062.jpg" loading="lazy" alt="Photo 62">
+    </figure>
+    <figure class="gi" onclick="openLb(62)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(62)" aria-label="Photo 63 of 194">
+      <img src="thumbs/063.jpg" loading="lazy" alt="Photo 63">
+    </figure>
+    <figure class="gi" onclick="openLb(63)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(63)" aria-label="Photo 64 of 194">
+      <img src="thumbs/064.jpg" loading="lazy" alt="Photo 64">
+    </figure>
+    <figure class="gi" onclick="openLb(64)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(64)" aria-label="Photo 65 of 194">
+      <img src="thumbs/065.jpg" loading="lazy" alt="Photo 65">
+    </figure>
+    <figure class="gi" onclick="openLb(65)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(65)" aria-label="Photo 66 of 194">
+      <img src="thumbs/066.jpg" loading="lazy" alt="Photo 66">
+    </figure>
+    <figure class="gi" onclick="openLb(66)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(66)" aria-label="Photo 67 of 194">
+      <img src="thumbs/067.jpg" loading="lazy" alt="Photo 67">
+    </figure>
+    <figure class="gi" onclick="openLb(67)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(67)" aria-label="Photo 68 of 194">
+      <img src="thumbs/068.jpg" loading="lazy" alt="Photo 68">
+    </figure>
+    <figure class="gi" onclick="openLb(68)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(68)" aria-label="Photo 69 of 194">
+      <img src="thumbs/069.jpg" loading="lazy" alt="Photo 69">
+    </figure>
+    <figure class="gi" onclick="openLb(69)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(69)" aria-label="Photo 70 of 194">
+      <img src="thumbs/070.jpg" loading="lazy" alt="Photo 70">
+    </figure>
+    <figure class="gi" onclick="openLb(70)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(70)" aria-label="Photo 71 of 194">
+      <img src="thumbs/071.jpg" loading="lazy" alt="Photo 71">
+    </figure>
+    <figure class="gi" onclick="openLb(71)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(71)" aria-label="Photo 72 of 194">
+      <img src="thumbs/072.jpg" loading="lazy" alt="Photo 72">
+    </figure>
+    <figure class="gi" onclick="openLb(72)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(72)" aria-label="Photo 73 of 194">
+      <img src="thumbs/073.jpg" loading="lazy" alt="Photo 73">
+    </figure>
+    <figure class="gi" onclick="openLb(73)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(73)" aria-label="Photo 74 of 194">
+      <img src="thumbs/074.jpg" loading="lazy" alt="Photo 74">
+    </figure>
+    <figure class="gi" onclick="openLb(74)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(74)" aria-label="Photo 75 of 194">
+      <img src="thumbs/075.jpg" loading="lazy" alt="Photo 75">
+    </figure>
+    <figure class="gi" onclick="openLb(75)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(75)" aria-label="Photo 76 of 194">
+      <img src="thumbs/076.jpg" loading="lazy" alt="Photo 76">
+    </figure>
+    <figure class="gi" onclick="openLb(76)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(76)" aria-label="Photo 77 of 194">
+      <img src="thumbs/077.jpg" loading="lazy" alt="Photo 77">
+    </figure>
+    <figure class="gi" onclick="openLb(77)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(77)" aria-label="Photo 78 of 194">
+      <img src="thumbs/078.jpg" loading="lazy" alt="Photo 78">
+    </figure>
+    <figure class="gi" onclick="openLb(78)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(78)" aria-label="Photo 79 of 194">
+      <img src="thumbs/079.jpg" loading="lazy" alt="Photo 79">
+    </figure>
+    <figure class="gi" onclick="openLb(79)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(79)" aria-label="Photo 80 of 194">
+      <img src="thumbs/080.jpg" loading="lazy" alt="Photo 80">
+    </figure>
+    <figure class="gi" onclick="openLb(80)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(80)" aria-label="Photo 81 of 194">
+      <img src="thumbs/081.jpg" loading="lazy" alt="Photo 81">
+    </figure>
+    <figure class="gi" onclick="openLb(81)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(81)" aria-label="Photo 82 of 194">
+      <img src="thumbs/082.jpg" loading="lazy" alt="Photo 82">
+    </figure>
+    <figure class="gi" onclick="openLb(82)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(82)" aria-label="Photo 83 of 194">
+      <img src="thumbs/083.jpg" loading="lazy" alt="Photo 83">
+    </figure>
+    <figure class="gi" onclick="openLb(83)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(83)" aria-label="Photo 84 of 194">
+      <img src="thumbs/084.jpg" loading="lazy" alt="Photo 84">
+    </figure>
+    <figure class="gi" onclick="openLb(84)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(84)" aria-label="Photo 85 of 194">
+      <img src="thumbs/085.jpg" loading="lazy" alt="Photo 85">
+    </figure>
+    <figure class="gi" onclick="openLb(85)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(85)" aria-label="Photo 86 of 194">
+      <img src="thumbs/086.jpg" loading="lazy" alt="Photo 86">
+    </figure>
+    <figure class="gi" onclick="openLb(86)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(86)" aria-label="Photo 87 of 194">
+      <img src="thumbs/087.jpg" loading="lazy" alt="Photo 87">
+    </figure>
+    <figure class="gi" onclick="openLb(87)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(87)" aria-label="Photo 88 of 194">
+      <img src="thumbs/088.jpg" loading="lazy" alt="Photo 88">
+    </figure>
+    <figure class="gi" onclick="openLb(88)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(88)" aria-label="Photo 89 of 194">
+      <img src="thumbs/089.jpg" loading="lazy" alt="Photo 89">
+    </figure>
+    <figure class="gi" onclick="openLb(89)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(89)" aria-label="Photo 90 of 194">
+      <img src="thumbs/090.jpg" loading="lazy" alt="Photo 90">
+    </figure>
+    <figure class="gi" onclick="openLb(90)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(90)" aria-label="Photo 91 of 194">
+      <img src="thumbs/091.jpg" loading="lazy" alt="Photo 91">
+    </figure>
+    <figure class="gi" onclick="openLb(91)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(91)" aria-label="Photo 92 of 194">
+      <img src="thumbs/092.jpg" loading="lazy" alt="Photo 92">
+    </figure>
+    <figure class="gi" onclick="openLb(92)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(92)" aria-label="Photo 93 of 194">
+      <img src="thumbs/093.jpg" loading="lazy" alt="Photo 93">
+    </figure>
+    <figure class="gi" onclick="openLb(93)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(93)" aria-label="Photo 94 of 194">
+      <img src="thumbs/094.jpg" loading="lazy" alt="Photo 94">
+    </figure>
+    <figure class="gi" onclick="openLb(94)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(94)" aria-label="Photo 95 of 194">
+      <img src="thumbs/095.jpg" loading="lazy" alt="Photo 95">
+    </figure>
+    <figure class="gi" onclick="openLb(95)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(95)" aria-label="Photo 96 of 194">
+      <img src="thumbs/096.jpg" loading="lazy" alt="Photo 96">
+    </figure>
+    <figure class="gi" onclick="openLb(96)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(96)" aria-label="Photo 97 of 194">
+      <img src="thumbs/097.jpg" loading="lazy" alt="Photo 97">
+    </figure>
+    <figure class="gi" onclick="openLb(97)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(97)" aria-label="Photo 98 of 194">
+      <img src="thumbs/098.jpg" loading="lazy" alt="Photo 98">
+    </figure>
+    <figure class="gi" onclick="openLb(98)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(98)" aria-label="Photo 99 of 194">
+      <img src="thumbs/099.jpg" loading="lazy" alt="Photo 99">
+    </figure>
+    <figure class="gi" onclick="openLb(99)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(99)" aria-label="Photo 100 of 194">
+      <img src="thumbs/100.jpg" loading="lazy" alt="Photo 100">
+    </figure>
+    <figure class="gi" onclick="openLb(100)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(100)" aria-label="Photo 101 of 194">
+      <img src="thumbs/101.jpg" loading="lazy" alt="Photo 101">
+    </figure>
+    <figure class="gi" onclick="openLb(101)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(101)" aria-label="Photo 102 of 194">
+      <img src="thumbs/102.jpg" loading="lazy" alt="Photo 102">
+    </figure>
+    <figure class="gi" onclick="openLb(102)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(102)" aria-label="Photo 103 of 194">
+      <img src="thumbs/103.jpg" loading="lazy" alt="Photo 103">
+    </figure>
+    <figure class="gi" onclick="openLb(103)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(103)" aria-label="Photo 104 of 194">
+      <img src="thumbs/104.jpg" loading="lazy" alt="Photo 104">
+    </figure>
+    <figure class="gi" onclick="openLb(104)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(104)" aria-label="Photo 105 of 194">
+      <img src="thumbs/105.jpg" loading="lazy" alt="Photo 105">
+    </figure>
+    <figure class="gi" onclick="openLb(105)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(105)" aria-label="Photo 106 of 194">
+      <img src="thumbs/106.jpg" loading="lazy" alt="Photo 106">
+    </figure>
+    <figure class="gi" onclick="openLb(106)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(106)" aria-label="Photo 107 of 194">
+      <img src="thumbs/107.jpg" loading="lazy" alt="Photo 107">
+    </figure>
+    <figure class="gi" onclick="openLb(107)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(107)" aria-label="Photo 108 of 194">
+      <img src="thumbs/108.jpg" loading="lazy" alt="Photo 108">
+    </figure>
+    <figure class="gi" onclick="openLb(108)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(108)" aria-label="Photo 109 of 194">
+      <img src="thumbs/109.jpg" loading="lazy" alt="Photo 109">
+    </figure>
+    <figure class="gi" onclick="openLb(109)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(109)" aria-label="Photo 110 of 194">
+      <img src="thumbs/110.jpg" loading="lazy" alt="Photo 110">
+    </figure>
+    <figure class="gi" onclick="openLb(110)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(110)" aria-label="Photo 111 of 194">
+      <img src="thumbs/111.jpg" loading="lazy" alt="Photo 111">
+    </figure>
+    <figure class="gi" onclick="openLb(111)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(111)" aria-label="Photo 112 of 194">
+      <img src="thumbs/112.jpg" loading="lazy" alt="Photo 112">
+    </figure>
+    <figure class="gi" onclick="openLb(112)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(112)" aria-label="Photo 113 of 194">
+      <img src="thumbs/113.jpg" loading="lazy" alt="Photo 113">
+    </figure>
+    <figure class="gi" onclick="openLb(113)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(113)" aria-label="Photo 114 of 194">
+      <img src="thumbs/114.jpg" loading="lazy" alt="Photo 114">
+    </figure>
+    <figure class="gi" onclick="openLb(114)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(114)" aria-label="Photo 115 of 194">
+      <img src="thumbs/115.jpg" loading="lazy" alt="Photo 115">
+    </figure>
+    <figure class="gi" onclick="openLb(115)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(115)" aria-label="Photo 116 of 194">
+      <img src="thumbs/116.jpg" loading="lazy" alt="Photo 116">
+    </figure>
+    <figure class="gi" onclick="openLb(116)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(116)" aria-label="Photo 117 of 194">
+      <img src="thumbs/117.jpg" loading="lazy" alt="Photo 117">
+    </figure>
+    <figure class="gi" onclick="openLb(117)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(117)" aria-label="Photo 118 of 194">
+      <img src="thumbs/118.jpg" loading="lazy" alt="Photo 118">
+    </figure>
+    <figure class="gi" onclick="openLb(118)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(118)" aria-label="Photo 119 of 194">
+      <img src="thumbs/119.jpg" loading="lazy" alt="Photo 119">
+    </figure>
+    <figure class="gi" onclick="openLb(119)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(119)" aria-label="Photo 120 of 194">
+      <img src="thumbs/120.jpg" loading="lazy" alt="Photo 120">
+    </figure>
+    <figure class="gi" onclick="openLb(120)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(120)" aria-label="Photo 121 of 194">
+      <img src="thumbs/121.jpg" loading="lazy" alt="Photo 121">
+    </figure>
+    <figure class="gi" onclick="openLb(121)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(121)" aria-label="Photo 122 of 194">
+      <img src="thumbs/122.jpg" loading="lazy" alt="Photo 122">
+    </figure>
+    <figure class="gi" onclick="openLb(122)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(122)" aria-label="Photo 123 of 194">
+      <img src="thumbs/123.jpg" loading="lazy" alt="Photo 123">
+    </figure>
+    <figure class="gi" onclick="openLb(123)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(123)" aria-label="Photo 124 of 194">
+      <img src="thumbs/124.jpg" loading="lazy" alt="Photo 124">
+    </figure>
+    <figure class="gi" onclick="openLb(124)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(124)" aria-label="Photo 125 of 194">
+      <img src="thumbs/125.jpg" loading="lazy" alt="Photo 125">
+    </figure>
+    <figure class="gi" onclick="openLb(125)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(125)" aria-label="Photo 126 of 194">
+      <img src="thumbs/126.jpg" loading="lazy" alt="Photo 126">
+    </figure>
+    <figure class="gi" onclick="openLb(126)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(126)" aria-label="Photo 127 of 194">
+      <img src="thumbs/127.jpg" loading="lazy" alt="Photo 127">
+    </figure>
+    <figure class="gi" onclick="openLb(127)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(127)" aria-label="Photo 128 of 194">
+      <img src="thumbs/128.jpg" loading="lazy" alt="Photo 128">
+    </figure>
+    <figure class="gi" onclick="openLb(128)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(128)" aria-label="Photo 129 of 194">
+      <img src="thumbs/129.jpg" loading="lazy" alt="Photo 129">
+    </figure>
+    <figure class="gi" onclick="openLb(129)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(129)" aria-label="Photo 130 of 194">
+      <img src="thumbs/130.jpg" loading="lazy" alt="Photo 130">
+    </figure>
+    <figure class="gi" onclick="openLb(130)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(130)" aria-label="Photo 131 of 194">
+      <img src="thumbs/131.jpg" loading="lazy" alt="Photo 131">
+    </figure>
+    <figure class="gi" onclick="openLb(131)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(131)" aria-label="Photo 132 of 194">
+      <img src="thumbs/132.jpg" loading="lazy" alt="Photo 132">
+    </figure>
+    <figure class="gi" onclick="openLb(132)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(132)" aria-label="Photo 133 of 194">
+      <img src="thumbs/133.jpg" loading="lazy" alt="Photo 133">
+    </figure>
+    <figure class="gi" onclick="openLb(133)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(133)" aria-label="Photo 134 of 194">
+      <img src="thumbs/134.jpg" loading="lazy" alt="Photo 134">
+    </figure>
+    <figure class="gi" onclick="openLb(134)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(134)" aria-label="Photo 135 of 194">
+      <img src="thumbs/135.jpg" loading="lazy" alt="Photo 135">
+    </figure>
+    <figure class="gi" onclick="openLb(135)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(135)" aria-label="Photo 136 of 194">
+      <img src="thumbs/136.jpg" loading="lazy" alt="Photo 136">
+    </figure>
+    <figure class="gi" onclick="openLb(136)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(136)" aria-label="Photo 137 of 194">
+      <img src="thumbs/137.jpg" loading="lazy" alt="Photo 137">
+    </figure>
+    <figure class="gi" onclick="openLb(137)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(137)" aria-label="Photo 138 of 194">
+      <img src="thumbs/138.jpg" loading="lazy" alt="Photo 138">
+    </figure>
+    <figure class="gi" onclick="openLb(138)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(138)" aria-label="Photo 139 of 194">
+      <img src="thumbs/139.jpg" loading="lazy" alt="Photo 139">
+    </figure>
+    <figure class="gi" onclick="openLb(139)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(139)" aria-label="Photo 140 of 194">
+      <img src="thumbs/140.jpg" loading="lazy" alt="Photo 140">
+    </figure>
+    <figure class="gi" onclick="openLb(140)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(140)" aria-label="Photo 141 of 194">
+      <img src="thumbs/141.jpg" loading="lazy" alt="Photo 141">
+    </figure>
+    <figure class="gi" onclick="openLb(141)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(141)" aria-label="Photo 142 of 194">
+      <img src="thumbs/142.jpg" loading="lazy" alt="Photo 142">
+    </figure>
+    <figure class="gi" onclick="openLb(142)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(142)" aria-label="Photo 143 of 194">
+      <img src="thumbs/143.jpg" loading="lazy" alt="Photo 143">
+    </figure>
+    <figure class="gi" onclick="openLb(143)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(143)" aria-label="Photo 144 of 194">
+      <img src="thumbs/144.jpg" loading="lazy" alt="Photo 144">
+    </figure>
+    <figure class="gi" onclick="openLb(144)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(144)" aria-label="Photo 145 of 194">
+      <img src="thumbs/145.jpg" loading="lazy" alt="Photo 145">
+    </figure>
+    <figure class="gi" onclick="openLb(145)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(145)" aria-label="Photo 146 of 194">
+      <img src="thumbs/146.jpg" loading="lazy" alt="Photo 146">
+    </figure>
+    <figure class="gi" onclick="openLb(146)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(146)" aria-label="Photo 147 of 194">
+      <img src="thumbs/147.jpg" loading="lazy" alt="Photo 147">
+    </figure>
+    <figure class="gi" onclick="openLb(147)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(147)" aria-label="Photo 148 of 194">
+      <img src="thumbs/148.jpg" loading="lazy" alt="Photo 148">
+    </figure>
+    <figure class="gi" onclick="openLb(148)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(148)" aria-label="Photo 149 of 194">
+      <img src="thumbs/149.jpg" loading="lazy" alt="Photo 149">
+    </figure>
+    <figure class="gi" onclick="openLb(149)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(149)" aria-label="Photo 150 of 194">
+      <img src="thumbs/150.jpg" loading="lazy" alt="Photo 150">
+    </figure>
+    <figure class="gi" onclick="openLb(150)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(150)" aria-label="Photo 151 of 194">
+      <img src="thumbs/151.jpg" loading="lazy" alt="Photo 151">
+    </figure>
+    <figure class="gi" onclick="openLb(151)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(151)" aria-label="Photo 152 of 194">
+      <img src="thumbs/152.jpg" loading="lazy" alt="Photo 152">
+    </figure>
+    <figure class="gi" onclick="openLb(152)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(152)" aria-label="Photo 153 of 194">
+      <img src="thumbs/153.jpg" loading="lazy" alt="Photo 153">
+    </figure>
+    <figure class="gi" onclick="openLb(153)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(153)" aria-label="Photo 154 of 194">
+      <img src="thumbs/154.jpg" loading="lazy" alt="Photo 154">
+    </figure>
+    <figure class="gi" onclick="openLb(154)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(154)" aria-label="Photo 155 of 194">
+      <img src="thumbs/155.jpg" loading="lazy" alt="Photo 155">
+    </figure>
+    <figure class="gi" onclick="openLb(155)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(155)" aria-label="Photo 156 of 194">
+      <img src="thumbs/156.jpg" loading="lazy" alt="Photo 156">
+    </figure>
+    <figure class="gi" onclick="openLb(156)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(156)" aria-label="Photo 157 of 194">
+      <img src="thumbs/157.jpg" loading="lazy" alt="Photo 157">
+    </figure>
+    <figure class="gi" onclick="openLb(157)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(157)" aria-label="Photo 158 of 194">
+      <img src="thumbs/158.jpg" loading="lazy" alt="Photo 158">
+    </figure>
+    <figure class="gi" onclick="openLb(158)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(158)" aria-label="Photo 159 of 194">
+      <img src="thumbs/159.jpg" loading="lazy" alt="Photo 159">
+    </figure>
+    <figure class="gi" onclick="openLb(159)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(159)" aria-label="Photo 160 of 194">
+      <img src="thumbs/160.jpg" loading="lazy" alt="Photo 160">
+    </figure>
+    <figure class="gi" onclick="openLb(160)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(160)" aria-label="Photo 161 of 194">
+      <img src="thumbs/161.jpg" loading="lazy" alt="Photo 161">
+    </figure>
+    <figure class="gi" onclick="openLb(161)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(161)" aria-label="Photo 162 of 194">
+      <img src="thumbs/162.jpg" loading="lazy" alt="Photo 162">
+    </figure>
+    <figure class="gi" onclick="openLb(162)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(162)" aria-label="Photo 163 of 194">
+      <img src="thumbs/163.jpg" loading="lazy" alt="Photo 163">
+    </figure>
+    <figure class="gi" onclick="openLb(163)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(163)" aria-label="Photo 164 of 194">
+      <img src="thumbs/164.jpg" loading="lazy" alt="Photo 164">
+    </figure>
+    <figure class="gi" onclick="openLb(164)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(164)" aria-label="Photo 165 of 194">
+      <img src="thumbs/165.jpg" loading="lazy" alt="Photo 165">
+    </figure>
+    <figure class="gi" onclick="openLb(165)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(165)" aria-label="Photo 166 of 194">
+      <img src="thumbs/166.jpg" loading="lazy" alt="Photo 166">
+    </figure>
+    <figure class="gi" onclick="openLb(166)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(166)" aria-label="Photo 167 of 194">
+      <img src="thumbs/167.jpg" loading="lazy" alt="Photo 167">
+    </figure>
+    <figure class="gi" onclick="openLb(167)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(167)" aria-label="Photo 168 of 194">
+      <img src="thumbs/168.jpg" loading="lazy" alt="Photo 168">
+    </figure>
+    <figure class="gi" onclick="openLb(168)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(168)" aria-label="Photo 169 of 194">
+      <img src="thumbs/169.jpg" loading="lazy" alt="Photo 169">
+    </figure>
+    <figure class="gi" onclick="openLb(169)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(169)" aria-label="Photo 170 of 194">
+      <img src="thumbs/170.jpg" loading="lazy" alt="Photo 170">
+    </figure>
+    <figure class="gi" onclick="openLb(170)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(170)" aria-label="Photo 171 of 194">
+      <img src="thumbs/171.jpg" loading="lazy" alt="Photo 171">
+    </figure>
+    <figure class="gi" onclick="openLb(171)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(171)" aria-label="Photo 172 of 194">
+      <img src="thumbs/172.jpg" loading="lazy" alt="Photo 172">
+    </figure>
+    <figure class="gi" onclick="openLb(172)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(172)" aria-label="Photo 173 of 194">
+      <img src="thumbs/173.jpg" loading="lazy" alt="Photo 173">
+    </figure>
+    <figure class="gi" onclick="openLb(173)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(173)" aria-label="Photo 174 of 194">
+      <img src="thumbs/174.jpg" loading="lazy" alt="Photo 174">
+    </figure>
+    <figure class="gi" onclick="openLb(174)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(174)" aria-label="Photo 175 of 194">
+      <img src="thumbs/175.jpg" loading="lazy" alt="Photo 175">
+    </figure>
+    <figure class="gi" onclick="openLb(175)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(175)" aria-label="Photo 176 of 194">
+      <img src="thumbs/176.jpg" loading="lazy" alt="Photo 176">
+    </figure>
+    <figure class="gi" onclick="openLb(176)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(176)" aria-label="Photo 177 of 194">
+      <img src="thumbs/177.jpg" loading="lazy" alt="Photo 177">
+    </figure>
+    <figure class="gi" onclick="openLb(177)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(177)" aria-label="Photo 178 of 194">
+      <img src="thumbs/178.jpg" loading="lazy" alt="Photo 178">
+    </figure>
+    <figure class="gi" onclick="openLb(178)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(178)" aria-label="Photo 179 of 194">
+      <img src="thumbs/179.jpg" loading="lazy" alt="Photo 179">
+    </figure>
+    <figure class="gi" onclick="openLb(179)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(179)" aria-label="Photo 180 of 194">
+      <img src="thumbs/180.jpg" loading="lazy" alt="Photo 180">
+    </figure>
+    <figure class="gi" onclick="openLb(180)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(180)" aria-label="Photo 181 of 194">
+      <img src="thumbs/181.jpg" loading="lazy" alt="Photo 181">
+    </figure>
+    <figure class="gi" onclick="openLb(181)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(181)" aria-label="Photo 182 of 194">
+      <img src="thumbs/182.jpg" loading="lazy" alt="Photo 182">
+    </figure>
+    <figure class="gi" onclick="openLb(182)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(182)" aria-label="Photo 183 of 194">
+      <img src="thumbs/183.jpg" loading="lazy" alt="Photo 183">
+    </figure>
+    <figure class="gi" onclick="openLb(183)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(183)" aria-label="Photo 184 of 194">
+      <img src="thumbs/184.jpg" loading="lazy" alt="Photo 184">
+    </figure>
+    <figure class="gi" onclick="openLb(184)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(184)" aria-label="Photo 185 of 194">
+      <img src="thumbs/185.jpg" loading="lazy" alt="Photo 185">
+    </figure>
+    <figure class="gi" onclick="openLb(185)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(185)" aria-label="Photo 186 of 194">
+      <img src="thumbs/186.jpg" loading="lazy" alt="Photo 186">
+    </figure>
+    <figure class="gi" onclick="openLb(186)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(186)" aria-label="Photo 187 of 194">
+      <img src="thumbs/187.jpg" loading="lazy" alt="Photo 187">
+    </figure>
+    <figure class="gi" onclick="openLb(187)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(187)" aria-label="Photo 188 of 194">
+      <img src="thumbs/188.jpg" loading="lazy" alt="Photo 188">
+    </figure>
+    <figure class="gi" onclick="openLb(188)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(188)" aria-label="Photo 189 of 194">
+      <img src="thumbs/189.jpg" loading="lazy" alt="Photo 189">
+    </figure>
+    <figure class="gi" onclick="openLb(189)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(189)" aria-label="Photo 190 of 194">
+      <img src="thumbs/190.jpg" loading="lazy" alt="Photo 190">
+    </figure>
+    <figure class="gi" onclick="openLb(190)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(190)" aria-label="Photo 191 of 194">
+      <img src="thumbs/191.jpg" loading="lazy" alt="Photo 191">
+    </figure>
+    <figure class="gi" onclick="openLb(191)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(191)" aria-label="Photo 192 of 194">
+      <img src="thumbs/192.jpg" loading="lazy" alt="Photo 192">
+    </figure>
+    <figure class="gi" onclick="openLb(192)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(192)" aria-label="Photo 193 of 194">
+      <img src="thumbs/193.jpg" loading="lazy" alt="Photo 193">
+    </figure>
+    <figure class="gi" onclick="openLb(193)" tabindex="0" onkeydown="if(event.key==='Enter')openLb(193)" aria-label="Photo 194 of 194">
+      <img src="thumbs/194.jpg" loading="lazy" alt="Photo 194">
+    </figure>
+  </main>
+
+  <!-- Lightbox -->
+  <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer">
+    <button class="lb-close" onclick="closeLb()" aria-label="Close">&#x2715;</button>
+    <div class="lb-img-wrap">
+      <button class="lb-btn lb-prev" onclick="navigate(-1)" aria-label="Previous photo">&#8249;</button>
+      <span class="lb-spinner" id="lb-spinner">Loading…</span>
+      <img id="lb-img" src="" alt="">
+      <button class="lb-btn lb-next" onclick="navigate(1)" aria-label="Next photo">&#8250;</button>
+    </div>
+    <div class="lb-footer">
+      <span id="lb-num">1</span>&nbsp;of&nbsp;194
+      &nbsp;·&nbsp; Ysgol Ein Harglwyddes &nbsp;·&nbsp; 24 May 2025
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <p>
+      <a href="https://ourladysbangor.org">Parish of Our Lady &amp; St. James, Bangor</a>
+      &nbsp;·&nbsp; 24 May 2025
+    </p>
+    <p style="margin-top:0.4rem">
+      <a href="https://ourladysbangor.org">← Return to parish website</a>
+    </p>
+  </footer>
+
+  <script>
+    const PHOTOS = [
+      "photos/001.jpg",
+      "photos/002.jpg",
+      "photos/003.jpg",
+      "photos/004.jpg",
+      "photos/005.jpg",
+      "photos/006.jpg",
+      "photos/007.jpg",
+      "photos/008.jpg",
+      "photos/009.jpg",
+      "photos/010.jpg",
+      "photos/011.jpg",
+      "photos/012.jpg",
+      "photos/013.jpg",
+      "photos/014.jpg",
+      "photos/015.jpg",
+      "photos/016.jpg",
+      "photos/017.jpg",
+      "photos/018.jpg",
+      "photos/019.jpg",
+      "photos/020.jpg",
+      "photos/021.jpg",
+      "photos/022.jpg",
+      "photos/023.jpg",
+      "photos/024.jpg",
+      "photos/025.jpg",
+      "photos/026.jpg",
+      "photos/027.jpg",
+      "photos/028.jpg",
+      "photos/029.jpg",
+      "photos/030.jpg",
+      "photos/031.jpg",
+      "photos/032.jpg",
+      "photos/033.jpg",
+      "photos/034.jpg",
+      "photos/035.jpg",
+      "photos/036.jpg",
+      "photos/037.jpg",
+      "photos/038.jpg",
+      "photos/039.jpg",
+      "photos/040.jpg",
+      "photos/041.jpg",
+      "photos/042.jpg",
+      "photos/043.jpg",
+      "photos/044.jpg",
+      "photos/045.jpg",
+      "photos/046.jpg",
+      "photos/047.jpg",
+      "photos/048.jpg",
+      "photos/049.jpg",
+      "photos/050.jpg",
+      "photos/051.jpg",
+      "photos/052.jpg",
+      "photos/053.jpg",
+      "photos/054.jpg",
+      "photos/055.jpg",
+      "photos/056.jpg",
+      "photos/057.jpg",
+      "photos/058.jpg",
+      "photos/059.jpg",
+      "photos/060.jpg",
+      "photos/061.jpg",
+      "photos/062.jpg",
+      "photos/063.jpg",
+      "photos/064.jpg",
+      "photos/065.jpg",
+      "photos/066.jpg",
+      "photos/067.jpg",
+      "photos/068.jpg",
+      "photos/069.jpg",
+      "photos/070.jpg",
+      "photos/071.jpg",
+      "photos/072.jpg",
+      "photos/073.jpg",
+      "photos/074.jpg",
+      "photos/075.jpg",
+      "photos/076.jpg",
+      "photos/077.jpg",
+      "photos/078.jpg",
+      "photos/079.jpg",
+      "photos/080.jpg",
+      "photos/081.jpg",
+      "photos/082.jpg",
+      "photos/083.jpg",
+      "photos/084.jpg",
+      "photos/085.jpg",
+      "photos/086.jpg",
+      "photos/087.jpg",
+      "photos/088.jpg",
+      "photos/089.jpg",
+      "photos/090.jpg",
+      "photos/091.jpg",
+      "photos/092.jpg",
+      "photos/093.jpg",
+      "photos/094.jpg",
+      "photos/095.jpg",
+      "photos/096.jpg",
+      "photos/097.jpg",
+      "photos/098.jpg",
+      "photos/099.jpg",
+      "photos/100.jpg",
+      "photos/101.jpg",
+      "photos/102.jpg",
+      "photos/103.jpg",
+      "photos/104.jpg",
+      "photos/105.jpg",
+      "photos/106.jpg",
+      "photos/107.jpg",
+      "photos/108.jpg",
+      "photos/109.jpg",
+      "photos/110.jpg",
+      "photos/111.jpg",
+      "photos/112.jpg",
+      "photos/113.jpg",
+      "photos/114.jpg",
+      "photos/115.jpg",
+      "photos/116.jpg",
+      "photos/117.jpg",
+      "photos/118.jpg",
+      "photos/119.jpg",
+      "photos/120.jpg",
+      "photos/121.jpg",
+      "photos/122.jpg",
+      "photos/123.jpg",
+      "photos/124.jpg",
+      "photos/125.jpg",
+      "photos/126.jpg",
+      "photos/127.jpg",
+      "photos/128.jpg",
+      "photos/129.jpg",
+      "photos/130.jpg",
+      "photos/131.jpg",
+      "photos/132.jpg",
+      "photos/133.jpg",
+      "photos/134.jpg",
+      "photos/135.jpg",
+      "photos/136.jpg",
+      "photos/137.jpg",
+      "photos/138.jpg",
+      "photos/139.jpg",
+      "photos/140.jpg",
+      "photos/141.jpg",
+      "photos/142.jpg",
+      "photos/143.jpg",
+      "photos/144.jpg",
+      "photos/145.jpg",
+      "photos/146.jpg",
+      "photos/147.jpg",
+      "photos/148.jpg",
+      "photos/149.jpg",
+      "photos/150.jpg",
+      "photos/151.jpg",
+      "photos/152.jpg",
+      "photos/153.jpg",
+      "photos/154.jpg",
+      "photos/155.jpg",
+      "photos/156.jpg",
+      "photos/157.jpg",
+      "photos/158.jpg",
+      "photos/159.jpg",
+      "photos/160.jpg",
+      "photos/161.jpg",
+      "photos/162.jpg",
+      "photos/163.jpg",
+      "photos/164.jpg",
+      "photos/165.jpg",
+      "photos/166.jpg",
+      "photos/167.jpg",
+      "photos/168.jpg",
+      "photos/169.jpg",
+      "photos/170.jpg",
+      "photos/171.jpg",
+      "photos/172.jpg",
+      "photos/173.jpg",
+      "photos/174.jpg",
+      "photos/175.jpg",
+      "photos/176.jpg",
+      "photos/177.jpg",
+      "photos/178.jpg",
+      "photos/179.jpg",
+      "photos/180.jpg",
+      "photos/181.jpg",
+      "photos/182.jpg",
+      "photos/183.jpg",
+      "photos/184.jpg",
+      "photos/185.jpg",
+      "photos/186.jpg",
+      "photos/187.jpg",
+      "photos/188.jpg",
+      "photos/189.jpg",
+      "photos/190.jpg",
+      "photos/191.jpg",
+      "photos/192.jpg",
+      "photos/193.jpg",
+      "photos/194.jpg"
+    ];
+    const TOTAL  = PHOTOS.length;
+    let current  = 0;
+    let preloadNext = null;
+
+    const lb      = document.getElementById('lb');
+    const lbImg   = document.getElementById('lb-img');
+    const lbNum   = document.getElementById('lb-num');
+    const spinner = document.getElementById('lb-spinner');
+
+    function openLb(idx) {
+      current = idx;
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      loadPhoto(idx);
+    }
+
+    function closeLb() {
+      lb.classList.remove('open');
+      document.body.style.overflow = '';
+      lbImg.src = '';
+    }
+
+    function loadPhoto(idx) {
+      spinner.classList.add('show');
+      lbImg.style.opacity = '0';
+      const img = new Image();
+      img.onload = () => {
+        lbImg.src = PHOTOS[idx];
+        lbImg.alt = 'Photo ' + (idx + 1) + ' of ' + TOTAL;
+        lbImg.style.opacity = '1';
+        spinner.classList.remove('show');
+        lbNum.textContent = idx + 1;
+        // Preload neighbours
+        if (idx + 1 < TOTAL) new Image().src = PHOTOS[idx + 1];
+        if (idx - 1 >= 0)    new Image().src = PHOTOS[idx - 1];
+      };
+      img.src = PHOTOS[idx];
+    }
+
+    function navigate(dir) {
+      current = (current + dir + TOTAL) % TOTAL;
+      loadPhoto(current);
+    }
+
+    // Keyboard
+    document.addEventListener('keydown', e => {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
+      if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   navigate(-1);
+      if (e.key === 'Escape') closeLb();
+    });
+
+    // Click backdrop to close
+    lb.addEventListener('click', e => {
+      if (e.target === lb) closeLb();
+    });
+
+    // Touch swipe
+    let touchStartX = 0;
+    lb.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, {passive: true});
+    lb.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 50) navigate(dx < 0 ? 1 : -1);
+    }, {passive: true});
+
+    // CSS transition for image fade
+    lbImg.style.transition = 'opacity 0.2s ease';
+  </script>
+
+</body>
+</html>
