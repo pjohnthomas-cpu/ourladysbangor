@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photo Essay Generator — Our Lady & St. James</title>
+<style>
+  :root {
+    --navy: #1a2640;
+    --gold: #d4a843;
+    --cream: #f7f5f0;
+    --stone: #e8e8e8;
+    --text: #0f0f0f;
+    --white: #ffffff;
+    --mid: #2a3d5c;
+    --panel: #f0ede8;
+    --border: #d0ccc6;
+    --success: #2d6a4f;
+    --danger: #8b1c1c;
+    --sidebar-w: 340px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { font-family: system-ui, -apple-system, sans-serif; font-size: 14px; color: var(--text); background: var(--cream); display: flex; flex-direction: column; }
+
+  /* ── HEADER ── */
+  header { background: var(--navy); color: var(--white); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+  header h1 { font-family: Georgia, serif; font-size: 1.1rem; font-weight: 600; color: var(--gold); }
+  header h1 span { display: block; font-family: system-ui, sans-serif; font-size: 0.75rem; font-weight: 400; color: rgba(255,255,255,0.7); margin-top: 1px; }
+  .step-badges { display: flex; gap: 6px; }
+  .step-badge { padding: 3px 10px; border: 1px solid rgba(255,255,255,0.2); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; color: rgba(255,255,255,0.5); cursor: pointer; transition: all 0.2s; }
+  .step-badge.active { background: var(--gold); color: var(--navy); border-color: var(--gold); }
+  .step-badge.done { background: rgba(212,168,67,0.2); color: var(--gold); border-color: rgba(212,168,67,0.4); }
+
+  /* ── LAYOUT ── */
+  .app { display: flex; flex: 1; overflow: hidden; }
+  .sidebar { width: var(--sidebar-w); background: var(--white); border-right: 1px solid var(--border); display: flex; flex-direction: column; flex-shrink: 0; overflow-y: auto; }
+  .main { flex: 1; overflow-y: auto; background: var(--cream); }
+
+  /* ── SIDEBAR PANELS ── */
+  .panel { padding: 16px; border-bottom: 1px solid var(--border); }
+  .panel-title { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+  .panel-title svg { opacity: 0.6; }
+  label { display: block; font-size: 0.78rem; font-weight: 600; color: #444; margin-bottom: 3px; margin-top: 10px; }
+  label:first-of-type { margin-top: 0; }
+  input[type=text], input[type=date], input[type=url], textarea, select {
+    width: 100%; padding: 7px 9px; border: 1px solid var(--border); background: var(--panel);
+    font-size: 0.82rem; color: var(--text); font-family: inherit;
+    transition: border-color 0.2s;
+  }
+  input:focus, textarea:focus, select:focus { outline: none; border-color: var(--gold); background: var(--white); }
+  textarea { resize: vertical; min-height: 60px; }
+  .hint { font-size: 0.72rem; color: #888; margin-top: 3px; }
+
+  /* ── FOLDER PICK ── */
+  .folder-pick { border: 2px dashed var(--border); padding: 20px; text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+  .folder-pick:hover { border-color: var(--gold); background: #fdf8ee; }
+  .folder-pick input { display: none; }
+  .folder-pick .icon { font-size: 2rem; margin-bottom: 6px; }
+  .folder-pick p { font-size: 0.8rem; color: #666; }
+  .folder-pick strong { font-size: 0.85rem; color: var(--navy); }
+
+  /* ── IMAGE GRID (step 2) ── */
+  .img-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px; }
+  .img-card { position: relative; border: 2px solid var(--border); background: var(--white); cursor: pointer; transition: border-color 0.15s; }
+  .img-card:hover { border-color: var(--gold); }
+  .img-card.hero-sel { border-color: #c0392b; }
+  .img-card.index-sel { border-color: var(--gold); }
+  .img-card img { width: 100%; height: 90px; object-fit: cover; display: block; }
+  .img-card .fname { font-size: 0.65rem; color: #666; padding: 3px 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .img-badge { position: absolute; top: 4px; left: 4px; font-size: 0.6rem; font-weight: 700; padding: 2px 5px; letter-spacing: 0.04em; }
+  .badge-hero { background: #c0392b; color: white; }
+  .badge-idx { background: var(--gold); color: var(--navy); }
+  .img-sel-count { font-size: 0.75rem; color: #666; padding: 4px 12px 8px; }
+  .chapter-block { background: var(--white); border: 1px solid var(--border); margin: 10px 12px; }
+  .chapter-header { background: var(--panel); padding: 8px 10px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+  .chapter-header strong { font-size: 0.82rem; color: var(--navy); }
+  .chapter-body { padding: 10px; display: none; }
+  .chapter-block.open .chapter-body { display: block; }
+  .chapter-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 8px; }
+  .ch-photo { border: 1px solid var(--border); position: relative; }
+  .ch-photo img { width: 100%; height: 70px; object-fit: cover; display: block; }
+  .ch-photo-caption { font-size: 0.68rem; padding: 3px 5px; color: #555; }
+  .ch-photo-controls { display: flex; gap: 4px; padding: 3px 5px; }
+  .ch-photo-controls button { flex: 1; font-size: 0.65rem; padding: 2px 4px; border: 1px solid var(--border); background: var(--panel); cursor: pointer; }
+  .ch-photo-controls button:hover { background: var(--gold); color: var(--navy); border-color: var(--gold); }
+  .ch-photo .wide-toggle { position: absolute; top: 3px; right: 3px; font-size: 0.6rem; background: var(--navy); color: white; border: none; padding: 1px 4px; cursor: pointer; }
+  .ch-photo .wide-on { background: var(--gold); color: var(--navy); }
+
+  /* ── BUTTONS ── */
+  .btn { display: inline-block; padding: 8px 16px; font-size: 0.82rem; font-weight: 700; cursor: pointer; border: none; letter-spacing: 0.03em; transition: background 0.2s; }
+  .btn-primary { background: var(--navy); color: var(--gold); }
+  .btn-primary:hover { background: var(--mid); }
+  .btn-gold { background: var(--gold); color: var(--navy); }
+  .btn-gold:hover { background: #e0b84e; }
+  .btn-sm { padding: 5px 10px; font-size: 0.75rem; }
+  .btn-row { display: flex; gap: 8px; flex-wrap: wrap; padding: 12px; }
+
+  /* ── STEP VIEWS ── */
+  .step-view { display: none; }
+  .step-view.active { display: flex; flex-direction: column; height: 100%; }
+
+  /* ── OUTPUT ── */
+  .output-area { flex: 1; padding: 20px; overflow-y: auto; }
+  .output-tabs { display: flex; border-bottom: 2px solid var(--border); background: var(--white); flex-shrink: 0; }
+  .output-tab { padding: 10px 18px; font-size: 0.8rem; font-weight: 700; cursor: pointer; color: #888; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.2s; }
+  .output-tab.active { color: var(--navy); border-bottom-color: var(--gold); }
+  .output-pane { display: none; }
+  .output-pane.active { display: block; }
+  .code-block { background: #1a2640; color: #e8e0cc; font-family: 'Courier New', monospace; font-size: 0.72rem; line-height: 1.6; padding: 16px; white-space: pre-wrap; overflow-x: auto; border-radius: 0; }
+  .copy-btn { display: flex; align-items: center; gap: 6px; background: var(--navy); color: var(--gold); border: none; padding: 7px 14px; font-size: 0.78rem; font-weight: 700; cursor: pointer; margin-bottom: 8px; }
+  .copy-btn:hover { background: var(--mid); }
+  .copy-btn.copied { background: var(--success); color: white; }
+
+  /* ── PREVIEW (step 3 main) ── */
+
+  /* ── MISC ── */
+  .add-chapter-btn { width: calc(100% - 24px); margin: 0 12px 12px; padding: 8px; border: 1px dashed var(--border); background: transparent; cursor: pointer; font-size: 0.78rem; color: var(--mid); font-weight: 600; }
+  .add-chapter-btn:hover { background: var(--panel); border-color: var(--gold); }
+  .del-chapter { font-size: 0.65rem; color: #c0392b; background: none; border: none; cursor: pointer; padding: 2px 6px; }
+  .del-chapter:hover { background: #fde; }
+  .notice { padding: 10px 12px; font-size: 0.78rem; border-left: 3px solid var(--gold); background: #fdf8ee; margin: 8px 12px; }
+  .empty-state { text-align: center; padding: 40px 20px; color: #999; }
+  .empty-state .icon { font-size: 2.5rem; margin-bottom: 10px; }
+  .file-count-badge { background: var(--gold); color: var(--navy); font-size: 0.68rem; font-weight: 700; padding: 1px 6px; border-radius: 2px; margin-left: 6px; }
+
+  /* ── INLINE CAPTION EDIT ── */
+  .caption-input { width: 100%; font-size: 0.7rem; border: 1px solid #ddd; padding: 2px 4px; background: #fafafa; }
+  .caption-input:focus { outline: none; border-color: var(--gold); background: white; }
+
+  .orientation-row { display: flex; align-items: center; gap: 6px; margin-top: 4px; font-size: 0.72rem; color: #555; }
+  .orientation-row label { font-size: 0.72rem; font-weight: 400; color: #555; margin: 0; }
+  .orientation-row select { width: auto; padding: 2px 4px; font-size: 0.72rem; }
+
+  /* Steps in sidebar that react to current step */
+  .step-only-2, .step-only-3 { display: none; }
+
+  .set-hero-btn { display: none; position: absolute; bottom: 22px; right: 4px; font-size: 0.6rem; font-weight: 700; padding: 2px 5px; background: rgba(26,38,64,0.85); color: var(--gold); border: 1px solid var(--gold); cursor: pointer; letter-spacing: 0.03em; }
+  .img-card:hover .set-hero-btn { display: block; }
+  .img-card.hero-sel .set-hero-btn { background: #c0392b; color: white; border-color: #c0392b; display: block; }
+
+  .drive-link-field { display: flex; gap: 6px; }
+  .drive-link-field input { flex: 1; }
+
+  /* ── SLUG PREVIEW ── */
+  .slug-preview { font-size: 0.7rem; color: #888; margin-top: 3px; font-family: monospace; }
+  .slug-preview span { color: var(--navy); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Photo Essay Generator
+    <span>Our Lady &amp; St. James, Bangor</span>
+  </h1>
+  <div class="step-badges">
+    <div class="step-badge active" id="badge-1" onclick="goStep(1)">1 · Load</div>
+    <div class="step-badge" id="badge-2" onclick="goStep(2)">2 · Arrange</div>
+    <div class="step-badge" id="badge-3" onclick="goStep(3)">3 · Output</div>
+  </div>
+</header>
+
+<div class="app">
+  <!-- ══════════════════════════════════════════════════════════════
+       SIDEBAR
+  ══════════════════════════════════════════════════════════════ -->
+  <aside class="sidebar" id="sidebar">
+
+    <!-- ── ESSAY METADATA ── -->
+    <div class="panel">
+      <div class="panel-title">
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M2 2h12v1H2zm0 3h12v1H2zm0 3h8v1H2zm0 3h6v1H2z"/></svg>
+        Essay Metadata
+      </div>
+
+      <label>Event Title</label>
+      <input type="text" id="meta-title" placeholder="e.g. Bishop's Farewell Visit" oninput="updateSlug()">
+
+      <label>Subtitle / Occasion</label>
+      <input type="text" id="meta-subtitle" placeholder="e.g. Confirmation Mass">
+
+      <label>Date</label>
+      <input type="date" id="meta-date" oninput="updateSlug()">
+
+      <label>Venue</label>
+      <select id="meta-venue">
+        <option value="Our Lady &amp; St. James, Bangor">Our Lady &amp; St. James, Bangor</option>
+        <option value="St. David &amp; St. Helen, Caernarfon">St. David &amp; St. Helen, Caernarfon</option>
+      </select>
+
+      <label>Intro paragraph</label>
+      <textarea id="meta-intro" rows="3" placeholder="Brief description for the hero section and index…"></textarea>
+
+      <label>About This Set — extra details</label>
+      <textarea id="meta-about" rows="2" placeholder="e.g. Celebrant: Fr. Savi · Music: Parish Choir"></textarea>
+
+      <label>Google Drive folder URL (full-res download)</label>
+      <div class="drive-link-field">
+        <input type="url" id="meta-drive" placeholder="https://drive.google.com/drive/folders/…">
+      </div>
+      <div class="hint">Parishioners will see a "Download full-resolution photos" button.</div>
+
+      <label>Essay filename slug</label>
+      <input type="text" id="meta-slug" placeholder="e.g. bishops-farewell-2026-06-14">
+      <div class="slug-preview" id="slug-preview">→ <span>—</span></div>
+
+      <label>Image subdirectory name</label>
+      <input type="text" id="meta-imgdir" placeholder="e.g. bishops-farewell-2026-06-14">
+      <div class="slug-preview" id="slug-dir-preview">→ <span>—</span></div>
+      <div class="hint">Usually identical — separate only if your image folder name differs.</div>
+    </div>
+
+    <!-- ── STEP 1: FOLDER LOAD ── -->
+    <div class="panel" id="step1-panel">
+      <div class="panel-title">
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M1 3.5A1.5 1.5 0 0 1 2.5 2h2.764c.958 0 1.76.56 2.311 1.184C7.985 3.648 8.48 4 9 4h4.5A1.5 1.5 0 0 1 15 5.5v7A1.5 1.5 0 0 1 13.5 14h-11A1.5 1.5 0 0 1 1 12.5v-9z"/></svg>
+        Load Image Folder
+      </div>
+      <div class="folder-pick" onclick="document.getElementById('folder-input').click()">
+        <input type="file" id="folder-input" webkitdirectory multiple accept="image/*" onchange="loadFolder(this)">
+        <div class="icon">📂</div>
+        <strong>Click to select image folder</strong>
+        <p>Pick the subdirectory of web-optimised JPEGs from your repo clone.</p>
+      </div>
+      <div class="hint" style="margin-top:6px;">Accepts JPEG, PNG, WEBP. Reads from your local clone — nothing is uploaded.</div>
+    </div>
+
+    <!-- ── STEP 2: IMAGE SELECTION CONTROLS ── -->
+    <div class="panel step-only-2" id="step2-panel">
+      <div class="panel-title">
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/><path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z"/></svg>
+        Selection
+        <span class="file-count-badge" id="file-count">0</span>
+      </div>
+      <div class="notice">
+        <strong>Hero image:</strong> Hover a photo → click ★ Hero (or right-click).<br>
+        <strong>Index strip (3):</strong> Click photos to toggle selection.<br>
+        <strong>Essay chapters:</strong> Add below and pick photos per chapter.
+      </div>
+    </div>
+
+    <!-- ── STEP 2: CHAPTERS ── -->
+    <div class="step-only-2" id="chapters-panel">
+      <div class="panel-title" style="padding:10px 12px 4px; font-size:0.7rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--mid);">
+        Essay Chapters
+      </div>
+      <div id="chapters-list"></div>
+      <button class="add-chapter-btn" onclick="addChapter()">+ Add Chapter</button>
+    </div>
+
+  </aside>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       MAIN AREA
+  ══════════════════════════════════════════════════════════════ -->
+  <main class="main">
+
+    <!-- STEP 1 VIEW -->
+    <div class="step-view active" id="step1-view">
+      <div class="empty-state" style="margin-top:80px;">
+        <div class="icon">🖼️</div>
+        <p style="font-size:1rem;font-weight:600;color:var(--navy);margin-bottom:8px;">Parish Photo Essay Generator</p>
+        <p style="max-width:360px;margin:0 auto;color:#888;font-size:0.85rem;line-height:1.6;">
+          Fill in the metadata on the left, then load the image folder from your local repo clone.
+          The tool generates a ready-to-deploy essay page and index.html snippet.
+        </p>
+        <div style="margin-top:24px;display:flex;flex-direction:column;gap:8px;align-items:center;font-size:0.8rem;color:#aaa;">
+          <div>① Fill metadata &amp; load folder</div>
+          <div>② Arrange images into chapters, set hero, pick index strip</div>
+          <div>③ Copy the generated HTML</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2 VIEW -->
+    <div class="step-view" id="step2-view">
+      <!-- Image thumbnail grid for selection -->
+      <div style="padding:12px;border-bottom:1px solid var(--border);background:var(--white);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+        <div style="font-size:0.8rem;font-weight:700;color:var(--navy);">All Images
+          <span style="font-weight:400;color:#888;" id="hero-label"> — hover a photo → ★ Hero</span>
+        </div>
+        <div style="font-size:0.75rem;color:#888;">
+          Index strip: <strong id="index-count">0</strong>/3
+          &nbsp;|&nbsp; Hero: <strong id="hero-set">none</strong>
+        </div>
+      </div>
+      <div class="img-grid" id="img-grid"></div>
+      <div class="btn-row" style="border-top:1px solid var(--border);background:var(--white);">
+        <button class="btn btn-gold" onclick="goStep(3)">Generate Output →</button>
+        <button class="btn btn-primary btn-sm" onclick="goStep(1)">← Back</button>
+      </div>
+    </div>
+
+    <!-- STEP 3 VIEW -->
+    <div class="step-view" id="step3-view">
+      <div class="output-tabs">
+        <div class="output-tab active" onclick="showTab('tab-essay', this)">Essay Page HTML</div>
+        <div class="output-tab" onclick="showTab('tab-index', this)">Index Snippet</div>
+        <div class="output-tab" onclick="showTab('tab-preview', this)">Essay Preview</div>
+      </div>
+      <div class="output-area">
+
+        <!-- Essay HTML -->
+        <div class="output-pane active" id="tab-essay">
+          <button class="copy-btn" onclick="copyOutput('essay-output', this)">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg>
+            Copy Essay HTML
+          </button>
+          <pre class="code-block" id="essay-output"><!-- generate to see output --></pre>
+        </div>
+
+        <!-- Index snippet -->
+        <div class="output-pane" id="tab-index">
+          <button class="copy-btn" onclick="copyOutput('index-output', this)">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg>
+            Copy Index Snippet
+          </button>
+          <p style="font-size:0.78rem;color:#888;margin-bottom:8px;">Paste <strong style="color:var(--navy);">inside</strong> <code>&lt;div class="photoessay-copy"&gt;</code> in index.html — immediately after the <code>&lt;div class="divider"&gt;&lt;/div&gt;</code> line, above the existing entries. Do <strong style="color:#8b1c1c;">not</strong> paste before the <code>photoessay-bg</code> wrapper div.</p>
+          <pre class="code-block" id="index-output"><!-- generate to see output --></pre>
+        </div>
+
+        <!-- Preview -->
+        <div class="output-pane" id="tab-preview">
+          <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#888;padding:8px 12px;background:var(--panel);border-bottom:1px solid var(--border);">Live preview — index snippet appearance</div>
+          <div id="preview-content" style="padding:20px;max-width:700px;"></div>
+        </div>
+
+      </div>
+      <div class="btn-row" style="border-top:1px solid var(--border);background:var(--white);">
+        <button class="btn btn-primary btn-sm" onclick="goStep(2)">← Back to Arrange</button>
+        <button class="btn btn-gold" onclick="regenerate()">↺ Regenerate</button>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════════════════════
+let state = {
+  step: 1,
+  files: [],          // {name, url, file}
+  heroFile: null,     // filename
+  indexFiles: [],     // up to 3 filenames
+  chapters: []        // [{kicker, title, body, photos:[{name,caption,wide,orientation}]}]
+};
+
+// ══════════════════════════════════════════════════════════════
+// STEP NAVIGATION
+// ══════════════════════════════════════════════════════════════
+function goStep(n) {
+  if (n === 2 && state.files.length === 0) { alert('Please load an image folder first.'); return; }
+  if (n === 3) { generateOutput(); }
+  state.step = n;
+  document.querySelectorAll('.step-view').forEach(v => v.classList.remove('active'));
+  document.getElementById('step' + n + '-view').classList.add('active');
+  document.querySelectorAll('.step-badge').forEach((b, i) => {
+    b.classList.toggle('active', i + 1 === n);
+    b.classList.toggle('done', i + 1 < n);
+  });
+  // Show/hide step-only panels
+  document.querySelectorAll('.step-only-2').forEach(el => el.style.display = (n === 2 ? 'block' : 'none'));
+  document.querySelectorAll('.step-only-3').forEach(el => el.style.display = (n === 3 ? 'block' : 'none'));
+}
+
+// ══════════════════════════════════════════════════════════════
+// SLUG
+// ══════════════════════════════════════════════════════════════
+function updateSlug() {
+  const title = document.getElementById('meta-title').value;
+  const date = document.getElementById('meta-date').value; // YYYY-MM-DD
+  const slugInput = document.getElementById('meta-slug');
+  const dirInput  = document.getElementById('meta-imgdir');
+  const titleSlug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  const datePart  = date || '';
+  const auto      = datePart ? `${titleSlug}-${datePart}` : titleSlug;
+  if (!slugInput.dataset.manual) slugInput.value = auto;
+  if (!dirInput.dataset.manual)  dirInput.value  = auto;
+  refreshSlugPreview();
+}
+function refreshSlugPreview() {
+  const slug = getSlug();
+  const dir  = getImgDir();
+  document.querySelector('#slug-preview span').textContent    = slug ? slug + '.html' : '—';
+  document.querySelector('#slug-dir-preview span').textContent = dir  ? dir  + '/'    : '—';
+}
+document.getElementById('meta-slug').addEventListener('input', function() {
+  this.dataset.manual = '1';
+  refreshSlugPreview();
+});
+document.getElementById('meta-imgdir').addEventListener('input', function() {
+  this.dataset.manual = '1';
+  refreshSlugPreview();
+});
+function getSlug()   { return document.getElementById('meta-slug').value.trim(); }
+function getImgDir() { return document.getElementById('meta-imgdir').value.trim(); }
+
+// ══════════════════════════════════════════════════════════════
+// FOLDER LOAD
+// ══════════════════════════════════════════════════════════════
+function loadFolder(input) {
+  const files = Array.from(input.files).filter(f => f.type.startsWith('image/'));
+  if (files.length === 0) { alert('No image files found in that folder.'); return; }
+  // Revoke old URLs
+  state.files.forEach(f => URL.revokeObjectURL(f.url));
+  state.files = files.map(f => ({ name: f.name, url: URL.createObjectURL(f), file: f }));
+  state.files.sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+  state.heroFile = null;
+  state.indexFiles = [];
+  state.chapters = [];
+  document.getElementById('file-count').textContent = state.files.length;
+  renderImgGrid();
+  goStep(2);
+}
+
+// ══════════════════════════════════════════════════════════════
+// IMAGE GRID (step 2)
+// ══════════════════════════════════════════════════════════════
+function safeId(name) { return 'card-' + name.replace(/[^a-zA-Z0-9_-]/g, '_'); }
+
+function renderImgGrid() {
+  const grid = document.getElementById('img-grid');
+  grid.innerHTML = '';
+  state.files.forEach(f => {
+    const card = document.createElement('div');
+    card.className = 'img-card';
+    card.dataset.fname = f.name;
+    card.id = safeId(f.name);
+    if (f.name === state.heroFile) card.classList.add('hero-sel');
+    if (state.indexFiles.includes(f.name)) card.classList.add('index-sel');
+
+    const img = document.createElement('img');
+    img.src = f.url;
+    img.alt = f.name;
+    img.loading = 'lazy';
+
+    const fname = document.createElement('div');
+    fname.className = 'fname';
+    fname.textContent = f.name;
+
+    // Badges
+    const badges = document.createElement('div');
+    badges.className = 'card-badges';
+    if (f.name === state.heroFile) {
+      const b = document.createElement('span');
+      b.className = 'img-badge badge-hero';
+      b.textContent = 'HERO';
+      badges.appendChild(b);
+    }
+    const idxPos = state.indexFiles.indexOf(f.name);
+    if (idxPos >= 0) {
+      const b = document.createElement('span');
+      b.className = 'img-badge badge-idx';
+      b.style.left = f.name === state.heroFile ? '42px' : '4px';
+      b.textContent = 'IDX ' + (idxPos + 1);
+      badges.appendChild(b);
+    }
+
+    const heroBtn = document.createElement('button');
+    heroBtn.className = 'set-hero-btn';
+    heroBtn.title = 'Set as hero image';
+    heroBtn.textContent = '★ Hero';
+    heroBtn.addEventListener('click', e => { e.stopPropagation(); setHero(f.name); });
+
+    card.appendChild(badges);
+    card.appendChild(heroBtn);
+    card.appendChild(img);
+    card.appendChild(fname);
+
+    // Left click → toggle index
+    card.addEventListener('click', () => toggleIndex(f.name));
+    // Right click → set hero
+    card.addEventListener('contextmenu', e => { e.preventDefault(); setHero(f.name); });
+
+    grid.appendChild(card);
+  });
+  updateSelCounts();
+}
+
+function setHero(name) {
+  const old = state.heroFile;
+  state.heroFile = (state.heroFile === name) ? null : name;
+  if (old) refreshCard(old);
+  refreshCard(name);
+  document.getElementById('hero-set').textContent = state.heroFile || 'none';
+}
+
+function toggleIndex(name) {
+  const idx = state.indexFiles.indexOf(name);
+  if (idx >= 0) {
+    state.indexFiles.splice(idx, 1);
+  } else {
+    if (state.indexFiles.length >= 3) { alert('Maximum 3 images for the index strip.'); return; }
+    state.indexFiles.push(name);
+  }
+  refreshCard(name);
+  updateSelCounts();
+}
+
+function refreshCard(name) {
+  const card = document.getElementById(safeId(name));
+  if (!card) return;
+  card.className = 'img-card';
+  if (name === state.heroFile) card.classList.add('hero-sel');
+  if (state.indexFiles.includes(name)) card.classList.add('index-sel');
+  // Rebuild badges
+  const oldBadges = card.querySelector('.card-badges');
+  if (oldBadges) card.removeChild(oldBadges);
+  const badges = document.createElement('div');
+  badges.className = 'card-badges';
+  if (name === state.heroFile) {
+    const b = document.createElement('span');
+    b.className = 'img-badge badge-hero';
+    b.textContent = 'HERO';
+    badges.appendChild(b);
+  }
+  const idxPos = state.indexFiles.indexOf(name);
+  if (idxPos >= 0) {
+    const b = document.createElement('span');
+    b.className = 'img-badge badge-idx';
+    b.style.left = name === state.heroFile ? '42px' : '4px';
+    b.textContent = 'IDX ' + (idxPos + 1);
+    badges.appendChild(b);
+  }
+  card.insertBefore(badges, card.firstChild);
+}
+
+function updateSelCounts() {
+  document.getElementById('index-count').textContent = state.indexFiles.length;
+}
+
+// ══════════════════════════════════════════════════════════════
+// CHAPTERS
+// ══════════════════════════════════════════════════════════════
+const ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'];
+
+function addChapter() {
+  const n = state.chapters.length;
+  state.chapters.push({
+    kicker: ROMAN[n] || (n + 1).toString(),
+    title: '',
+    body: '',
+    photos: []
+  });
+  renderChapters();
+}
+
+function renderChapters() {
+  const list = document.getElementById('chapters-list');
+  list.innerHTML = '';
+  state.chapters.forEach((ch, ci) => {
+    const block = document.createElement('div');
+    block.className = 'chapter-block open';
+    block.id = 'ch-' + ci;
+
+    block.innerHTML = `
+      <div class="chapter-header" onclick="toggleChapter(${ci})">
+        <strong>${ch.kicker || (ci+1)}. ${ch.title || '(untitled)'}</strong>
+        <button class="del-chapter" onclick="deleteChapter(event,${ci})">✕ remove</button>
+      </div>
+      <div class="chapter-body">
+        <label>Kicker (Roman numeral / label)</label>
+        <input type="text" value="${esc(ch.kicker)}" oninput="state.chapters[${ci}].kicker=this.value;refreshChapterHeader(${ci})" style="width:80px;display:inline-block;">
+        <label>Chapter Title</label>
+        <input type="text" value="${esc(ch.title)}" placeholder="e.g. The Procession Begins" oninput="state.chapters[${ci}].title=this.value;refreshChapterHeader(${ci})">
+        <label>Narrative paragraph</label>
+        <textarea oninput="state.chapters[${ci}].body=this.value" rows="2" placeholder="Short description of this chapter…">${esc(ch.body)}</textarea>
+        <label>Photos in this chapter</label>
+        <div class="chapter-photos" id="ch-photos-${ci}"></div>
+        <div style="margin-top:6px;">
+          <select id="ch-pick-${ci}" style="font-size:0.75rem;width:calc(100% - 80px);display:inline-block;">
+            <option value="">— pick a photo —</option>
+            ${state.files.map(f => `<option value="${esc(f.name)}">${esc(f.name)}</option>`).join('')}
+          </select>
+          <button class="btn btn-primary btn-sm" style="font-size:0.72rem;padding:5px 8px;" onclick="addPhotoToChapter(${ci})">Add</button>
+        </div>
+      </div>
+    `;
+    list.appendChild(block);
+    renderChapterPhotos(ci);
+  });
+}
+
+function refreshChapterHeader(ci) {
+  const ch = state.chapters[ci];
+  const block = document.getElementById('ch-' + ci);
+  if (block) block.querySelector('.chapter-header strong').textContent = `${ch.kicker || (ci+1)}. ${ch.title || '(untitled)'}`;
+}
+
+function toggleChapter(ci) {
+  const block = document.getElementById('ch-' + ci);
+  if (block) block.classList.toggle('open');
+}
+
+function deleteChapter(e, ci) {
+  e.stopPropagation();
+  if (!confirm('Remove this chapter?')) return;
+  state.chapters.splice(ci, 1);
+  renderChapters();
+}
+
+function addPhotoToChapter(ci) {
+  const sel = document.getElementById('ch-pick-' + ci);
+  const name = sel.value;
+  if (!name) return;
+  if (state.chapters[ci].photos.some(p => p.name === name)) { alert('Already in this chapter.'); return; }
+  state.chapters[ci].photos.push({ name, caption: '', wide: false, orientation: 'landscape' });
+  renderChapterPhotos(ci);
+  sel.value = '';
+}
+
+function renderChapterPhotos(ci) {
+  const container = document.getElementById('ch-photos-' + ci);
+  if (!container) return;
+  container.innerHTML = '';
+  state.chapters[ci].photos.forEach((ph, pi) => {
+    const f = state.files.find(x => x.name === ph.name);
+    const div = document.createElement('div');
+    div.className = 'ch-photo';
+    div.innerHTML = `
+      <img src="${f ? f.url : ''}" alt="${esc(ph.name)}" style="height:70px;object-fit:cover;width:100%;display:block;">
+      <button class="wide-toggle ${ph.wide ? 'wide-on' : ''}" title="Toggle wide (2-col span)" onclick="toggleWide(${ci},${pi})">${ph.wide ? '⟺' : '→←'}</button>
+      <div class="ch-photo-caption">
+        <input class="caption-input" type="text" placeholder="Caption…" value="${esc(ph.caption)}" oninput="state.chapters[${ci}].photos[${pi}].caption=this.value">
+      </div>
+      <div class="orientation-row">
+        <label>Orientation:</label>
+        <select onchange="state.chapters[${ci}].photos[${pi}].orientation=this.value">
+          <option value="landscape" ${ph.orientation==='landscape'?'selected':''}>Landscape (4:3)</option>
+          <option value="portrait" ${ph.orientation==='portrait'?'selected':''}>Portrait (3:4)</option>
+        </select>
+      </div>
+      <div class="ch-photo-controls">
+        <button onclick="movePhoto(${ci},${pi},-1)">↑</button>
+        <button onclick="movePhoto(${ci},${pi},1)">↓</button>
+        <button onclick="removePhoto(${ci},${pi})">✕</button>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function toggleWide(ci, pi) {
+  state.chapters[ci].photos[pi].wide = !state.chapters[ci].photos[pi].wide;
+  renderChapterPhotos(ci);
+}
+
+function movePhoto(ci, pi, dir) {
+  const photos = state.chapters[ci].photos;
+  const ni = pi + dir;
+  if (ni < 0 || ni >= photos.length) return;
+  [photos[pi], photos[ni]] = [photos[ni], photos[pi]];
+  renderChapterPhotos(ci);
+}
+
+function removePhoto(ci, pi) {
+  state.chapters[ci].photos.splice(pi, 1);
+  renderChapterPhotos(ci);
+}
+
+// ══════════════════════════════════════════════════════════════
+// OUTPUT TABS
+// ══════════════════════════════════════════════════════════════
+function showTab(id, tabEl) {
+  document.querySelectorAll('.output-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.output-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (tabEl) tabEl.classList.add('active');
+}
+
+function copyOutput(id, btn) {
+  const text = document.getElementById(id).textContent;
+  const restore = () => {
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg> Copy';
+    }, 2000);
+  };
+  const markCopied = () => {
+    btn.classList.add('copied');
+    btn.textContent = '✓ Copied!';
+    restore();
+  };
+  const fallback = () => {
+    // file:// or insecure context — use textarea execCommand
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.focus(); ta.select();
+    try { document.execCommand('copy'); markCopied(); }
+    catch(e) { btn.textContent = 'Select & copy manually'; restore(); }
+    document.body.removeChild(ta);
+  };
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text).then(markCopied).catch(fallback);
+  } else {
+    fallback();
+  }
+}
+
+function regenerate() { generateOutput(); }
+
+// ══════════════════════════════════════════════════════════════
+// HTML GENERATION
+// ══════════════════════════════════════════════════════════════
+function getMeta() {
+  const dateRaw = document.getElementById('meta-date').value;
+  let dateFormatted = '';
+  if (dateRaw) {
+    const d = new Date(dateRaw + 'T12:00:00');
+    dateFormatted = d.toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  }
+  return {
+    title: document.getElementById('meta-title').value.trim() || 'Parish Event',
+    subtitle: document.getElementById('meta-subtitle').value.trim(),
+    date: dateRaw,
+    dateFormatted,
+    venue: document.getElementById('meta-venue').value,
+    intro: document.getElementById('meta-intro').value.trim(),
+    about: document.getElementById('meta-about').value.trim(),
+    drive: document.getElementById('meta-drive').value.trim(),
+    slug:   getSlug()   || 'essay-' + dateRaw,
+    imgdir: getImgDir() || getSlug() || 'essay-' + dateRaw
+  };
+}
+
+function generateOutput() {
+  const meta = getMeta();
+  const essayHTML = buildEssayPage(meta);
+  const indexHTML = buildIndexSnippet(meta);
+  document.getElementById('essay-output').textContent = essayHTML;
+  document.getElementById('index-output').textContent = indexHTML;
+  buildPreview(meta);
+}
+
+// ── ESC helpers ──
+// For HTML attributes and text content
+function esc(s) { return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+// For JSON string values inside <script> blocks — no HTML encoding, only JSON/injection safety
+function jsonEsc(s) { return String(s || '').replace(/\\/g,'\\\\').replace(/"/g,'\\"').replace(/</g,'\\u003C').replace(/\r/g,'\\r').replace(/\n/g,'\\n'); }
+
+// ── ESSAY PAGE ──
+function buildEssayPage(meta) {
+  const heroImg = meta.imgdir + '/' + (state.heroFile || (state.files[0] && state.files[0].name) || 'hero.jpeg');
+  const ogImg = 'https://www.ourladysbangor.org/' + heroImg;
+
+  // Chapters
+  const chaptersHTML = state.chapters.map((ch, ci) => {
+    const photosHTML = ch.photos.map(ph => {
+      const src = meta.imgdir + '/' + ph.name;
+      const cls = ph.orientation === 'portrait' ? 'portrait' : 'landscape';
+      const wideCls = ph.wide ? ' wide' : '';
+      const wh = ph.orientation === 'portrait' ? 'width="480" height="640"' : 'width="640" height="480"';
+      return `          <figure class="${cls}${wideCls}"><a href="${src}"><img loading="lazy" ${wh} src="${src}" alt="${esc(ph.caption || ph.name)}"></a><figcaption>${esc(ph.caption)}</figcaption></figure>`;
+    }).join('\n');
+
+    return `
+      <div class="chapter">
+        <div>
+          <p class="chapter-kicker">${esc(ch.kicker)}${ch.kicker.trim().endsWith('.') ? '' : '.'}</p>
+          <h3>${esc(ch.title)}</h3>
+          <p>${esc(ch.body)}</p>
+        </div>
+        <div class="photo-grid">
+${photosHTML}
+        </div>
+      </div>`;
+  }).join('\n');
+
+  // Full gallery mosaic (all images)
+  const mosaicHTML = state.files.map((f, i) => {
+    const src = meta.imgdir + '/' + f.name;
+    const num = String(i + 1).padStart(2, '0');
+    return `        <figure><a href="${src}"><img loading="lazy" src="${src}" alt="Photo ${num} from ${esc(meta.title)}"></a><figcaption>${num}</figcaption></figure>`;
+  }).join('\n');
+
+  // Drive download button
+  const driveBtn = meta.drive ? `
+        <a class="button secondary" href="${esc(meta.drive)}" target="_blank" rel="noopener">
+          &#8659; Download Full-Resolution Photos
+        </a>` : '';
+
+  // About panel extras
+  const aboutExtra = meta.about ? `<br>\n        <strong>Notes:</strong> ${esc(meta.about)}` : '';
+
+  return `<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${esc(meta.title)} Photoessay | ${esc(meta.dateFormatted)} | Our Lady &amp; St. James, Bangor</title>
+<meta name="description" content="A parish photoessay from ${esc(meta.title)} at ${esc(meta.venue)}, ${esc(meta.dateFormatted)}.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.ourladysbangor.org/${esc(meta.slug)}.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://www.ourladysbangor.org/${esc(meta.slug)}.html">
+<meta property="og:title" content="${esc(meta.title)} Photoessay | Our Lady &amp; St. James, Bangor">
+<meta property="og:description" content="${esc(meta.intro || 'A parish photoessay from ' + meta.title + '.')}">
+<meta property="og:image" content="${esc(ogImg)}">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${esc(meta.title)} Photoessay">
+<meta name="twitter:description" content="${esc(meta.intro || 'A parish photoessay from ' + meta.title + '.')}">
+<meta name="twitter:image" content="${esc(ogImg)}">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ImageGallery",
+  "name": "${jsonEsc(meta.title)} Photoessay",
+  "description": "${jsonEsc(meta.intro || 'A parish photoessay from ' + meta.title + '.')}",
+  "datePublished": "${jsonEsc(meta.date)}",
+  "publisher": {
+    "@type": "Church",
+    "name": "Parish of Our Lady & St. James, Bangor",
+    "url": "https://www.ourladysbangor.org/"
+  }
+}
+<\/script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1a2640;
+    --gold: #d4a843;
+    --cream: #ffffff;
+    --stone: #e8e8e8;
+    --text: #0f0f0f;
+    --white: #ffffff;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Lato', sans-serif; font-weight: 400; color: var(--text); background: var(--cream); line-height: 1.85; font-size: 18px; }
+  img { max-width: 100%; }
+
+  header { background: var(--navy); position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 12px rgba(0,0,0,0.35); }
+  .header-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; gap: 24px; }
+  .site-title { font-family: 'Cormorant Garamond', serif; color: var(--gold); font-size: 1.25rem; font-weight: 600; line-height: 1.3; text-decoration: none; }
+  .site-title span { display: block; color: rgba(255,255,255,0.85); font-size: 0.9rem; font-weight: 400; font-family: 'Lato', sans-serif; letter-spacing: 0.05em; }
+  .nav-links { display: flex; align-items: center; flex-wrap: wrap; justify-content: flex-end; gap: 18px; }
+  .nav-links a { color: rgba(255,255,255,0.95); text-decoration: none; font-size: 1rem; letter-spacing: 0.03em; font-weight: 700; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--gold); }
+
+  .hero { position: relative; min-height: clamp(520px, 78vh, 760px); overflow: hidden; display: grid; align-items: end; }
+  .hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 35%; filter: brightness(0.78); }
+  .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(10,18,35,0.05), rgba(10,18,35,0.78)); }
+  .hero-text { position: relative; z-index: 1; max-width: 1100px; width: 100%; margin: 0 auto; padding: clamp(28px, 6vw, 64px) 24px; color: var(--white); }
+  .gold-bar { width: 50px; height: 3px; background: var(--gold); margin-bottom: 14px; }
+  .eyebrow { color: rgba(255,255,255,0.88); font-size: 0.95rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; margin-bottom: 8px; }
+  h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.35rem, 7vw, 5.1rem); line-height: 0.98; font-weight: 700; letter-spacing: 0; max-width: 850px; text-shadow: 0 2px 18px rgba(0,0,0,0.55); }
+  .hero-text p { max-width: 700px; margin-top: 18px; color: rgba(255,255,255,0.9); font-size: clamp(1rem, 2.2vw, 1.22rem); line-height: 1.65; }
+
+  .section { max-width: 1100px; margin: 0 auto; padding: 60px 24px; }
+  .divider { width: 50px; height: 2px; background: var(--gold); margin-bottom: 12px; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.75rem,3.2vw,2.35rem); font-weight: 600; color: var(--navy); margin-bottom: 6px; line-height: 1.15; }
+  .section-subtitle { color: #2a2420; font-size: 1rem; letter-spacing: 0.02em; margin-bottom: 28px; font-weight: 400; }
+  .intro-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr); gap: 36px; align-items: start; }
+  .intro-copy p { margin-bottom: 16px; font-size: 1.03rem; }
+  .note-panel { border-left: 4px solid var(--gold); background: #f0f0f0; padding: 22px 24px; }
+  .note-panel h2 { font-family: 'Cormorant Garamond', serif; color: var(--navy); font-size: 1.45rem; margin-bottom: 8px; line-height: 1.15; }
+  .note-panel p { font-size: 0.98rem; line-height: 1.75; }
+
+  .chapter-band { background: #f0f0f0; border-top: 1px solid #d8d8d8; border-bottom: 1px solid #d8d8d8; }
+  .chapter { display: grid; grid-template-columns: minmax(180px, 0.32fr) minmax(0, 1fr); gap: 28px; align-items: start; margin-top: 34px; }
+  .chapter:first-of-type { margin-top: 0; }
+  .chapter-kicker { color: var(--navy); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; font-size: 0.88rem; }
+  .chapter h3 { font-family: 'Cormorant Garamond', serif; color: var(--navy); font-size: 1.55rem; line-height: 1.15; margin-top: 4px; }
+  .chapter p { font-size: 0.98rem; color: #211b17; line-height: 1.75; margin-top: 10px; }
+  .photo-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; align-items: start; }
+  figure { background: var(--white); border: 1px solid #d8d8d8; }
+  figure a { display: block; color: inherit; text-decoration: none; }
+  figure img { display: block; width: 100%; height: 100%; object-fit: cover; background: #ddd; transition: filter 0.2s, transform 0.2s; }
+  figure a:hover img, figure a:focus img { filter: brightness(1.04); transform: scale(1.01); }
+  figcaption { padding: 10px 12px 12px; font-size: 0.9rem; line-height: 1.5; color: #211b17; }
+  .landscape img { aspect-ratio: 4 / 3; }
+  .portrait img { aspect-ratio: 3 / 4; }
+  .wide { grid-column: span 2; }
+  .wide img { aspect-ratio: 4 / 3; }
+
+  .full-gallery { background: #111a28; color: rgba(255,255,255,0.9); }
+  .full-gallery .section-title { color: var(--white); }
+  .full-gallery .section-subtitle { color: rgba(255,255,255,0.78); }
+  .full-gallery .mosaic { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+  .full-gallery figure { border: 1px solid rgba(212,168,67,0.3); background: rgba(255,255,255,0.06); }
+  .full-gallery figcaption { color: rgba(255,255,255,0.8); font-size: 0.82rem; }
+  .full-gallery img { aspect-ratio: 1 / 1; }
+
+  .return-band { background: #f0f0f0; border-top: 1px solid #d8d8d8; }
+  .button-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+  .button { display: inline-block; padding: 11px 20px; background: var(--navy); color: var(--gold); text-decoration: none; font-size: 0.98rem; font-weight: 700; letter-spacing: 0.03em; }
+  .button:hover { background: #243352; }
+  .button.secondary { background: var(--gold); color: var(--navy); }
+  .button.secondary:hover { background: #e0b84e; }
+
+  .lightbox { position: fixed; inset: 0; z-index: 500; display: none; align-items: center; justify-content: center; padding: 22px; background: rgba(5,9,18,0.92); }
+  .lightbox.open { display: flex; }
+  .lightbox img { max-width: min(100%, 1100px); max-height: 86vh; width: auto; height: auto; box-shadow: 0 18px 44px rgba(0,0,0,0.55); }
+  .lightbox button { position: absolute; top: 18px; right: 18px; border: 1px solid rgba(212,168,67,0.5); background: var(--navy); color: var(--gold); font-size: 1rem; font-weight: 700; padding: 10px 14px; cursor: pointer; }
+
+  footer { background: #111a28; color: rgba(255,255,255,0.92); text-align: center; padding: 36px 24px; font-size: 1rem; line-height: 2; }
+  footer a { color: var(--gold); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+  .footer-cross { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--gold); margin-bottom: 10px; }
+
+  @media (max-width: 900px) {
+    .header-inner { align-items: flex-start; flex-direction: column; gap: 10px; }
+    .intro-grid, .chapter { grid-template-columns: 1fr; gap: 20px; }
+    .photo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .full-gallery .mosaic { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .wide { grid-column: span 1; }
+  }
+  @media (max-width: 640px) {
+    body { font-size: 16px; }
+    .header-inner, .section, .hero-text { padding-left: 16px; padding-right: 16px; }
+    .nav-links { gap: 13px; }
+    .nav-links a { font-size: 0.94rem; }
+    .hero { min-height: 470px; }
+    .photo-grid { grid-template-columns: 1fr; gap: 12px; }
+    .full-gallery .mosaic { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    figcaption { font-size: 0.88rem; }
+    .button { width: 100%; text-align: center; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a class="site-title" href="index.html">
+      Parish of Our Lady &amp; St. James, Bangor
+      <span>St. David &amp; St. Helen, Caernarfon &nbsp;&middot;&nbsp; Diocese of Wrexham</span>
+    </a>
+    <nav class="nav-links" aria-label="Photoessay navigation">
+      <a href="index.html">Home</a>
+      <a href="#essay">Essay</a>
+      <a href="#gallery">All Photos</a>
+      <a href="#contact">Parish Details</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero" aria-label="${esc(meta.title)} photoessay">
+    <img src="${heroImg}" alt="${esc(meta.title)} — ${esc(meta.venue)}">
+    <div class="hero-text">
+      <div class="gold-bar"></div>
+      <p class="eyebrow">${esc(meta.dateFormatted)}${meta.subtitle ? ' &middot; ' + esc(meta.subtitle) : ''}</p>
+      <h1>${esc(meta.title)}</h1>
+      <p>${esc(meta.intro)}</p>
+    </div>
+  </section>
+
+  <section class="section" id="essay">
+    <div class="intro-grid">
+      <div class="intro-copy">
+        <div class="divider"></div>
+        <h2 class="section-title">${esc(meta.title)}</h2>
+        <p>${esc(meta.intro)}</p>
+      </div>
+      <aside class="note-panel" aria-label="Photoessay details">
+        <h2>About This Set</h2>
+        <p><strong>Date:</strong> ${esc(meta.dateFormatted)}<br>
+        <strong>Place:</strong> ${esc(meta.venue)}<br>
+        <strong>Occasion:</strong> ${esc(meta.subtitle || meta.title)}${aboutExtra}
+        </p>${driveBtn ? `
+        <div style="margin-top:16px;">${driveBtn.trim()}</div>` : ''}
+      </aside>
+    </div>
+  </section>
+
+  <div class="chapter-band">
+    <section class="section">
+${chaptersHTML}
+    </section>
+  </div>
+
+  <section class="full-gallery" id="gallery">
+    <div class="section">
+      <div class="divider"></div>
+      <h2 class="section-title">Complete Image Set</h2>
+      <p class="section-subtitle">All photographs in sequence.</p>
+      <div class="mosaic" aria-label="Complete photo gallery">
+${mosaicHTML}
+      </div>
+    </div>
+  </section>
+
+  <section class="return-band" id="contact">
+    <div class="section">
+      <div class="divider"></div>
+      <h2 class="section-title">Parish Details</h2>
+      <p class="section-subtitle">Our Lady &amp; St. James, Bangor &middot; St. David &amp; St. Helen, Caernarfon</p>
+      <p>For parish enquiries, contact the Parish Office at <a href="tel:01248370421">01248 370421</a> or <a href="mailto:priestbangor@rcdwxm.org.uk">priestbangor@rcdwxm.org.uk</a>.</p>
+      <div class="button-row">
+        <a class="button secondary" href="index.html">Return to Parish Home</a>
+        <a class="button" href="#gallery">View All Photos</a>${meta.drive ? `
+        <a class="button" href="${esc(meta.drive)}" target="_blank" rel="noopener">&#8659; Download Full-Resolution Photos</a>` : ''}
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-cross">&#10013;</div>
+  <p><strong style="color:rgba(255,255,255,0.85)">Parish of Our Lady &amp; St. James, Bangor</strong> &nbsp;&middot;&nbsp; St. David &amp; St. Helen, Caernarfon<br>
+  Ty Mair, Menai Avenue, Bangor, Gwynedd LL57 2HH &nbsp;&middot;&nbsp; Tel <a href="tel:01248370421">01248 370421</a><br>
+  Diocese of Wrexham &nbsp;&middot;&nbsp; Registered Charity No. 700426</p>
+</footer>
+
+<div class="lightbox" id="lightbox" aria-modal="true" role="dialog" aria-label="Expanded photo">
+  <button type="button" id="lightbox-close">Close</button>
+  <img id="lightbox-image" src="" alt="">
+</div>
+
+<script>
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImage = document.getElementById('lightbox-image');
+  const closeButton = document.getElementById('lightbox-close');
+
+  document.querySelectorAll('figure a[href$=".jpeg"], figure a[href$=".jpg"], figure a[href$=".webp"]').forEach(function(link) {
+    link.addEventListener('click', function(event) {
+      event.preventDefault();
+      const img = link.querySelector('img');
+      lightboxImage.src = link.href;
+      lightboxImage.alt = img ? img.alt : 'Expanded photograph';
+      lightbox.classList.add('open');
+      closeButton.focus();
+    });
+  });
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    lightboxImage.src = '';
+  }
+
+  closeButton.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', function(event) {
+    if (event.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+  });
+<\/script>
+</body>
+</html>`;
+}
+
+// ── INDEX SNIPPET ──
+function buildIndexSnippet(meta) {
+  const stripImgs = state.indexFiles.length > 0 ? state.indexFiles : (state.files.slice(0, 3).map(f => f.name));
+  const stripHTML = stripImgs.map(name => {
+    const f = state.files.find(x => x.name === name);
+    return `          <img src="${esc(meta.imgdir)}/${esc(name)}" alt="${esc(meta.title)} — ${esc(meta.venue)}">`;
+  }).join('\n');
+
+  const driveBtn = meta.drive
+    ? `\n        <a class="photoessay-link" href="${esc(meta.drive)}" target="_blank" rel="noopener" style="margin-left:10px;background:#2a3d5c;">Full Photo Album &nearr;</a>`
+    : '';
+
+  return `        <!-- NEW PHOTOESSAY ENTRY — paste inside <div class="photoessay-copy">, after <div class="divider"></div> -->
+        <div style="margin-top:32px;padding-top:28px;border-top:1px solid var(--stone);">
+          <h2 class="section-title">${esc(meta.title)}</h2>
+          <p class="section-subtitle">${esc(meta.dateFormatted)}${meta.subtitle ? ' &mdash; ' + esc(meta.subtitle) : ''} &mdash; ${esc(meta.venue)}</p>
+          <p style="font-size:1rem;color:var(--text);line-height:1.8;margin-bottom:16px;">${esc(meta.intro)}</p>
+          <a class="photoessay-link" href="${esc(meta.slug)}.html">View the Photoessay</a>${driveBtn}
+          <div class="photoessay-strip" style="margin-top:16px;" aria-label="Preview photos from ${esc(meta.title)}">
+${stripHTML}
+          </div>
+        </div>
+        <!-- END NEW PHOTOESSAY ENTRY -->`;
+}
+
+// ── PREVIEW ──
+function buildPreview(meta) {
+  const stripImgs = state.indexFiles.length > 0 ? state.indexFiles : (state.files.slice(0, 3).map(f => f.name));
+  const prev = document.getElementById('preview-content');
+
+  const driveLink = meta.drive
+    ? `<a href="${esc(meta.drive)}" target="_blank" rel="noopener" style="display:inline-block;margin-left:10px;padding:8px 16px;background:#2a3d5c;color:#d4a843;text-decoration:none;font-weight:700;font-size:0.9rem;">Full Photo Album ↗</a>`
+    : '';
+
+  const stripHTMLprev = stripImgs.map((name, i) => {
+    const f = state.files.find(x => x.name === name);
+    const imgSrc = f ? f.url : '';
+    const style = i === 0
+      ? 'width:100%;height:308px;object-fit:cover;display:block;grid-row:span 2;'
+      : 'width:100%;height:150px;object-fit:cover;display:block;';
+    return `<img src="${imgSrc}" alt="${esc(name)}" style="${style}">`;
+  }).join('');
+
+  prev.innerHTML = `
+    <div style="font-family:Georgia,serif;">
+      <div style="width:50px;height:2px;background:#d4a843;margin-bottom:10px;"></div>
+      <h2 style="font-family:Georgia,serif;font-size:1.6rem;color:#1a2640;margin-bottom:4px;">${esc(meta.title)}</h2>
+      <p style="font-size:0.88rem;color:#555;margin-bottom:12px;">${esc(meta.dateFormatted)}${meta.subtitle ? ' — ' + esc(meta.subtitle) : ''} — ${esc(meta.venue)}</p>
+      <p style="font-size:0.95rem;line-height:1.7;margin-bottom:14px;color:#222;">${esc(meta.intro)}</p>
+      <a href="#" style="display:inline-block;padding:8px 16px;background:#1a2640;color:#d4a843;text-decoration:none;font-weight:700;font-size:0.9rem;">View the Photoessay</a>
+      ${driveLink}
+      <div style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:start;">
+        ${stripHTMLprev}
+      </div>
+    </div>
+  `;
+}
+
+// ══════════════════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════════════════
+goStep(1);
+</script>
+</body>
+</html>
