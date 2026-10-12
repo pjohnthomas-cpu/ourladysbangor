@@ -190,17 +190,6 @@
   @media (max-width: 900px) { .in-memoriam-list { column-count: 2; } }
   @media (max-width: 640px) { .in-memoriam-list { column-count: 1; } }
 
-  /* PHOTOESSAY FEATURE */
-  .photoessay-bg { background: #ffffff; border-top: 1px solid var(--stone); border-bottom: 1px solid var(--stone); }
-  #photoessay { scroll-margin-top: 92px; }
-  .photoessay-feature { display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 0.85fr); gap: 34px; align-items: center; }
-  .photoessay-copy p { font-size: 1rem; color: var(--text); line-height: 1.8; margin-bottom: 16px; }
-  .photoessay-link { display: inline-block; padding: 11px 22px; background: var(--navy); color: var(--gold); text-decoration: none; font-size: 1rem; font-weight: 700; letter-spacing: 0.03em; transition: background 0.2s; }
-  .photoessay-link:hover { background: #243352; }
-  .photoessay-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .photoessay-strip img { width: 100%; height: 190px; object-fit: cover; display: block; filter: brightness(0.95); }
-  .photoessay-strip img:first-child { grid-row: span 2; height: 390px; object-position: center 35%; }
-
   /* FORMS */
   .forms-bg { background: var(--navy); border-top: 1px solid #0d1a30; }
   .forms-bg .section-title { color: var(--white); }
@@ -394,11 +383,6 @@
     /* Notices */
     .notices-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
 
-    /* Photoessay */
-    .photoessay-feature { grid-template-columns: 1fr; gap: 24px; }
-    .photoessay-strip img { height: 180px; }
-    .photoessay-strip img:first-child { height: 370px; }
-
     /* Music */
     .music-grid { grid-template-columns: 1fr; gap: 28px; }
     .music-img-wide { height: 180px; }
@@ -463,11 +447,6 @@
     .notices-grid { grid-template-columns: 1fr; gap: 14px; }
     .notice-card { padding: 18px 18px; }
 
-    /* Photoessay */
-    .photoessay-strip { grid-template-columns: 1fr; gap: 8px; }
-    .photoessay-strip img, .photoessay-strip img:first-child { height: 210px; grid-row: span 1; }
-    .photoessay-link { width: 100%; text-align: center; padding: 13px 18px; }
-
     /* Music */
     .music-img-wide { height: 160px; }
     .music-img-tall { height: 190px; }
@@ -520,7 +499,6 @@
       <a href="#masses">Masses</a>
       <a href="#bulletin">Bulletin</a>
       <a href="#notices">Notices</a>
-      <a href="#photoessay">Photoessay</a>
       <a href="#music">Music</a>
       <a href="#forms">Forms</a>
       <a href="#gallery">Our Church</a>
@@ -534,7 +512,6 @@
     <a href="#masses"   onclick="closeMenu()">Masses</a>
     <a href="#bulletin" onclick="closeMenu()">Bulletin</a>
     <a href="#notices"  onclick="closeMenu()">Notices</a>
-    <a href="#photoessay" onclick="closeMenu()">Photoessay</a>
     <a href="#music"    onclick="closeMenu()">Music</a>
     <a href="#forms"    onclick="closeMenu()">Forms</a>
     <a href="#gallery"  onclick="closeMenu()">Our Church</a>
@@ -575,50 +552,12 @@
   </div>
 </section>
 
-<!-- PHOTOESSAY -->
-<div class="photoessay-bg" id="photoessay">
-  <div class="section">
-    <div class="photoessay-feature">
-      <div class="photoessay-copy">
-        <div class="divider"></div>
-
-        <div style="margin-top:32px;padding-top:28px;border-top:1px solid var(--stone);">
-          <h2 class="section-title">Presentation of First Communion Pupils</h2>
-          <p class="section-subtitle">Sunday 14 June 2026 &mdash; Our Lady &amp; St. James, Bangor</p>
-          <p style="font-size:1rem;color:var(--text);line-height:1.8;margin-bottom:16px;">Fr. Savi presented the pupils who had made First Holy Communion the previous week to the congregation.</p>
-          <a class="photoessay-link" href="fhcp14jun26.html">View the Photoessay</a>
-          <a class="photoessay-link" href="https://drive.google.com/drive/folders/12MAPOi3MJIqmZYD_D9RVFKBCBakdyvEO?usp=sharing" target="_blank" rel="noopener" style="margin-left:10px;background:#2a3d5c;">Full Photo Album &nearr;</a>
-          <div class="photoessay-strip" style="margin-top:16px;" aria-label="Preview photos from Presentation of First Communion Pupils">
-            <img src="photos/14jun26-fhc2/DSC_8902 Medium.jpeg" alt="Presentation of First Communion Pupils — Our Lady &amp; St. James, Bangor">
-            <img src="photos/14jun26-fhc2/IMG_0472 Medium.jpeg" alt="Presentation of First Communion Pupils — Our Lady &amp; St. James, Bangor">
-            <img src="photos/14jun26-fhc2/IMG_0478 Medium.jpeg" alt="Presentation of First Communion Pupils — Our Lady &amp; St. James, Bangor">
-          </div>
-        </div>
-
-        <div style="margin-top:32px;padding-top:28px;border-top:1px solid var(--stone);">
-          <h2 class="section-title">First Holy Communion 2026</h2>
-          <p class="section-subtitle">Saturday 6 June 2026 &mdash; Our Lady &amp; St. James, Bangor</p>
-          <p style="font-size:1rem;color:var(--text);line-height:1.8;margin-bottom:16px;">A joyful morning as thirteen children — Edward A, Edward J, Grace, Daniella, Ebube, Ruben, Michael, Samuel, Gracie, Daniel, Jason, Alvin, and Olivia — received the Body of Christ for the first time.</p>
-          <a class="photoessay-link" href="fhc-2026-06-06.html">View the Photoessay</a>
-          <a class="photoessay-link" href="https://photos.app.goo.gl/nVgYtpDrH5QMBJkX6" target="_blank" rel="noopener" style="margin-left:10px;background:#2a3d5c;">Full Photo Album &nearr;</a>
-          <div class="photoessay-strip" style="margin-top:16px;" aria-label="Preview photos from First Holy Communion">
-            <img src="photos/fhc-2026/fhc-children-2.jpg" alt="First Holy Communion children with Fr. Savi">
-            <img src="photos/fhc-2026/fhc-altar.jpg" alt="The sanctuary prepared for First Holy Communion">
-            <img src="photos/fhc-2026/fhc-congregation.jpg" alt="The Congregation gathered at Mass">
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- GALLERY -->
 <div class="gallery-bg" id="gallery">
   <div class="section" style="padding-top:0;padding-bottom:0;">
     <div class="divider"></div>
-    <h2 class="section-title">Happy Birthday</h2>
-    <p class="section-subtitle">Blessings and best wishes for our dedicated altar server celebrating his birthday this week.</p>
+    <h2 class="section-title">Our Church</h2>
+    <p class="section-subtitle">Views from Our Lady &amp; St. James, Bangor</p>
   </div>
   <div class="gallery-inner">
     <div class="gallery-grid" id="gallery-thumbs">
@@ -655,7 +594,7 @@
   <div class="section">
     <div class="divider"></div>
     <h2 class="section-title">Mass Times</h2>
-    <p class="section-subtitle">Regular weekly schedule &mdash; see bulletin for variations on feast days</p>
+    <p class="section-subtitle">October 2026 schedule &mdash; see the calendar below for date-by-date details</p>
     <div class="masses-grid">
       <div class="mass-card">
         <h3>Bangor &mdash; Our Lady &amp; St. James</h3>
@@ -668,12 +607,13 @@
       </div>
       <div class="mass-card">
         <h3>Caernarfon &mdash; St. David &amp; St. Helen</h3>
-        <div class="mass-row"><span class="mass-day">Saturday</span><span class="mass-time">18:00 Vigil Mass</span></div>
+        <div class="mass-row"><span class="mass-day">Saturday</span><span class="mass-time">18:00 Vigil Mass until 24 Oct; 17:00 from 31 Oct</span></div>
         <div class="mass-row"><span class="mass-day">Confession</span><span class="mass-time">By arrangement with Fr. Savi</span></div>
         <div class="mass-row"><span class="mass-day">RCIA</span><span class="mass-time">Thursdays 18:30 &mdash; OL Catholic Primary School</span></div>
+        <p class="mass-note">The Caernarfon Vigil Mass moves to 17:00 during wintertime because of darker evenings.</p>
       </div>
     </div>
-    <p class="mass-note" style="color:#8b1a1a;font-weight:700;margin-top:18px;">Note: Fr. Savi is on annual leave from 16 August to 2 September, visiting his parents in Kerala and his new Provincial. There will be no weekday Masses and no 17:00 Sunday Mass in Bangor during this time &mdash; see the calendar below for exact dates.</p>
+    <p class="mass-note" style="color:#8b1a1a;font-weight:700;margin-top:18px;">October update: there will be no Holy Mass in Bangor on Tuesday 27 October because of the clergy conference.</p>
   </div>
 </div>
 
@@ -681,67 +621,45 @@
 <div class="schedule-bg" id="bulletin">
   <div class="section">
     <div class="divider"></div>
-    <h2 class="section-title">August &amp; September 2026 Calendar</h2>
-    <p class="section-subtitle" style="color:rgba(255,255,255,0.85);">Ordinary Time — August &amp; September 2026</p>
+    <h2 class="section-title">October 2026 Calendar</h2>
+    <p class="section-subtitle" style="color:rgba(255,255,255,0.85);">Ordinary Time &mdash; October 2026</p>
     <div class="featured-newsletter">
-      <h3>Latest Parish Newsletter &mdash; August &amp; September 2026</h3>
-      <p>Download the Aug/Sep issue of <em>The Flame</em>, featuring Fr. Savi&rsquo;s reflection &ldquo;The Assumption of Mary: A Sign of Hope for a Wary and Weary World&rdquo;, the full liturgical calendar, and parish news. Items for the October edition should be sent to <a href="mailto:bangorparishflame@outlook.com" style="color:var(--gold);">bangorparishflame@outlook.com</a> by the second week of September.</p>
-      <a class="newsletter-link" href="THE_FLAMEAugSep.pdf" download>Download Newsletter PDF</a>
+      <h3>Latest Parish Newsletter &mdash; October 2026</h3>
+      <p>Download the October issue of <em>The Flame</em>, featuring Fr. Savi&rsquo;s reflection on the Rosary, the October liturgical calendar, parish notices, and upcoming diocesan events. Items for the November edition should be sent to <a href="mailto:bangorparishflame@outlook.com" style="color:var(--gold);">bangorparishflame@outlook.com</a> by the second week of October.</p>
+      <a class="newsletter-link" href="theflameoctober26.pdf" download>Download Newsletter PDF</a>
     </div>
   
     <!-- TABLE view -->
 
-    <div class="month-heading">August 2026</div>
+    <div class="month-heading">October 2026</div>
     <div class="schedule-table-wrap"><table class="schedule-table">
       <thead><tr><th style="width:155px">Date</th><th>Observance</th><th>Details</th></tr></thead>
       <tbody>
-        <tr><td>Saturday 1 Aug</td><td>Vigil Mass</td><td>Caernarfon: 18:00 Vigil Mass</td></tr>
-        <tr><td>Sunday 2 Aug</td><td>Sunday Mass</td><td>Bangor: 10:00 &amp; 17:00 Holy Mass</td></tr>
-        <tr><td>Monday 3 Aug</td><td>Weekday Mass</td><td>Bangor: 19:00 Holy Mass</td></tr>
-        <tr><td>Tuesday 4 Aug</td><td>Weekday Mass</td><td>Bangor: 09:45 Morning Prayer &amp; 10:00 Holy Mass</td></tr>
-        <tr><td>Thursday 6 Aug</td><td>Weekday Mass</td><td>Bangor: 12:15 Holy Mass</td></tr>
-        <tr><td>Saturday 8 Aug</td><td>Vigil Mass</td><td>Caernarfon: 18:00 Vigil Mass</td></tr>
-        <tr><td>Sunday 9 Aug</td><td>Sunday Mass</td><td>Bangor: 10:00 &amp; 17:00 Holy Mass</td></tr>
-        <tr><td>Monday 10 Aug</td><td>Weekday Mass</td><td>Bangor: 19:00 Holy Mass</td></tr>
-        <tr><td>Tuesday 11 Aug</td><td>Weekday Mass</td><td>Bangor: 09:45 Morning Prayer &amp; 10:00 Holy Mass</td></tr>
-        <tr><td>Thursday 13 Aug</td><td>Weekday Mass</td><td>Bangor: 12:15 Holy Mass</td></tr>
-        <tr><td>Saturday 15 Aug</td><td><span class="badge badge-feast">Assumption</span> Vigil Mass</td><td>Caernarfon: 18:00 Vigil Mass</td></tr>
-        <tr><td>Sunday 16 Aug</td><td><span class="badge badge-feast">Assumption of the Blessed Virgin Mary</span></td><td>Bangor: 10:00 Holy Mass &mdash; <span class="badge badge-none">No Mass at 17:00</span></td></tr>
-        <tr><td>17&ndash;21 Aug</td><td><span class="badge badge-none">No Mass</span> Fr. Savi on annual leave</td><td>No weekday Masses in Bangor this week</td></tr>
-        <tr><td>Saturday 22 Aug</td><td>Vigil Mass</td><td>Caernarfon: 18:00 Vigil Mass</td></tr>
-        <tr><td>Sunday 23 Aug</td><td>Sunday Mass</td><td>Bangor: 10:00 Holy Mass &mdash; <span class="badge badge-none">No Mass at 17:00</span></td></tr>
-        <tr><td>24&ndash;28 Aug</td><td><span class="badge badge-none">No Mass</span> Fr. Savi on annual leave</td><td>No weekday Masses in Bangor this week</td></tr>
-        <tr><td>Saturday 29 Aug</td><td>Vigil Mass</td><td>Caernarfon: 18:00 Vigil Mass</td></tr>
-        <tr><td>Sunday 30 Aug</td><td><span class="badge badge-feast">Second Collection</span></td><td>Bangor: 10:00 Holy Mass &mdash; <span class="badge badge-none">No Mass at 17:00</span> &mdash; second collection for Poor Parishes of the Diocese</td></tr>
-        <tr><td>31 Aug&ndash;3 Sep</td><td><span class="badge badge-none">No Mass</span> Fr. Savi on annual leave</td><td>No weekday Masses in Bangor this week</td></tr>
+        <tr><td>Thursday 1 Oct</td><td>Weekday Mass</td><td>Bangor: 12:15 Holy Mass</td></tr>
+        <tr><td>Saturday 3 Oct</td><td>Vigil Mass</td><td>Caernarfon: 18:00 Vigil Mass</td></tr>
+        <tr><td>Sunday 4 Oct</td><td>27th Sunday in Ordinary Time</td><td>Bangor: 10:00 &amp; 17:00 Holy Mass</td></tr>
+        <tr><td>Monday 5 Oct</td><td>Weekday Mass</td><td>Bangor: 19:00 Holy Mass</td></tr>
+        <tr><td>Tuesday 6 Oct</td><td>Morning Prayer &amp; Mass</td><td>Bangor: 09:45 Morning Prayer &amp; 10:00 Holy Mass</td></tr>
+        <tr><td>Thursday 8 Oct</td><td>Weekday Mass</td><td>Bangor: 12:15 Holy Mass</td></tr>
+        <tr><td>Saturday 10 Oct</td><td>Vigil Mass</td><td>Caernarfon: 18:00 Vigil Mass</td></tr>
+        <tr><td>Sunday 11 Oct</td><td><span class="badge badge-feast">Volunteer Thanksgiving</span> 28th Sunday in Ordinary Time</td><td>Bangor: 10:00 &amp; 17:00 Holy Mass</td></tr>
+        <tr><td>Monday 12 Oct</td><td>Weekday Mass</td><td>Bangor: 19:00 Holy Mass</td></tr>
+        <tr><td>Tuesday 13 Oct</td><td>Morning Prayer &amp; Mass</td><td>Bangor: 09:45 Morning Prayer &amp; 10:00 Holy Mass</td></tr>
+        <tr><td>Thursday 15 Oct</td><td>Weekday Mass</td><td>Bangor: 12:15 Holy Mass</td></tr>
+        <tr><td>Saturday 17 Oct</td><td>Vigil Mass</td><td>Caernarfon: 18:00 Vigil Mass</td></tr>
+        <tr><td>Sunday 18 Oct</td><td><span class="badge badge-feast">World Mission Sunday</span> 29th Sunday in Ordinary Time</td><td>Bangor: 10:00 &amp; 17:00 Holy Mass &mdash; second collection for World Mission Sunday</td></tr>
+        <tr><td>Monday 19 Oct</td><td>Weekday Mass</td><td>Bangor: 19:00 Holy Mass</td></tr>
+        <tr><td>Tuesday 20 Oct</td><td>Morning Prayer &amp; Mass</td><td>Bangor: 09:45 Morning Prayer &amp; 10:00 Holy Mass</td></tr>
+        <tr><td>Thursday 22 Oct</td><td>Weekday Mass</td><td>Bangor: 12:15 Holy Mass</td></tr>
+        <tr><td>Saturday 24 Oct</td><td>Vigil Mass</td><td>Caernarfon: 18:00 Vigil Mass</td></tr>
+        <tr><td>Sunday 25 Oct</td><td><span class="badge badge-feast">Family Eucharist</span> 30th Sunday in Ordinary Time</td><td>Bangor: 10:00 &amp; 17:00 Holy Mass &mdash; Family Eucharist at 10:00 with blessing for October birthdays and milestones</td></tr>
+        <tr><td>Monday 26 Oct</td><td>Weekday Mass</td><td>Bangor: 19:00 Holy Mass</td></tr>
+        <tr><td>Tuesday 27 Oct</td><td><span class="badge badge-none">No Holy Mass</span></td><td>Bangor: 09:45 Morning Prayer only &mdash; no Holy Mass because of the clergy conference</td></tr>
+        <tr><td>Thursday 29 Oct</td><td>Weekday Mass</td><td>Bangor: 12:15 Holy Mass</td></tr>
+        <tr><td>Saturday 31 Oct</td><td><span class="badge badge-feast">Winter Vigil Time</span> Vigil Mass</td><td>Caernarfon: 17:00 Vigil Mass</td></tr>
       </tbody>
     </table></div>
 
-    <div class="month-heading">September 2026</div>
-    <div class="schedule-table-wrap"><table class="schedule-table">
-      <thead><tr><th style="width:155px">Date</th><th>Observance</th><th>Details</th></tr></thead>
-      <tbody>
-        <tr><td>Saturday 5 Sep</td><td>Vigil Mass</td><td>Caernarfon: 18:00 Vigil Mass &mdash; School Mass in Caernarfon Church</td></tr>
-        <tr><td>Sunday 6 Sep</td><td>Sunday Mass</td><td>Bangor: 10:00 School Mass at Church &amp; 17:00 Holy Mass</td></tr>
-        <tr><td>Monday 7 Sep</td><td>Weekday Mass</td><td>Bangor: 19:00 Holy Mass</td></tr>
-        <tr><td>Tuesday 8 Sep</td><td>Weekday Mass</td><td>Bangor: 09:45 Morning Prayer &amp; 10:00 Holy Mass</td></tr>
-        <tr><td>Thursday 10 Sep</td><td>Weekday Mass</td><td>Bangor: 12:15 Holy Mass</td></tr>
-        <tr><td>Saturday 12 Sep</td><td>Vigil Mass</td><td>Caernarfon: 18:00 Vigil Mass</td></tr>
-        <tr><td>Sunday 13 Sep</td><td><span class="badge badge-feast">Education Sunday</span></td><td>Bangor: 10:00 &amp; 17:00 Holy Mass &mdash; second collection for the Education ministry</td></tr>
-        <tr><td>Monday 14 Sep</td><td>Weekday Mass</td><td>Bangor: 19:00 Holy Mass</td></tr>
-        <tr><td>Tuesday 15 Sep</td><td>Weekday Mass</td><td>Bangor: 09:45 &amp; 10:00 Morning Prayer &amp; Holy Mass</td></tr>
-        <tr><td>Thursday 17 Sep</td><td>Weekday Mass</td><td>Bangor: 12:15 Holy Mass</td></tr>
-        <tr><td>Saturday 19 Sep</td><td>Vigil Mass</td><td>Caernarfon: 18:00 Vigil Mass</td></tr>
-        <tr><td>Sunday 20 Sep</td><td><span class="badge badge-feast">Bishop's Visit</span> <span class="badge badge-feast">Evangelii Gaudium Sunday</span></td><td>Bangor: 10:00 School Mass &mdash; Bishop Peter &mdash; &amp; 17:00 Holy Mass &mdash; second collection for Home Mission work; Mass attendance recorded at all Sunday Masses today</td></tr>
-        <tr><td>Monday 21 Sep</td><td>Weekday Mass</td><td>Bangor: 19:00 Holy Mass</td></tr>
-        <tr><td>Tuesday 22 Sep</td><td>Weekday Mass</td><td>Bangor: 09:45 &amp; 10:00 Morning Prayer &amp; Holy Mass</td></tr>
-        <tr><td>Thursday 24 Sep</td><td>Weekday Mass</td><td>Bangor: 12:15 Holy Mass</td></tr>
-        <tr><td>Saturday 26 Sep</td><td>Vigil Mass</td><td>Caernarfon: 18:00 Vigil Mass</td></tr>
-        <tr><td>Sunday 27 Sep</td><td><span class="badge badge-feast">Family Eucharist</span> <span class="badge badge-feast">Harvest Sunday</span></td><td>Bangor: 10:00 &amp; 17:00 Holy Mass &mdash; Family Eucharist with blessing for Aug/Sept birthdays &amp; milestones; Harvest Sunday</td></tr>
-        <tr><td>Monday 28 Sep</td><td>Weekday Mass</td><td>Bangor: 19:00 Holy Mass</td></tr>
-        <tr><td>Tuesday 29 Sep</td><td>Weekday Mass</td><td>Bangor: 09:45 &amp; 10:00 Morning Prayer &amp; Holy Mass</td></tr>
-      </tbody>
-    </table></div>
   </div>
 </div>
 
@@ -750,128 +668,72 @@
   <div class="section">
     <div class="divider"></div>
     <h2 class="section-title">Notices &amp; Announcements</h2>
-    <p class="section-subtitle">Parish life &mdash; August &amp; September 2026</p>
+    <p class="section-subtitle">Parish life &mdash; October 2026</p>
     <div class="notices-grid">
 
-      <div class="notice-card">
-        <h4>Fr. Savi&rsquo;s Annual Leave &mdash; 16 Aug to 2 Sep</h4>
-        <p>Fr. Savi will take the remainder of his entitled annual holiday from <strong>16th August to 2nd September</strong>, travelling to India to visit his 91&#8209;year&#8209;old parents in Kerala and his new Provincial. Please note there will be <strong>no weekday Masses</strong> and <strong>no 17:00 Sunday Mass</strong> in Bangor during this time.</p>
-      </div>
-
-      <div class="notice-card">
-        <h4>Funeral of Fiona Jane Walsh</h4>
-        <p>The Requiem for <strong>Fiona Jane Walsh</strong> will take place on <strong>Wednesday, 5th August 2026 at 11:30am</strong>, at Our Lady &amp; St. James Church, Bangor, followed by Cremation at 1:30pm at Bangor Crematorium. May she rest in peace.</p>
-      </div>
-
-      <div class="notice-card">
-        <h4>Second Collection &mdash; 30 August</h4>
-        <p>On <strong>Sunday 30 August</strong>, a second collection at all Masses will support poor parishes of our Diocese. Please support &mdash; your kindness sustains their pastoral life.</p>
-      </div>
-
-      <div class="notice-card">
-        <h4>Blessing of School Bags &mdash; 5 &amp; 6 September</h4>
-        <p>As pupils return to school this September, let us begin the new academic year by seeking God&rsquo;s blessing. All pupils and students are warmly invited to bring their bags, backpacks, or satchels (no uniform needed!) to Mass on <strong>5th September (Caernarfon)</strong> and <strong>6th September (Bangor)</strong>, placing the year&rsquo;s lessons, friendships, and challenges into God&rsquo;s hands from the start.</p>
-      </div>
-
-      <div class="notice-card">
-        <h4>Confirmation Preparation Begins in the New Academic Year</h4>
-        <p>From the beginning of the new academic year, the parish intends to begin preparation for the <strong>Sacrament of Confirmation</strong>. Since our parish has not held this sacrament since 2011, many parishioners &mdash; or their family or loved ones &mdash; may not realise they have not yet received it. Please spread this news among family and friends, so anyone who has missed out has the opportunity to come forward. Forms are available in the <a href="#forms">Forms section below</a> and in the church, and should be completed and returned to the parish as soon as possible.</p>
-      </div>
-
-      <div class="notice-card">
-        <h4>Education Sunday &mdash; 13 September</h4>
-        <p>13th September is Education Sunday. Let us pray for students, teachers, and all engaged in forming our young people. A second collection will support the Education ministry&rsquo;s work.</p>
-      </div>
-
-      <div class="notice-card">
-        <h4>Bishop&rsquo;s Visit &amp; New School &mdash; 20 September</h4>
-        <p>Bishop Peter will celebrate Holy Mass at Our Lady &amp; St. James&rsquo; Church, Bangor, at <strong>10am on Sunday 20th September</strong>. Afterwards, Our Lady Catholic Primary School celebrates its new building with a parade from the old school to the new. All parishioners are warmly invited!</p>
-      </div>
-
-      <div class="notice-card">
-        <h4>Evangelii Gaudium Sunday &mdash; 20 September</h4>
-        <p>Sunday 20th September marks Evangelii Gaudium Sunday (Home Mission Sunday). There will be a second collection to support Home Mission work across England and Wales. Please note that <strong>Mass attendance across all Sunday Masses will be recorded</strong> on this day.</p>
-      </div>
-
-      <div class="notice-card">
-        <h4>Bring &amp; Share Parish Garden Party &mdash; 26 September</h4>
-        <p>All parishioners are invited to a Bring &amp; Share Garden Party on <strong>Saturday, 26th September, from 2pm to 5pm</strong>, in the Garden of T&#375; Mair, Menai Avenue, Bangor, LL57 2HH. Join us to grow as a parish family in an atmosphere of friendship and fun. Families and friends are warmly welcome &mdash; do come along and bring someone new!</p>
-      </div>
-
-      <div class="notice-card">
-        <h4>Harvest Sunday &mdash; 27 September</h4>
-        <p>On Sunday 27th September, we celebrate Harvest Sunday, giving thanks to God for the gifts of the earth and for all who labour to bring food to our tables.</p>
-      </div>
-
-      <div class="notice-card">
-        <h4>Family Eucharist &mdash; 27 September</h4>
-        <p>On <strong>Sunday, 27th September at 10am</strong>, we will celebrate Family Eucharist for both August and September. A special blessing will also be given to all those celebrating birthdays or other milestones during Aug &amp; Sept. Please complete a slip available at the back of the church and place it in the letterbox. Everyone is warmly welcome.</p>
-      </div>
-
       <div class="notice-card wide">
-        <h4>Dearly Departed in August and September</h4>
-        <div class="in-memoriam-list">
-          <p>Thomas P Johnston, William John Owen, Kenneth Williams, Wlodek Miniszko, Mary Elizabeth Thomas, Pricilla Owen, Gerry J Pritchard, Barbara Carroll-Jones, Angela Kiely, William D Foster, John Guy Charlton, Margaret Mary Lomax, John Daniel, Brian Hogan, Ethel M Gilliam, Ifor Jones, James Regan, Doreen Ann Bryan, Basil Caroline, Brian Johnson, Marie Louise Sexton, Rowena Mary Barnes, Robert William Talbot, Carol Ann Joyce, Jean Doran, Jean Walsh, Anne Mary Hughes, Mary Doyle, Stuart Jones, Susan Mary Murrell, Thomas Murphy, Sean O&rsquo;Toole, Peter Jackson, Anne Francis Elfarissi, Kenneth Roland Thomas, Paul Rahilly, Mary Carr, Liam Jones, Irene Szwaja Jones, Peter Ronald Mills, Irene Mary Parry, Margaret O&rsquo;Brien, Cottie Baptist, Peter Hill, Irene Marie Sutton, Mary Edith Wilson, Peter Richard Lewis, John E Nolan, Brian Anthony Davies, John Maclean, Major Harold York, David Brown, James O&rsquo;Neill, Marguerite Williams, Michael Noel Walsh, Owen Arnold Hughes, Gerard Patrick Kelly, Jaqueline Ann Nhanea, Violet Valla, Mary Veronica Kimpton, Joseph Edward McGrath, Mary Dorothy Owen, Maureen Allen, Rory O&rsquo;Donnell, Robert Jones, Michael David Carroll, Catherine Tinsley-Holt, William Davies, Muriel Richards, David Rigby, Margaret Rowlands, Thomas James Delaney, Robert McCready, John Brooke, Blanca Michaiewicz, Bryan Dixon, Peter Flanagan, Jane Robinson, Louise Stocks, Michael Stocks, Mary Robinson, Vera Williams, Stanislaw Kranjniak, Owen Jasper Turner, Andrew Thurlow, Esther Lewis, Richard Brayford, John Wilkinson, Theresa Burgoyne, Thomas Jones, Anthony Gallagher, Ann Owens, Wawrzyniec Laszek, Ann Christina Smith, Sr Mary Agnes, Maureen Patricia Ellis, Mervyn John Francis, Mary Kiely, Teresa McGrath, David Brown, Rosie Hogan, Ellen Owen, Anthony Jansen, William R Davies, Rodrick Davies, Florence Finney, Josef Lisiecki, Kathleen Mary Leigh, Terry Thomas Mochan, John Hughes, Kevin Noone, Arthur Browne, Thomas P Williams, Elizabeth Roberts, Sister Mary Hill, Edward Fitzpatrick, Alison O&rsquo;Neal, Thomas Henry Coleclough, Rev Fr Brian Jones, Jane Baker, Thomas J Lynch, Fr Oswald Lofthouse, Bridget Hughes, Catherine Tynan, Beryl Monica Williams, Ida Frances Peggy Charlton, Jeanette Bridget Joyce, Paula Jones, Dean Skillin, Thomas Flannagan, Harol (Bill) Sellers, Edith Mary Davies, David Owen, Marjorie Scallon, Elizabeth Christine AArdt, Oreste Fassiola, Pauline Morecraft, Joseph McGovern, Ellena Keegan, Anne Pritchard, Hazel Murphy, Chris Conway, Anna Elwyn Jones, Patrick O&rsquo;Brien, Michael Richards, Peter B Eames, Rod Needham, Margaret Kelly, Dennis Kelly, Richard Charnock, Ione Olive Fletcher, Teresa Marie Hasstrup, Joan Murhpy, Aleena Biju, Evelyn Reilly, Jeanette Joyce, Mavis James, Jack Halstead, Eileen Frances Pegler, Mary Pritchard, Mary Irene Jones.</p>
-        </div>
-        <p style="font-style:italic;margin-top:10px;">May their souls, and the souls of all the faithful departed, through the mercy of God, rest in peace. Amen.</p>
+        <h4>The Rosary: A Crown of Prayer</h4>
+        <p>October is the Month of the Rosary. Fr. Savi invites parishioners to rediscover this simple prayer, whether at home, while travelling, on a walk, or in quiet moments of the day, asking Mary, Queen of the Most Holy Rosary, to lead our families, parish, and world closer to Jesus.</p>
       </div>
 
       <div class="notice-card">
-        <h4>A Call for New Vestments &mdash; Chasubles</h4>
-        <p>Our parish is in need of chasubles for Holy Mass. At present, we rely on a few old, ill&#8209;fitting chasubles brought from Caernarfon; formerly, the priest used his own personal vestments. We need four chasubles, one for each liturgical colour &mdash; white, red, green, and purple. Parishioners are warmly invited to donate one in memory or honour of a loved one; with permission, a small dedication can be sewn inside. A good quality chasuble costs around &pound;150&ndash;&pound;200.</p>
+        <h4>Pope&rsquo;s Intention for October</h4>
+        <p>Let us pray that mental health ministry may be established throughout the Church, helping to overcome stigma and discrimination toward people living with mental illness.</p>
+      </div>
+
+      <div class="notice-card">
+        <h4>Volunteer Thanksgiving Mass &mdash; 11 October</h4>
+        <p>The parish gives thanks for all volunteers, past and present, who have offered their time, energy, and talents, whether quietly behind the scenes or in active ministry.</p>
+      </div>
+
+      <div class="notice-card">
+        <h4>World Mission Sunday &mdash; 18 October</h4>
+        <p>A second collection will be taken on Sunday 18 October to support the worldwide missionary work of the Church.</p>
+      </div>
+
+      <div class="notice-card">
+        <h4>Family Eucharist &mdash; 25 October</h4>
+        <p>Family Eucharist will be celebrated at the 10:00 Mass on Sunday 25 October. A special blessing will be given for October birthdays and milestones; slips are available at the back of church.</p>
+      </div>
+
+      <div class="notice-card">
+        <h4>Clergy Conference &amp; Mass Update</h4>
+        <p>Fr. Savi will attend the Presbyteral Meeting on Monday 26 October and the Clergy Conference from 27 to 28 October at Loreto Centre, Llandudno. There will be no Holy Mass in Bangor on Tuesday 27 October.</p>
+      </div>
+
+      <div class="notice-card">
+        <h4>Caernarfon Vigil Mass Winter Time</h4>
+        <p>Because of darker evenings, the Saturday Vigil Mass in Caernarfon moves from 18:00 to 17:00 during wintertime. The October calendar lists the first 17:00 Vigil Mass on Saturday 31 October.</p>
       </div>
 
       <div class="notice-card">
         <h4>Pastoral Visits to the Sick &amp; Housebound</h4>
-        <p>Visiting the sick and bringing Holy Communion to those unable to attend Mass is one of our parish&rsquo;s priorities. If you, a relative, or anyone you know would benefit from a pastoral visit or would like to receive Holy Communion at home, please pass on their details to Fr. Savi or a member of the parish team. Your help in identifying those in need is greatly appreciated, so that no one in our parish family is forgotten.</p>
+        <p>Bringing Holy Communion to those unable to attend Mass remains a parish priority. Please pass details to Fr. Savi or a parish team member if you or someone you know would value a visit.</p>
       </div>
 
       <div class="notice-card">
-        <h4>Bangor Parish Boiler Update</h4>
-        <p>The PAC and Parish Finance Committee have appointed <strong>Mr. Alan Wilkinson</strong>, <strong>Mr. Anthony Anisiobi</strong>, and <strong>Mr. Richard Allsopp</strong> to handle all boiler issues. <strong>Mr. Paul Rowlinson</strong> will manage all insurance-related issues. We thank them for their service to the parish.</p>
+        <h4>Confirmation, First Holy Communion &amp; RCIA</h4>
+        <p>Confirmation preparation, First Holy Communion classes, and RCIA registration are all open. Forms are available at the back of church and on the parish website.</p>
       </div>
 
       <div class="notice-card">
-        <h4>Parish Safety and Emergency Awareness</h4>
-        <p>As a parish community, it is important that we all remain attentive to one another&rsquo;s safety and wellbeing. In the event of an emergency, quick and responsible action can make a real difference. This responsibility belongs to all of us, not only to the priest at the altar.</p>
-
-        <p>You may have noticed the nylon ventilation cables installed around the church. These are essential for the proper ventilation of the building, as there is no other ventilation system in place. Please ensure that they are never removed, blocked, or tampered with.</p>
-
-        <p>We also ask everyone to be especially mindful during services. For example, if someone enters the sacristy and does not return within a reasonable time, or if the main power supply needs attention, or if the sound system or light do not function properly, it is important that someone from the assembly checks the situation. It is far easier for a parishioner to step out briefly than for the priest to leave the altar during Mass. Your awareness and care are therefore vital.</p>
-
-        <p>In the coming months, we hope to organise basic emergency&#8209;response training for a small group of parish volunteers, ideally in collaboration with the local fire service. This will help us be better prepared should an emergency ever arise.</p>
-
-        <p>Thank you for your cooperation and for helping us keep our parish a safe and caring place for all.</p>
+        <h4>Diocesan Youth Day &mdash; 21 November</h4>
+        <p>All youth are welcome at St Joseph&rsquo;s Church, Colwyn Bay, on Saturday 21 November from 10:30, with Mass celebrated by Bishop Peter at 13:30. Under-18s require a parental consent form.</p>
       </div>
 
       <div class="notice-card">
-        <h4>Card-Tap Donation Machine</h4>
-        <p>The card-tap donation machine in the church is currently out of order. For now, offerings can be made by direct bank transfer or by the usual cash envelopes.</p>
+        <h4>Making Jesus the Centre of Your Life at Uni</h4>
+        <p>The Catholic Chaplaincy and Bangor Catholic Students offer hospitality, regular events, and support for students and staff who want to stay grounded in their faith during university life.</p>
       </div>
 
       <div class="notice-card">
-        <h4>Altar Servers</h4>
-        <p>Young people of the parish are invited to join the Altar Servers Ministry. Boys and girls are welcome &mdash; full training and guidance will be provided.<br><br>
-        To join, please speak to <strong>Fr. Savi</strong> after Mass or contact the Parish Office.</p>
+        <h4>Donation &amp; Giving Made Easier</h4>
+        <p>Two card donation machines are available at the back of the church. UK taxpayers can complete Gift Aid once by email after paying by card, and it will apply to future donations on that card.</p>
       </div>
 
       <div class="notice-card">
-        <h4>St Vincent de Paul (SVP) &mdash; Bro Menai Conference</h4>
-        <p>Supporting those in need through practical action and befriending.<br><br>
-        <strong>Adam Faries</strong> (President): <a href="tel:07886027689">07886 027689</a><br>
-        <strong>Anne Breslin</strong> (Secretary): <a href="tel:07759759242">07759 759242</a></p>
-      </div>
-
-      <div class="notice-card">
-        <h4>Safeguarding</h4>
-        <p>Our Safeguarding Representative is <strong>Jo Charles</strong>.<br>
-        Tel: <a href="tel:07454958980">07454 958980</a><br><br>
-        The Diocese of Wrexham is a Registered Charity No. 700426.</p>
-      </div>
-
-      <div class="notice-card">
-        <h4>News Items for The Flame &mdash; October Edition</h4>
-        <p>Please send any news items to be published in <strong>THE FLAME &mdash; October Edition</strong> to <a href="mailto:bangorparishflame@outlook.com">bangorparishflame@outlook.com</a> by the <strong>second week of September</strong>.</p>
+        <h4>News Items for The Flame &mdash; November Edition</h4>
+        <p>Please send items for the November edition of <em>The Flame</em> to <a href="mailto:bangorparishflame@outlook.com">bangorparishflame@outlook.com</a> by the second week of October.</p>
       </div>
 
     </div>
@@ -1051,8 +913,8 @@ other pastoral needs — please contact the Parish Office at these times using t
           <li><strong>Charity No.</strong> 700426</li>
         </ul>
         <div class="newsletter-panel">
-          <p>The latest parish newsletter &mdash; <em>The Flame</em>, August &amp; September 2026 &mdash; is available to download here.</p>
-          <a class="newsletter-link" href="THE_FLAMEAugSep.pdf" download>Download Newsletter PDF</a>
+          <p>The latest parish newsletter &mdash; <em>The Flame</em>, October 2026 &mdash; is available to download here.</p>
+          <a class="newsletter-link" href="theflameoctober26.pdf" download>Download Newsletter PDF</a>
         </div>
       </div>
 
