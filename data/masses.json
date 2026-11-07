@@ -1,0 +1,63 @@
+{
+  "subtitle": "November 2026 schedule — see the calendar below for date-by-date details",
+  "alert": "November updates: there will be no Holy Mass in Bangor on Tuesday 24 November because of the priests’ retreat (volunteer-led Rosary at 9:45 instead). Weekend of 14–15 November: Vigil Mass in Bangor on Saturday at 17:00 (no Vigil Mass in Caernarfon); on Sunday, Mass in Bangor at 10:00 only (no 17:00 Mass) and First Holy Communion Mass in Caernarfon at 12:30.",
+  "confession": [
+    {
+      "day": "Monday",
+      "time": "19:30"
+    },
+    {
+      "day": "Tuesday",
+      "time": "10:30"
+    },
+    {
+      "day": "Thursday",
+      "time": "12:45"
+    }
+  ],
+  "confession_by_arrangement": "Contact Fr. Savi",
+  "churches": [
+    {
+      "title": "Bangor — Our Lady & St. James",
+      "rows": [
+        {
+          "day": "Sunday",
+          "time": "10:00 & 17:00 — Holy Mass"
+        },
+        {
+          "day": "Monday",
+          "time": "19:00 — Holy Mass"
+        },
+        {
+          "day": "Tuesday",
+          "time": "09:45 Morning Prayer; 10:00 Holy Mass"
+        },
+        {
+          "day": "Thursday",
+          "time": "12:15 — Holy Mass"
+        }
+      ],
+      "show_confession": true,
+      "note": "Times may vary on feast days — please check the bulletin below."
+    },
+    {
+      "title": "Caernarfon — St. David & St. Helen",
+      "rows": [
+        {
+          "day": "Saturday",
+          "time": "17:00 Vigil Mass"
+        },
+        {
+          "day": "Confession",
+          "time": "By arrangement with Fr. Savi"
+        },
+        {
+          "day": "RCIA",
+          "time": "Thursdays 18:30 — OL Catholic Primary School"
+        }
+      ],
+      "show_confession": false,
+      "note": "The Caernarfon Vigil Mass is at 17:00 during wintertime because of darker evenings."
+    }
+  ]
+}

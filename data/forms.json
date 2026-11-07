@@ -1,0 +1,50 @@
+{
+  "subtitle": "Download, print, and return to the parish office or the box at the back of the church",
+  "forms": [
+    {
+      "title": "Gift Aid Declaration Form",
+      "text": "If you are a UK tax payer, please use this charity gift aid declaration – single donation form to make your donation to upgrade the church’s sound system go further.",
+      "file": "giftaid.pdf"
+    },
+    {
+      "title": "Baptism",
+      "text": "Application form for the Baptism of a child. Kindly attach the required documents: details for parents, godparents, residency, marital status (if married), and the child’s birth certificate. Please contact Fr. Savi to arrange a preparation meeting at least three months before the proposed date of Baptism.",
+      "file": "Baptism registration form.pdf"
+    },
+    {
+      "title": "First Holy Communion",
+      "text": "Registration form for children preparing to receive their First Holy Communion. Includes faith formation questions and a parental commitment to attend preparation sessions.",
+      "file": "First-Holy-Communion Registration.pdf"
+    },
+    {
+      "title": "Confirmation",
+      "text": "Registration form for the rite of Confirmation. Includes faith formation questions, documentation requirements and commitment to attend preparation sessions.",
+      "file": "confirmation.pdf"
+    },
+    {
+      "title": "Altar Server Registration",
+      "text": "For children wishing to serve at the altar, or already serving. Provides contact details for scheduling, training, and parish events. Parental consent required.",
+      "file": "Altar Server-Registration.pdf"
+    },
+    {
+      "title": "RCIA — Becoming Catholic",
+      "text": "Registration form for the Rite of Christian Initiation for Adults. For anyone exploring the Catholic faith or wishing to be received into the Church. Sessions are held on Thursday evenings.",
+      "file": "RCIA-Registration Form.pdf"
+    },
+    {
+      "title": "Marriage — Guide & Procedure",
+      "text": "A step-by-step guide to arranging a Catholic marriage at the parish, covering documentation, marriage preparation, mixed-marriage permissions, and civil requirements. Please contact Fr. Savi at least 6–12 months in advance.",
+      "file": "Marriage-A preliminary Guideline of Procedure.pdf"
+    },
+    {
+      "title": "Funeral — Guide",
+      "text": "When a loved one passes away, the parish is here to support you with care and dignity as you prepare the funeral liturgy. The guide aids in making proper arrangements that reflect your wishes.",
+      "file": "funeral.pdf"
+    },
+    {
+      "title": "Youth Day consent",
+      "text": "Please return this form to the parish office before the Youth Day at St. Joseph's in Colwyn Bay on 21 November, to enable youth to take part.",
+      "file": "ydconsent.pdf"
+    }
+  ]
+}

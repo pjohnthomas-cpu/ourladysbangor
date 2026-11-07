@@ -75,416 +75,7 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --navy:    #1a2640;
-    --gold:    #d4a843;
-    --cream:   #ffffff;
-    --stone:   #e8e8e8;
-    --text:    #0f0f0f;
-    --muted:   #0f0c0a;
-    --white:   #ffffff;
-    --red-lent:#8b1a1a;
-    --easter:  #3d6b35;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Lato', sans-serif; font-weight: 400; color: var(--text); background: var(--cream); line-height: 1.85; font-size: 18px; }
-
-  /* HEADER */
-  header { background: var(--navy); position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 12px rgba(0,0,0,0.35); }
-  .header-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; }
-  .site-title { font-family: 'Cormorant Garamond', serif; color: var(--gold); font-size: 1.25rem; font-weight: 600; line-height: 1.3; text-decoration: none; }
-  .site-title span { display: block; color: rgba(255,255,255,0.85); font-size: 0.9rem; font-weight: 400; font-family: 'Lato', sans-serif; letter-spacing: 0.05em; }
-  .nav-links { display: flex; align-items: center; }
-  .nav-links a { color: rgba(255,255,255,0.95); text-decoration: none; font-size: 1rem; letter-spacing: 0.03em; margin-left: 20px; transition: color 0.2s; font-weight: 700; }
-  .nav-links a:hover { color: var(--gold); }
-  .hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; background: none; border: none; cursor: pointer; padding: 6px; }
-  .hamburger span { display: block; width: 24px; height: 2px; background: var(--gold); border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
-  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-  .hamburger.open span:nth-child(2) { opacity: 0; }
-  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-  .mobile-nav { display: none; flex-direction: column; background: #0f1a2e; padding: 8px 0 20px; border-top: 1px solid rgba(212,168,67,0.3); }
-  .mobile-nav.open { display: flex; }
-  .mobile-nav a { color: rgba(255,255,255,0.95); text-decoration: none; font-size: 1.1rem; letter-spacing: 0.02em; padding: 16px 28px; border-bottom: 1px solid rgba(255,255,255,0.10); font-weight: 700; transition: color 0.2s, background 0.2s; }
-  .mobile-nav a:hover { color: var(--gold); background: rgba(255,255,255,0.04); }
-
-  /* HERO */
-  .hero { position: relative; height: clamp(280px, 48vw, 520px); overflow: hidden; }
-  .hero img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; display: block; }
-  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(10,18,35,0.1) 0%, rgba(10,18,35,0.72) 100%); display: flex; align-items: flex-end; padding: clamp(18px,5vw,52px) clamp(18px,5vw,44px); }
-  .hero-text h1 { font-family: 'Cormorant Garamond', serif; color: var(--white); font-size: clamp(1.6rem,4.5vw,3rem); font-weight: 700; line-height: 1.12; text-shadow: 0 2px 16px rgba(0,0,0,0.65); }
-  .hero-text p { color: rgba(255,255,255,0.85); font-size: clamp(0.78rem,2vw,1rem); margin-top: 8px; font-weight: 300; letter-spacing: 0.04em; }
-  .gold-bar { width: 50px; height: 3px; background: var(--gold); margin-bottom: 14px; }
-
-  /* IMPORTANT ANNOUNCEMENT */
-  .announcement-wrap { background: #fff6e6; border-top: 1px solid rgba(139,26,26,0.18); border-bottom: 1px solid rgba(139,26,26,0.18); }
-  .announcement-box { max-width: 1100px; margin: 0 auto; padding: 26px 24px; border-left: 6px solid #8b1a1a; }
-  .announcement-label { display: inline-block; margin-bottom: 10px; padding: 4px 10px; background: #8b1a1a; color: var(--white); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
-  .announcement-box h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.6rem, 3.2vw, 2.1rem); color: #5c1010; margin-bottom: 10px; line-height: 1.15; }
-  .announcement-box p { font-size: 1.02rem; color: #231815; line-height: 1.8; max-width: 980px; }
-  .pastoral-plan-wrap { background: #f7f7f7; border-bottom: 1px solid #d8d8d8; }
-  .pastoral-plan-box { max-width: 1100px; margin: 0 auto; padding: 28px 24px; border-left: 6px solid var(--gold); }
-  .pastoral-plan-label { display: inline-block; margin-bottom: 10px; padding: 4px 10px; background: var(--navy); color: var(--gold); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
-  .pastoral-plan-box h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.55rem, 3vw, 2rem); color: var(--navy); margin-bottom: 10px; line-height: 1.15; }
-  .pastoral-plan-box p { font-size: 1.02rem; color: var(--text); line-height: 1.8; max-width: 980px; margin-bottom: 14px; }
-  .pastoral-plan-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
-  .pastoral-plan-link { display: inline-block; padding: 10px 18px; background: var(--navy); color: var(--gold); text-decoration: none; font-size: 0.95rem; font-weight: 700; letter-spacing: 0.03em; }
-  .pastoral-plan-link:hover { background: #243352; }
-  .pastoral-plan-link.secondary { background: #ffffff; color: var(--navy); border: 1px solid #c8c8c8; }
-  .pastoral-plan-link.secondary:hover { background: #eeeeee; }
-
-  /* RIBBON */
-  .ribbon { text-align: center; padding: 12px 20px; font-size: clamp(0.95rem,2vw,1.05rem); letter-spacing: 0.03em; font-weight: 700; color: var(--white); }
-  .ribbon-holy { background: #6b1a1a; }
-
-  /* SHARED */
-  .section { max-width: 1100px; margin: 0 auto; padding: 60px 24px; }
-  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.75rem,3.2vw,2.2rem); font-weight: 600; color: var(--navy); margin-bottom: 6px; }
-  .section-subtitle { color: #2a2420; font-size: 1rem; letter-spacing: 0.02em; margin-bottom: 32px; font-weight: 400; }
-  .divider { width: 50px; height: 2px; background: var(--gold); margin-bottom: 12px; }
-
-  /* MASS TIMES */
-  .masses-bg { background: #f0f0f0; border-top: 1px solid #d8d8d8; border-bottom: 1px solid #d8d8d8; }
-  .masses-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
-  .mass-card { background: #ffffff; border-left: 4px solid var(--gold); padding: 26px 30px; }
-  .mass-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; color: var(--navy); margin-bottom: 16px; font-weight: 600; }
-  .mass-row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 4px; padding: 9px 0; border-bottom: 1px solid var(--stone); font-size: 1rem; }
-  .mass-row:last-child { border-bottom: none; }
-  .mass-day { font-weight: 700; color: var(--navy); min-width: 100px; }
-  .mass-time { color: var(--text); }
-  .mass-note { font-size: 0.95rem; color: #1a1614; margin-top: 14px; font-style: italic; font-weight: 400; }
-
-  /* BULLETIN */
-  .schedule-bg { background: #000000; }
-  .schedule-bg .section-title { color: var(--white); }
-  .schedule-bg .section-subtitle { color: rgba(255,255,255,0.85); font-weight: 400; }
-  .month-heading { font-family: 'Cormorant Garamond', serif; color: var(--gold); font-size: 1.2rem; font-weight: 600; letter-spacing: 0.03em; margin: 32px 0 12px; border-bottom: 1px solid rgba(212,168,67,0.4); padding-bottom: 6px; }
-  .month-heading:first-of-type { margin-top: 0; }
-  .featured-newsletter { background: rgba(255,255,255,0.08); border: 1px solid rgba(212,168,67,0.35); border-left: 4px solid var(--gold); padding: 20px 22px; margin: 0 0 28px; }
-  .featured-newsletter h3 { font-family: 'Cormorant Garamond', serif; color: var(--gold); font-size: 1.5rem; font-weight: 600; margin-bottom: 8px; }
-  .featured-newsletter p { color: rgba(255,255,255,0.9); font-size: 1rem; line-height: 1.75; margin: 0 0 14px; }
-  .featured-newsletter .newsletter-link { background: var(--gold); color: var(--navy); }
-  .featured-newsletter .newsletter-link:hover { background: #e0b84e; }
-  .schedule-table { width: 100%; border-collapse: collapse; font-size: 1rem; margin-bottom: 4px; }
-  .schedule-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 4px; }
-  .schedule-table th { background: rgba(255,255,255,0.15); color: #f5d77a; text-align: left; padding: 11px 14px; font-weight: 700; letter-spacing: 0.03em; font-size: 0.9rem; }
-  .schedule-table td { padding: 11px 14px; border-bottom: 1px solid rgba(255,255,255,0.12); color: #ffffff; vertical-align: top; }
-  .schedule-table tr:last-child td { border-bottom: none; }
-  .schedule-table tr:hover td { background: rgba(255,255,255,0.06); }
-  .badge { display: inline-block; padding: 3px 8px; border-radius: 2px; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.03em; white-space: nowrap; }
-  .badge-lent   { background: #8b1a1a; color: #fff; }
-  .badge-holy   { background: #5c1010; color: #fff; }
-  .badge-easter { background: var(--easter); color: #fff; }
-  .badge-feast  { background: #c8962a; color: #fff; }
-  .badge-none   { background: rgba(255,255,255,0.20); color: rgba(255,255,255,0.9); }
-
-  /* NOTICES */
-  .notices-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
-  .notice-card { background: #ffffff; border: 1px solid #d8d8d8; padding: 24px 26px; border-top: 3px solid var(--navy); }
-  .notice-card h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; color: var(--navy); margin-bottom: 10px; font-weight: 600; }
-  .notice-card p { font-size: 1rem; color: var(--text); line-height: 1.75; }
-  .notice-card a { color: var(--navy); }
-  .notice-card.wide { grid-column: 1 / -1; }
-  .in-memoriam-list { column-count: 3; column-gap: 28px; font-size: 0.93rem; line-height: 1.7; color: var(--text); margin: 14px 0; }
-  .in-memoriam-list p { margin: 0; break-inside: avoid; }
-  @media (max-width: 900px) { .in-memoriam-list { column-count: 2; } }
-  @media (max-width: 640px) { .in-memoriam-list { column-count: 1; } }
-
-  /* FORMS */
-  .forms-bg { background: var(--navy); border-top: 1px solid #0d1a30; }
-  .forms-bg .section-title { color: var(--white); }
-  .forms-bg .section-subtitle { color: rgba(255,255,255,0.75); }
-  .forms-bg .divider { background: var(--gold); }
-  .forms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-  .form-card { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-left: 4px solid var(--gold); padding: 22px 24px; display: flex; flex-direction: column; gap: 10px; transition: background 0.2s; }
-  .form-card:hover { background: rgba(255,255,255,0.11); }
-  .form-card h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--gold); font-weight: 600; margin: 0; }
-  .form-card p { font-size: 0.97rem; color: rgba(255,255,255,0.82); line-height: 1.65; margin: 0; flex-grow: 1; }
-  .form-download { display: inline-block; margin-top: 4px; padding: 9px 18px; background: var(--gold); color: var(--navy); text-decoration: none; font-size: 0.92rem; font-weight: 700; letter-spacing: 0.03em; align-self: flex-start; transition: background 0.2s; }
-  .form-download:hover { background: #e0b84e; }
-  .forms-note { margin-top: 28px; font-size: 0.95rem; color: rgba(255,255,255,0.65); font-style: italic; }
-  @media (max-width: 640px) {
-    .forms-grid { grid-template-columns: 1fr; gap: 14px; }
-    .form-card { padding: 17px 18px; }
-  }
-
-  /* MUSIC */
-  .music-bg { background: var(--white); border-top: 1px solid var(--stone); }
-  .music-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
-  .music-img-wide { width: 100%; height: 200px; object-fit: cover; object-position: center 35%; display: block; margin-bottom: 18px; }
-  .music-img-tall { width: 100%; height: 360px; object-fit: cover; object-position: center top; display: block; margin-bottom: 24px; }
-  .organ-spec { width: 100%; border-collapse: collapse; font-size: 0.97rem; margin-top: 18px; }
-  .organ-spec thead th { background: var(--navy); color: var(--gold); padding: 9px 12px; text-align: left; font-weight: 700; letter-spacing: 0.03em; font-size: 0.92rem; }
-
-  .organ-spec tbody td { padding: 7px 12px; border-bottom: 1px solid var(--stone); color: var(--text); vertical-align: top; }
-  .organ-spec tbody tr:last-child td { border-bottom: none; }
-  .organ-spec tbody tr:hover td { background: var(--cream); }
-  .div-name { font-weight: 700; color: var(--navy); white-space: nowrap; }
-  .coupler { color: #2a2420; font-style: italic; }
-  .music-prose p { font-size: 1rem; color: var(--text); line-height: 1.85; margin-bottom: 14px; }
-  .music-prose a { color: var(--navy); }
-  .music-link { display: inline-block; margin-top: 14px; padding: 11px 22px; background: var(--navy); color: var(--gold); text-decoration: none; font-size: 1rem; font-weight: 700; letter-spacing: 0.03em; transition: background 0.2s; }
-  .music-link:hover { background: #243352; }
-  .music-subhead { font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; color: var(--navy); margin-bottom: 12px; font-weight: 600; }
-
-  /* GALLERY & LIGHTBOX */
-  .gallery-bg { background: var(--stone); padding: 56px 0; border-top: 1px solid #d8d8d8; border-bottom: 1px solid #d8d8d8; }
-  .gallery-inner { max-width: 1100px; margin: 24px auto 0; padding: 0 24px; }
-
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 8px;
-  }
-
-  .gallery-grid figure {
-    margin: 0;
-    overflow: hidden;
-    border-radius: 2px;
-    border: 1px solid #ccc;
-    cursor: pointer;
-    aspect-ratio: 1 / 1;
-    background: #f5f5f5;
-    transition: opacity 0.15s ease, transform 0.15s ease;
-  }
-
-  .gallery-grid figure:hover {
-    opacity: 0.85;
-    transform: scale(1.02);
-  }
-
-  .gallery-grid figure img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  /* Lightbox overlay */
-  #lb-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    background: rgba(0, 0, 0, 0.88);
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-    box-sizing: border-box;
-  }
-
-  #lb-overlay.active {
-    display: flex;
-  }
-
-  #lb-img {
-    max-width: 90vw;
-    max-height: 88vh;
-    border-radius: 2px;
-    box-shadow: 0 8px 40px rgba(0,0,0,0.6);
-    object-fit: contain;
-    display: block;
-  }
-
-  #lb-caption {
-    position: absolute;
-    bottom: 16px;
-    left: 0;
-    right: 0;
-    text-align: center;
-    color: rgba(255,255,255,0.75);
-    font-size: 13px;
-    pointer-events: none;
-  }
-
-  #lb-close {
-    position: absolute;
-    top: 16px;
-    right: 20px;
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 32px;
-    line-height: 1;
-    cursor: pointer;
-    opacity: 0.7;
-    padding: 0;
-    transition: opacity 0.15s;
-  }
-
-  #lb-close:hover { opacity: 1; }
-
-  .lb-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 40px;
-    line-height: 1;
-    cursor: pointer;
-    opacity: 0.5;
-    padding: 12px;
-    transition: opacity 0.15s;
-    user-select: none;
-  }
-
-  .lb-nav:hover { opacity: 1; }
-  #lb-prev { left: 8px; }
-  #lb-next { right: 8px; }
-  .gallery-grid .tall img { height: 100%; }
-
-  /* CONTACT */
-  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
-  .info-block p, .info-block li { font-size: 1rem; margin-bottom: 6px; }
-  .info-block ul { list-style: none; padding: 0; }
-  .info-block li { padding: 8px 0; border-bottom: 1px solid var(--stone); }
-  .info-block li:last-child { border-bottom: none; }
-  .info-block strong { color: var(--navy); font-weight: 700; display: inline-block; min-width: 100px; }
-  .info-block a { color: var(--navy); }
-  .info-subhead { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; color: var(--navy); margin: 30px 0 14px; font-weight: 600; }
-  .quote-block { margin-top: 28px; background: var(--cream); border-left: 4px solid var(--gold); padding: 18px 22px; }
-  .quote-block p { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--navy); font-style: italic; line-height: 1.7; }
-  .newsletter-panel { margin-top: 28px; background: var(--cream); border: 1px solid var(--stone); border-left: 4px solid var(--gold); padding: 18px 22px; }
-  .newsletter-panel p { margin: 0 0 12px; font-size: 1rem; color: var(--text); line-height: 1.75; }
-  .newsletter-link { display: inline-block; padding: 10px 18px; background: var(--navy); color: var(--gold); text-decoration: none; font-size: 0.95rem; font-weight: 700; letter-spacing: 0.03em; }
-  .newsletter-link:hover { background: #243352; }
-
-  /* FOOTER */
-  footer { background: #111a28; color: rgba(255,255,255,0.92); text-align: center; padding: 36px 24px; font-size: 1rem; line-height: 2; }
-  footer a { color: var(--gold); text-decoration: none; }
-  footer a:hover { text-decoration: underline; }
-  .footer-cross { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--gold); margin-bottom: 10px; }
-
-  /* ── TABLET ≤900px ─────────────────────────────────────────────── */
-  @media (max-width: 900px) {
-
-    /* Header */
-    .site-title { font-size: 1.1rem; }
-
-    /* Hero */
-    .hero { height: clamp(220px, 40vw, 400px); }
-
-    /* Section padding */
-    .section { padding: 48px 20px; }
-
-    .announcement-box { padding: 22px 20px; }
-    .pastoral-plan-box { padding: 24px 20px; }
-
-    /* Mass times */
-    .masses-grid { grid-template-columns: 1fr; gap: 20px; }
-    .mass-card { padding: 22px 24px; }
-
-    /* Bulletin table — hide type column to save width */
-    .schedule-table th:nth-child(2), .schedule-table td:nth-child(2) { display: none; }
-    .schedule-table td, .schedule-table th { padding: 9px 12px; font-size: 0.95rem; }
-
-    /* Notices */
-    .notices-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
-
-    /* Music */
-    .music-grid { grid-template-columns: 1fr; gap: 28px; }
-    .music-img-wide { height: 180px; }
-    .music-img-tall { height: 220px; object-position: center 20%; }
-
-    /* Organ spec table — allow division name column to wrap */
-    .div-name { white-space: normal; min-width: 80px; }
-
-    /* Gallery */
-    .gallery-bg { padding: 40px 0; }
-    .gallery-grid { grid-template-columns: 1fr 1fr; }
-    .gallery-grid .tall { grid-row: span 1; }
-    .gallery-grid img, .gallery-grid .tall img { height: 200px; }
-
-    /* Contact */
-    .info-grid { grid-template-columns: 1fr; gap: 32px; }
-    .info-block strong { min-width: 80px; }
-
-    /* Footer */
-    footer { font-size: 0.95rem; line-height: 1.9; padding: 30px 20px; }
-  }
-
-  /* ── MOBILE ≤640px ──────────────────────────────────────────────── */
-  @media (max-width: 640px) {
-
-    /* Header */
-    .hamburger { display: flex; }
-    .nav-links { display: none; }
-    .site-title { font-size: 1rem; }
-    .site-title span { font-size: 0.78rem; }
-
-    /* Hero */
-    .hero { height: clamp(200px, 55vw, 320px); }
-    .hero-text h1 { font-size: clamp(1.35rem, 6vw, 2rem); }
-    .hero-text p { font-size: 0.82rem; }
-
-    /* Ribbon */
-    .ribbon { font-size: 0.9rem; padding: 10px 16px; }
-
-    /* Section padding */
-    .section { padding: 34px 16px; }
-    .section-title { font-size: clamp(1.5rem, 5vw, 1.9rem); }
-
-    .announcement-box { padding: 20px 16px; border-left-width: 5px; }
-    .announcement-box p { font-size: 0.98rem; }
-    .pastoral-plan-box { padding: 22px 16px; border-left-width: 5px; }
-    .pastoral-plan-box p { font-size: 0.98rem; }
-    .pastoral-plan-link { width: 100%; text-align: center; padding: 13px 18px; }
-
-    /* Mass times */
-    .masses-grid { grid-template-columns: 1fr; gap: 16px; }
-    .mass-card { padding: 18px 18px; }
-    .mass-card h3 { font-size: 1.25rem; }
-    .mass-row { font-size: 0.97rem; }
-    .mass-day { min-width: 80px; }
-
-    /* Bulletin */
-    .schedule-table { min-width: 560px; }
-    .schedule-table td, .schedule-table th { padding: 8px 10px; font-size: 0.9rem; }
-
-    /* Notices */
-    .notices-grid { grid-template-columns: 1fr; gap: 14px; }
-    .notice-card { padding: 18px 18px; }
-
-    /* Music */
-    .music-img-wide { height: 160px; }
-    .music-img-tall { height: 190px; }
-    .music-link { width: 100%; text-align: center; padding: 13px 18px; }
-
-    /* Organ spec — make scrollable rather than overflowing */
-    .organ-spec-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-    .organ-spec { font-size: 0.88rem; min-width: 300px; }
-    .organ-spec thead th, .organ-spec tbody td { padding: 6px 9px; }
-
-    /* Gallery */
-    .gallery-bg { padding: 28px 0; }
-    .gallery-grid { grid-template-columns: 1fr; gap: 8px; }
-    .gallery-grid .tall { grid-row: span 1; }
-    .gallery-grid img, .gallery-grid .tall img { height: 190px; }
-
-    /* Contact */
-    .info-grid { grid-template-columns: 1fr; gap: 24px; }
-    .info-block strong { display: block; min-width: unset; margin-bottom: 2px; }
-    .info-block li { padding: 10px 0; font-size: 0.97rem; }
-    .quote-block { padding: 14px 16px; }
-    .quote-block p { font-size: 1rem; }
-
-    /* Footer */
-    footer { font-size: 0.88rem; line-height: 1.8; padding: 28px 16px; }
-    .footer-cross { font-size: 1.6rem; }
-  }
-
-  /* ── SMALL MOBILE ≤380px ────────────────────────────────────────── */
-  @media (max-width: 380px) {
-    body { font-size: 16px; }
-    .site-title { font-size: 0.9rem; }
-    .hero-text h1 { font-size: 1.25rem; }
-    .mass-card { padding: 14px 14px; }
-    .notice-card { padding: 14px 14px; }
-    .music-link { font-size: 0.93rem; }
-  }
-</style>
+<link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
 
@@ -540,42 +131,6 @@
   </div>
 </section>
 
-<section class="pastoral-plan-wrap" aria-label="Pastoral Plan feedback invitation">
-  <div class="pastoral-plan-box">
-    <div class="pastoral-plan-label">Pastoral Plan</div>
-    <h2>Please read <em>Into the Future IV</em> and share your feedback</h2>
-    <p>The Diocese of Wrexham has published the 30-page Pastoral Plan document, <em>Into the Future IV</em>. Parishioners are warmly invited to download the document, read it carefully, and send their thoughts and feedback to the Parish Office by Thursday the 17th of September(link/email id below).</p>
-        <div class="pastoral-plan-actions">
-      <a class="pastoral-plan-link" href="Intothefuture4.pdf" download>Download Pastoral Plan PDF</a>
-      <a class="pastoral-plan-link secondary" href="mailto:priestbangor@rcdwxm.org.uk?subject=Feedback%20on%20Into%20the%20Future%20IV">Send Feedback</a>
-    
-
-<p>To help formulate our response, a number of short meetings will be held at the following times. Everyone is warmly invited to attend and contribute their thoughts on the 4 key questions the Bishop poses for parishes:
-<ul>
-  <li>What is the mission of our parish?</li>
-  <li>How is the ongoing formation of adults undertaken in our parish or deanery, and what would help
-individuals in their ongoing formation?</li>
-<li>Do we have in place a Finance Committee and Pastoral Council which promotes the co-responsibility
-of priest and people for the mission of the Church?</li>
-<li>How do we promote stewardship of time, talent and treasure amongst the faithful?</li>
-</ul>
-<h3>Our Parish response needs to be submitted to the Bishop on Friday 18 th September, so meetings will be
-held as follows:</h3>
-<ol>
-<li>Monday 14 th September: 2pm in person at Our Lady and St James; 7.30pm in person following 7pm
-Mass </li>
-<li>Tuesday 15 th September: 10.30 am in person following 10am Mass; 1pm in person at Ysgol
-Santes Helen, Caernarfon</li>
-<li>Thursday 17 th September: 8pm via Zoom.
-(Please email jo.charles2@btinternet.com for the link.)</li>
-</ol>
-<h3>If you are not able to attend but wish to contribute, please send your comments on the questions to
-the Parish office via priestbangor@rcdwxm.org.uk by Thursday 17 th September.</h3>
-</p>
-</div>
-</div>
-</section>
-
 <!-- GALLERY -->
 <div class="gallery-bg" id="gallery">
   <div class="section" style="padding-top:0;padding-bottom:0;">
@@ -618,26 +173,26 @@ the Parish office via priestbangor@rcdwxm.org.uk by Thursday 17 th September.</h
   <div class="section">
     <div class="divider"></div>
     <h2 class="section-title">Mass Times</h2>
-    <p class="section-subtitle">October 2026 schedule &mdash; see the calendar below for date-by-date details</p>
+    <p class="section-subtitle">November 2026 schedule — see the calendar below for date-by-date details</p>
     <div class="masses-grid">
       <div class="mass-card">
-        <h3>Bangor &mdash; Our Lady &amp; St. James</h3>
-        <div class="mass-row"><span class="mass-day">Sunday</span><span class="mass-time">10:00 &amp; 17:00 &mdash; Holy Mass</span></div>
-        <div class="mass-row"><span class="mass-day">Monday</span><span class="mass-time">19:00 &mdash; Holy Mass</span></div>
+        <h3>Bangor — Our Lady &amp; St. James</h3>
+        <div class="mass-row"><span class="mass-day">Sunday</span><span class="mass-time">10:00 &amp; 17:00 — Holy Mass</span></div>
+        <div class="mass-row"><span class="mass-day">Monday</span><span class="mass-time">19:00 — Holy Mass</span></div>
         <div class="mass-row"><span class="mass-day">Tuesday</span><span class="mass-time">09:45 Morning Prayer; 10:00 Holy Mass</span></div>
-        <div class="mass-row"><span class="mass-day">Thursday</span><span class="mass-time">12:15 &mdash; Holy Mass</span></div>
-        <div class="mass-row"><span class="mass-day">Confession</span><span class="mass-time">Monday 19:30 &middot; Tuesday 10:30 &middot; Thursday 12:45</span></div>
-        <p class="mass-note">Times may vary on feast days &mdash; please check the bulletin below.</p>
+        <div class="mass-row"><span class="mass-day">Thursday</span><span class="mass-time">12:15 — Holy Mass</span></div>
+        <div class="mass-row"><span class="mass-day">Confession</span><span class="mass-time">Monday 19:30 · Tuesday 10:30 · Thursday 12:45</span></div>
+        <p class="mass-note">Times may vary on feast days — please check the bulletin below.</p>
       </div>
       <div class="mass-card">
-        <h3>Caernarfon &mdash; St. David &amp; St. Helen</h3>
-        <div class="mass-row"><span class="mass-day">Saturday</span><span class="mass-time">18:00 Vigil Mass until 24 Oct; 17:00 from 31 Oct</span></div>
+        <h3>Caernarfon — St. David &amp; St. Helen</h3>
+        <div class="mass-row"><span class="mass-day">Saturday</span><span class="mass-time">17:00 Vigil Mass</span></div>
         <div class="mass-row"><span class="mass-day">Confession</span><span class="mass-time">By arrangement with Fr. Savi</span></div>
-        <div class="mass-row"><span class="mass-day">RCIA</span><span class="mass-time">Thursdays 18:30 &mdash; OL Catholic Primary School</span></div>
-        <p class="mass-note">The Caernarfon Vigil Mass moves to 17:00 during wintertime because of darker evenings.</p>
+        <div class="mass-row"><span class="mass-day">RCIA</span><span class="mass-time">Thursdays 18:30 — OL Catholic Primary School</span></div>
+        <p class="mass-note">The Caernarfon Vigil Mass is at 17:00 during wintertime because of darker evenings.</p>
       </div>
     </div>
-    <p class="mass-note" style="color:#8b1a1a;font-weight:700;margin-top:18px;">October update: there will be no Holy Mass in Bangor on Tuesday 27 October because of the clergy conference.</p>
+    <p class="mass-note" style="color:#8b1a1a;font-weight:700;margin-top:18px;">November updates: there will be no Holy Mass in Bangor on Tuesday 24 November because of the priests’ retreat (volunteer-led Rosary at 9:45 instead). Weekend of 14–15 November: Vigil Mass in Bangor on Saturday at 17:00 (no Vigil Mass in Caernarfon); on Sunday, Mass in Bangor at 10:00 only (no 17:00 Mass) and First Holy Communion Mass in Caernarfon at 12:30.</p>
   </div>
 </div>
 
@@ -645,42 +200,40 @@ the Parish office via priestbangor@rcdwxm.org.uk by Thursday 17 th September.</h
 <div class="schedule-bg" id="bulletin">
   <div class="section">
     <div class="divider"></div>
-    <h2 class="section-title">October 2026 Calendar</h2>
-    <p class="section-subtitle" style="color:rgba(255,255,255,0.85);">Ordinary Time &mdash; October 2026</p>
+    <h2 class="section-title">November 2026 Calendar</h2>
+    <p class="section-subtitle" style="color:rgba(255,255,255,0.85);">Ordinary Time and the start of Advent — November 2026</p>
     <div class="featured-newsletter">
-      <h3>Latest Parish Newsletter &mdash; October 2026</h3>
-      <p>Download the October issue of <em>The Flame</em>, featuring Fr. Savi&rsquo;s reflection on the Rosary, the October liturgical calendar, parish notices, and upcoming diocesan events. Items for the November edition should be sent to <a href="mailto:bangorparishflame@outlook.com" style="color:var(--gold);">bangorparishflame@outlook.com</a> by the second week of October.</p>
-      <a class="newsletter-link" href="theflameoctober26.pdf" download>Download Newsletter PDF</a>
+      <h3>Latest Parish Newsletter &mdash; November 2026</h3>
+      <p>Download the November issue of <em>The Flame</em>, featuring Fr. Savi’s reflection on remembering the faithful departed, the November liturgical calendar, parish notices, and upcoming parish events. Items for the December edition should be sent to <a href="mailto:bangorparishflame@outlook.com" style="color:var(--gold);">bangorparishflame@outlook.com</a> by the first week of November.</p>
+      <a class="newsletter-link" href="theflamenovember26.pdf" download>Download Newsletter PDF</a>
     </div>
-  
-    <!-- TABLE view -->
 
-    <div class="month-heading">October 2026</div>
+    <div class="month-heading">November 2026</div>
     <div class="schedule-table-wrap"><table class="schedule-table">
       <thead><tr><th style="width:155px">Date</th><th>Observance</th><th>Details</th></tr></thead>
       <tbody>
-        <tr><td>Thursday 1 Oct</td><td>Weekday Mass</td><td>Bangor: 12:15 Holy Mass</td></tr>
-        <tr><td>Saturday 3 Oct</td><td>Vigil Mass</td><td>Caernarfon: 18:00 Vigil Mass</td></tr>
-        <tr><td>Sunday 4 Oct</td><td>27th Sunday in Ordinary Time</td><td>Bangor: 10:00 &amp; 17:00 Holy Mass</td></tr>
-        <tr><td>Monday 5 Oct</td><td>Weekday Mass</td><td>Bangor: 19:00 Holy Mass</td></tr>
-        <tr><td>Tuesday 6 Oct</td><td>Morning Prayer &amp; Mass</td><td>Bangor: 09:45 Morning Prayer &amp; 10:00 Holy Mass</td></tr>
-        <tr><td>Thursday 8 Oct</td><td>Weekday Mass</td><td>Bangor: 12:15 Holy Mass</td></tr>
-        <tr><td>Saturday 10 Oct</td><td>Vigil Mass</td><td>Caernarfon: 18:00 Vigil Mass</td></tr>
-        <tr><td>Sunday 11 Oct</td><td><span class="badge badge-feast">Volunteer Thanksgiving</span> 28th Sunday in Ordinary Time</td><td>Bangor: 10:00 &amp; 17:00 Holy Mass</td></tr>
-        <tr><td>Monday 12 Oct</td><td>Weekday Mass</td><td>Bangor: 19:00 Holy Mass</td></tr>
-        <tr><td>Tuesday 13 Oct</td><td>Morning Prayer &amp; Mass</td><td>Bangor: 09:45 Morning Prayer &amp; 10:00 Holy Mass</td></tr>
-        <tr><td>Thursday 15 Oct</td><td>Weekday Mass</td><td>Bangor: 12:15 Holy Mass</td></tr>
-        <tr><td>Saturday 17 Oct</td><td>Vigil Mass</td><td>Caernarfon: 18:00 Vigil Mass</td></tr>
-        <tr><td>Sunday 18 Oct</td><td><span class="badge badge-feast">World Mission Sunday</span> 29th Sunday in Ordinary Time</td><td>Bangor: 10:00 &amp; 17:00 Holy Mass &mdash; second collection for World Mission Sunday</td></tr>
-        <tr><td>Monday 19 Oct</td><td>Weekday Mass</td><td>Bangor: 19:00 Holy Mass</td></tr>
-        <tr><td>Tuesday 20 Oct</td><td>Morning Prayer &amp; Mass</td><td>Bangor: 09:45 Morning Prayer &amp; 10:00 Holy Mass</td></tr>
-        <tr><td>Thursday 22 Oct</td><td>Weekday Mass</td><td>Bangor: 12:15 Holy Mass</td></tr>
-        <tr><td>Saturday 24 Oct</td><td>Vigil Mass</td><td>Caernarfon: 18:00 Vigil Mass</td></tr>
-        <tr><td>Sunday 25 Oct</td><td><span class="badge badge-feast">Family Eucharist</span> 30th Sunday in Ordinary Time</td><td>Bangor: 10:00 &amp; 17:00 Holy Mass &mdash; Family Eucharist at 10:00 with blessing for October birthdays and milestones</td></tr>
-        <tr><td>Monday 26 Oct</td><td>Weekday Mass</td><td>Bangor: 19:00 Holy Mass</td></tr>
-        <tr><td>Tuesday 27 Oct</td><td><span class="badge badge-none">No Holy Mass</span></td><td>Bangor: 09:45 Morning Prayer only &mdash; no Holy Mass because of the clergy conference</td></tr>
-        <tr><td>Thursday 29 Oct</td><td>Weekday Mass</td><td>Bangor: 12:15 Holy Mass</td></tr>
-        <tr><td>Saturday 31 Oct</td><td><span class="badge badge-feast">Winter Vigil Time</span> Vigil Mass</td><td>Caernarfon: 17:00 Vigil Mass</td></tr>
+        <tr><td>Sunday 1 Nov</td><td><span class="badge badge-feast">Solemnity of All Saints</span> 31st Sunday in Ordinary Time</td><td>Bangor: 10:00 &amp; 17:00 Holy Mass</td></tr>
+        <tr><td>Monday 2 Nov</td><td><span class="badge badge-feast">All Souls’ Day</span></td><td>Bangor: 19:00 Holy Mass</td></tr>
+        <tr><td>Tuesday 3 Nov</td><td>Morning Prayer &amp; Mass</td><td>Bangor: 09:45 Morning Prayer &amp; 10:00 Holy Mass</td></tr>
+        <tr><td>Thursday 5 Nov</td><td>Weekday Mass</td><td>Bangor: 12:15 Holy Mass</td></tr>
+        <tr><td>Saturday 7 Nov</td><td>Vigil Mass</td><td>Caernarfon: 17:00 Vigil Mass</td></tr>
+        <tr><td>Sunday 8 Nov</td><td>32nd Sunday in Ordinary Time</td><td>Bangor: 10:00 &amp; 17:00 Holy Mass</td></tr>
+        <tr><td>Monday 9 Nov</td><td>Weekday Mass</td><td>Bangor: 19:00 Holy Mass</td></tr>
+        <tr><td>Tuesday 10 Nov</td><td>Morning Prayer &amp; Mass</td><td>Bangor: 09:45 Morning Prayer &amp; 10:00 Holy Mass</td></tr>
+        <tr><td>Thursday 12 Nov</td><td>Weekday Mass</td><td>Bangor: 12:15 Holy Mass</td></tr>
+        <tr><td>Saturday 14 Nov</td><td><span class="badge badge-feast">Mass time change</span> Vigil Mass</td><td>Bangor: 17:00 Vigil Mass — no Vigil Mass in Caernarfon this week</td></tr>
+        <tr><td>Sunday 15 Nov</td><td><span class="badge badge-feast">First Holy Communion</span> 33rd Sunday in Ordinary Time</td><td>Bangor: 10:00 Holy Mass only (no 17:00 Mass) — Caernarfon: 12:30 First Holy Communion Mass</td></tr>
+        <tr><td>Monday 16 Nov</td><td>Weekday Mass</td><td>Bangor: 19:00 Holy Mass</td></tr>
+        <tr><td>Tuesday 17 Nov</td><td>Morning Prayer &amp; Mass</td><td>Bangor: 09:45 Morning Prayer &amp; 10:00 Holy Mass</td></tr>
+        <tr><td>Thursday 19 Nov</td><td>Weekday Mass</td><td>Bangor: 12:15 Holy Mass</td></tr>
+        <tr><td>Saturday 21 Nov</td><td>Vigil Mass</td><td>Caernarfon: 17:00 Vigil Mass</td></tr>
+        <tr><td>Sunday 22 Nov</td><td><span class="badge badge-feast">Christ the King</span> 34th Sunday in Ordinary Time</td><td>Bangor: 10:00 &amp; 17:00 Holy Mass — Thanksgiving Mass for Married Couples at 10:00</td></tr>
+        <tr><td>Monday 23 Nov</td><td>Weekday Mass</td><td>Bangor: 19:00 Holy Mass</td></tr>
+        <tr><td>Tuesday 24 Nov</td><td><span class="badge badge-none">No Holy Mass</span></td><td>Bangor: 09:45 volunteer-led Rosary — no Holy Mass because of the priests’ retreat</td></tr>
+        <tr><td>Thursday 26 Nov</td><td>Weekday Mass</td><td>Bangor: 12:15 Holy Mass</td></tr>
+        <tr><td>Saturday 28 Nov</td><td>Vigil Mass</td><td>Caernarfon: 17:00 Vigil Mass</td></tr>
+        <tr><td>Sunday 29 Nov</td><td><span class="badge badge-feast">First Sunday of Advent</span></td><td>Bangor: 10:00 &amp; 17:00 Holy Mass — Family Eucharist at 10:00 with a blessing for birthdays</td></tr>
+        <tr><td>Monday 30 Nov</td><td><span class="badge badge-feast">St. Andrew, Apostle</span></td><td>Bangor: 19:00 Holy Mass</td></tr>
       </tbody>
     </table></div>
 
@@ -692,42 +245,62 @@ the Parish office via priestbangor@rcdwxm.org.uk by Thursday 17 th September.</h
   <div class="section">
     <div class="divider"></div>
     <h2 class="section-title">Notices &amp; Announcements</h2>
-    <p class="section-subtitle">Parish life &mdash; October 2026</p>
+    <p class="section-subtitle">Parish life — November 2026</p>
     <div class="notices-grid">
 
       <div class="notice-card wide">
-        <h4>The Rosary: A Crown of Prayer</h4>
-        <p>October is the Month of the Rosary. Fr. Savi invites parishioners to rediscover this simple prayer, whether at home, while travelling, on a walk, or in quiet moments of the day, asking Mary, Queen of the Most Holy Rosary, to lead our families, parish, and world closer to Jesus.</p>
+        <h4>Remembering with Gratitude, Waiting with Hope</h4>
+        <p>November begins with the Solemnity of All Saints on 1 November and All Souls’ Day on 2 November. We rejoice in the saints and lovingly remember our departed family members, friends and parishioners. Offering Holy Mass for the faithful departed is one of the greatest expressions of that love. During this month of remembrance, Fr. Savi warmly encourages you to request a Mass for someone you love, whether for the departed, the sick, families or special intentions. Envelopes are available in the church and may be placed in the box provided.</p>
       </div>
 
       <div class="notice-card">
-        <h4>Pope&rsquo;s Intention for October</h4>
-        <p>Let us pray that mental health ministry may be established throughout the Church, helping to overcome stigma and discrimination toward people living with mental illness.</p>
+        <h4>Pope’s Intention for November</h4>
+        <p>Let us pray for the proper use of wealth, that, not succumbing to the temptation of selfishness, it may always be put at the service of the common good and solidarity of those who have less.</p>
       </div>
 
       <div class="notice-card">
-        <h4>Volunteer Thanksgiving Mass &mdash; 11 October</h4>
-        <p>The parish gives thanks for all volunteers, past and present, who have offered their time, energy, and talents, whether quietly behind the scenes or in active ministry.</p>
+        <h4>First Holy Communion in Caernarfon — 15 November</h4>
+        <p>First Holy Communion will be celebrated in Caernarfon on Sunday 15 November at 12:30. Please keep our First Communicants and their families in your prayers. Weekend Masses: Saturday 14 November, 17:00 Vigil Mass in Bangor (no Vigil Mass in Caernarfon); Sunday 15 November, 12:30 First Holy Communion Mass in Caernarfon; no Mass in Bangor at 17:00. Please share this with anyone who may be affected.</p>
       </div>
 
       <div class="notice-card">
-        <h4>World Mission Sunday &mdash; 18 October</h4>
-        <p>A second collection will be taken on Sunday 18 October to support the worldwide missionary work of the Church.</p>
+        <h4>Priests’ Retreat — Tuesday 24 November</h4>
+        <p>There will be no 10:00 Holy Mass in Bangor on Tuesday 24 November, as the priests of the Vicariate will be on retreat at the Loreto Spirituality Centre in Llandudno. Everyone is welcome to join the volunteer-led Rosary at 9:45. Please keep our priests in your prayers.</p>
       </div>
 
       <div class="notice-card">
-        <h4>Family Eucharist &mdash; 25 October</h4>
-        <p>Family Eucharist will be celebrated at the 10:00 Mass on Sunday 25 October. A special blessing will be given for October birthdays and milestones; slips are available at the back of church.</p>
+        <h4>Thanksgiving Mass for Married Couples — 22 November</h4>
+        <p>On Sunday 22 November at 10:00 we will celebrate a Thanksgiving Mass for couples marking a special anniversary in 2026. Couples celebrating a five-year milestone, from 5 to 60 years and beyond, are warmly invited. Please place your name and details in the box in the church so that we can remember you in our prayers. Family and friends are welcome.</p>
       </div>
 
       <div class="notice-card">
-        <h4>Clergy Conference &amp; Mass Update</h4>
-        <p>Fr. Savi will attend the Presbyteral Meeting on Monday 26 October and the Clergy Conference from 27 to 28 October at Loreto Centre, Llandudno. There will be no Holy Mass in Bangor on Tuesday 27 October.</p>
+        <h4>Family Eucharist — 29 November</h4>
+        <p>Our Family Eucharist will be celebrated on Sunday 29 November at 10:00, the First Sunday of Advent. A special blessing will be given to all those celebrating birthdays. Please complete a slip, available at the back of the church, and place it in the letterbox.</p>
       </div>
 
       <div class="notice-card">
-        <h4>Caernarfon Vigil Mass Winter Time</h4>
-        <p>Because of darker evenings, the Saturday Vigil Mass in Caernarfon moves from 18:00 to 17:00 during wintertime. The October calendar lists the first 17:00 Vigil Mass on Saturday 31 October.</p>
+        <h4>Sponsor a Christmas Tree for 2026</h4>
+        <p>As Advent and Christmas approach, our church needs decorating for the season. If you would like to sponsor a Christmas tree, or share part of its cost, we would be most grateful. A tree can also be given in memory of a loved one or in thanksgiving for a special intention. Please speak to Fr. Savi or the parish office.</p>
+      </div>
+
+      <div class="notice-card">
+        <h4>Advent and Christmas Decoration</h4>
+        <p>Advent begins on Sunday 29 November. As last year, we invite volunteers to help plan and decorate the church for Advent and Christmas. If you would like to help, please get in touch with Chelsey David or Vanitha.</p>
+      </div>
+
+      <div class="notice-card">
+        <h4>Advent Confessions in Porthmadog</h4>
+        <p>On Friday 11 December, confessions will be available at the Church of the Most Holy Redeemer (Borth Road, Porthmadog, LL49 9BB) with several priests present from 11:00, followed by Holy Mass at 12 noon. All are encouraged to make use of this opportunity during Advent.</p>
+      </div>
+
+      <div class="notice-card">
+        <h4>Diocesan Youth Day — 21 November</h4>
+        <p>All youth are welcome at St Joseph’s Church, Colwyn Bay, on Saturday 21 November from 10:30, with Mass celebrated by Bishop Peter at 13:30. Under-18s require a parental consent form.</p>
+      </div>
+
+      <div class="notice-card">
+        <h4>Making Jesus the Centre of Your Life at Uni</h4>
+        <p>The Bangor Catholic Chaplaincy offers students and staff a welcoming community of friendship, support and hospitality. Weekly activities run on Mondays, Tuesdays and Wednesdays, with Sunday Movie Nights. Special events include guest speakers, a Vocations Evening, a church bake sale, a sponsored walk for Red Wednesday and local pilgrimages. New students are welcome to meet the team after Sunday Mass or to contact Ray, the University Chaplain.</p>
       </div>
 
       <div class="notice-card">
@@ -741,23 +314,23 @@ the Parish office via priestbangor@rcdwxm.org.uk by Thursday 17 th September.</h
       </div>
 
       <div class="notice-card">
-        <h4>Diocesan Youth Day &mdash; 21 November</h4>
-        <p>All youth are welcome at St Joseph&rsquo;s Church, Colwyn Bay, on Saturday 21 November from 10:30, with Mass celebrated by Bishop Peter at 13:30. Under-18s require a parental consent form.</p>
-      </div>
-
-      <div class="notice-card">
-        <h4>Making Jesus the Centre of Your Life at Uni</h4>
-        <p>The Catholic Chaplaincy and Bangor Catholic Students offer hospitality, regular events, and support for students and staff who want to stay grounded in their faith during university life.</p>
+        <h4>Sound System Upgrade in Bangor</h4>
+        <p>The project to upgrade the parish sound system was sponsored in April by a generous donation of £5,000, and a further £2,000 was raised by the parish for additional equipment. We are now working with a new supplier. Thank you for your continued support and patience.</p>
       </div>
 
       <div class="notice-card">
         <h4>Donation &amp; Giving Made Easier</h4>
-        <p>Two card donation machines are available at the back of the church. UK taxpayers can complete Gift Aid once by email after paying by card, and it will apply to future donations on that card.</p>
+        <p>By card or phone: use the card reader at the entrance of the church, or scan the QR code with your phone. UK taxpayers can complete Gift Aid once by email after paying by card, and it will apply to future donations on that card. By cheque: payable to Bangor and Caernarfon Catholic Church.</p>
       </div>
 
       <div class="notice-card">
-        <h4>News Items for The Flame &mdash; November Edition</h4>
-        <p>Please send items for the November edition of <em>The Flame</em> to <a href="mailto:bangorparishflame@outlook.com">bangorparishflame@outlook.com</a> by the second week of October.</p>
+        <h4>With Gratitude: New Chasubles and a New Cross</h4>
+        <p>Four generous families sponsored new chasubles, which have now arrived, been blessed and are in active use. A new cross for Good Friday veneration, imported from Italy and sponsored by a generous family, was blessed on 4 October and now stands at the front in the aisle. Thank you to everyone who contributed; you are remembered in our prayers.</p>
+      </div>
+
+      <div class="notice-card">
+        <h4>News Items for The Flame — December Edition</h4>
+        <p>Please send news items for the December edition of <em>The Flame</em> to <a href="mailto:bangorparishflame@outlook.com">bangorparishflame@outlook.com</a> by the first week of November.</p>
       </div>
 
     </div>
@@ -771,10 +344,9 @@ the Parish office via priestbangor@rcdwxm.org.uk by Thursday 17 th September.</h
     <h2 class="section-title">Parish Forms</h2>
     <p class="section-subtitle">Download, print, and return to the parish office or the box at the back of the church</p>
     <div class="forms-grid">
-
       <div class="form-card">
         <h4>Gift Aid Declaration Form</h4>
-        <p>If you are a UK tax payer, please use this charity gift aid declaration – single donation form to make your donation to upgrade the chursh's sound system go further. </p>
+        <p>If you are a UK tax payer, please use this charity gift aid declaration – single donation form to make your donation to upgrade the church’s sound system go further.</p>
         <a class="form-download" href="giftaid.pdf" download>Download &darr;</a>
       </div>
 
@@ -803,25 +375,26 @@ the Parish office via priestbangor@rcdwxm.org.uk by Thursday 17 th September.</h
       </div>
 
       <div class="form-card">
-        <h4>RCIA &mdash; Becoming Catholic</h4>
+        <h4>RCIA — Becoming Catholic</h4>
         <p>Registration form for the Rite of Christian Initiation for Adults. For anyone exploring the Catholic faith or wishing to be received into the Church. Sessions are held on Thursday evenings.</p>
         <a class="form-download" href="RCIA-Registration Form.pdf" download>Download &darr;</a>
       </div>
 
       <div class="form-card">
-        <h4>Marriage &mdash; Guide &amp; Procedure</h4>
-        <p>A step-by-step guide to arranging a Catholic marriage at the parish, covering documentation, marriage preparation, mixed-marriage permissions, and civil requirements. Please contact Fr. Savi at least 6&ndash;12 months in advance.</p>
+        <h4>Marriage — Guide &amp; Procedure</h4>
+        <p>A step-by-step guide to arranging a Catholic marriage at the parish, covering documentation, marriage preparation, mixed-marriage permissions, and civil requirements. Please contact Fr. Savi at least 6–12 months in advance.</p>
         <a class="form-download" href="Marriage-A preliminary Guideline of Procedure.pdf" download>Download &darr;</a>
       </div>
 
-        <div class="form-card">
-        <h4>Funeral &mdash; Guide </h4>
-        <p>When a loved one passes away, the parish is here to support you with care and dignity as you prepare the funeral liturgy. The guide aids in making proper arrangements that reflect your wishes. </p>
+      <div class="form-card">
+        <h4>Funeral — Guide</h4>
+        <p>When a loved one passes away, the parish is here to support you with care and dignity as you prepare the funeral liturgy. The guide aids in making proper arrangements that reflect your wishes.</p>
         <a class="form-download" href="funeral.pdf" download>Download &darr;</a>
       </div>
-<div class="form-card">
-        <h4>Youth Day consent </h4>
-        <p>Please return this form by start of November to enable youth to participate in the Youth Day at St. Joseph's in Colwyn Bay on the 21st of November. </p>
+
+      <div class="form-card">
+        <h4>Youth Day consent</h4>
+        <p>Please return this form to the parish office before the Youth Day at St. Joseph's in Colwyn Bay on 21 November, to enable youth to take part.</p>
         <a class="form-download" href="ydconsent.pdf" download>Download &darr;</a>
       </div>
     </div>
@@ -917,7 +490,7 @@ the Parish office via priestbangor@rcdwxm.org.uk by Thursday 17 th September.</h
           <li><strong>Address</strong> Ty Mair, Menai Avenue, Bangor LL57 2HH</li>
           <li><strong>Tel</strong> <a href="tel:01248370421">01248 370421</a></li>
           <li><strong>Email</strong> <a href="mailto:priestbangor@rcdwxm.org.uk">priestbangor@rcdwxm.org.uk</a></li>
-          <li><strong>Parish Office</strong> Ms. Kelly Abrahams &mdash; Monday (10:00-12:00), Wednesday (15:00-17:00), Friday (10:00-12:00)</li>
+          <li><strong>Parish Office</strong> Ms. Kelly Abhrams &mdash; Monday (10:00-14:00), Friday (10:00-15:00)</li>
           <li>For all enquiries — including Baptism, Marriage, Mass Requests, and
 other pastoral needs — please contact the Parish Office at these times using the details above.</li>
           <li><strong>Safeguarding</strong> Jo Charles &mdash; <a href="tel:07454958980">07454 958980</a></li>
@@ -941,8 +514,8 @@ other pastoral needs — please contact the Parish Office at these times using t
           <li><strong>Charity No.</strong> 700426</li>
         </ul>
         <div class="newsletter-panel">
-          <p>The latest parish newsletter &mdash; <em>The Flame</em>, October 2026 &mdash; is available to download here.</p>
-          <a class="newsletter-link" href="theflameoctober26.pdf" download>Download Newsletter PDF</a>
+          <p>The latest parish newsletter &mdash; <em>The Flame</em>, November 2026 &mdash; is available to download here.</p>
+          <a class="newsletter-link" href="theflamenovember26.pdf" download>Download Newsletter PDF</a>
         </div>
       </div>
 
@@ -958,104 +531,6 @@ other pastoral needs — please contact the Parish Office at these times using t
   Diocese of Wrexham &nbsp;&middot;&nbsp; Registered Charity No. 700426</p>
 </footer>
 
-<script>
-  const hamburger = document.getElementById('hamburger');
-  const mobileNav = document.getElementById('mobile-nav');
-
-  hamburger.addEventListener('click', function () {
-    const isOpen = mobileNav.classList.toggle('open');
-    hamburger.classList.toggle('open', isOpen);
-    hamburger.setAttribute('aria-expanded', isOpen);
-    mobileNav.setAttribute('aria-hidden', !isOpen);
-  });
-
-  function closeMenu() {
-    mobileNav.classList.remove('open');
-    hamburger.classList.remove('open');
-    hamburger.setAttribute('aria-expanded', 'false');
-    mobileNav.setAttribute('aria-hidden', 'true');
-  }
-</script>
-
-<script>
-  /* ── Announcement loader ── */
-  fetch('announcement.json?t=' + Date.now())
-    .then(function(r) { return r.json(); })
-    .then(function(ann) {
-      var section = document.getElementById('announcement-section');
-      if (!section) return;
-      if (ann.hidden) {
-        section.hidden = true;
-        return;
-      }
-      document.getElementById('announcement-title').textContent = ann.title;
-      document.getElementById('announcement-body').innerHTML   = ann.body;
-      section.hidden = false;
-    })
-    .catch(function() {
-      /* If JSON fails to load, hide the section gracefully */
-      var section = document.getElementById('announcement-section');
-      if (section) section.hidden = true;
-    });
-</script>
-
-<script>
-  /* ── Lightbox Gallery ── */
-  (function () {
-    const gallery  = document.getElementById('gallery-thumbs');
-    const overlay  = document.getElementById('lb-overlay');
-    const lbImg    = document.getElementById('lb-img');
-    const lbCap    = document.getElementById('lb-caption');
-    const btnClose = document.getElementById('lb-close');
-    const btnPrev  = document.getElementById('lb-prev');
-    const btnNext  = document.getElementById('lb-next');
-
-    const figures  = Array.from(gallery.querySelectorAll('figure'));
-    let current    = 0;
-
-    function open(index) {
-      current = index;
-      const fig = figures[current];
-      lbImg.src = fig.querySelector('img').src;
-      lbImg.alt = fig.querySelector('img').alt;
-      lbCap.textContent = fig.dataset.caption || '';
-      overlay.classList.add('active');
-      btnPrev.style.display = figures.length < 2 ? 'none' : '';
-      btnNext.style.display = figures.length < 2 ? 'none' : '';
-      lbImg.focus();
-    }
-
-    function close() {
-      overlay.classList.remove('active');
-      lbImg.src = '';
-    }
-
-    function step(dir) {
-      current = (current + dir + figures.length) % figures.length;
-      const fig = figures[current];
-      lbImg.src = fig.querySelector('img').src;
-      lbImg.alt = fig.querySelector('img').alt;
-      lbCap.textContent = fig.dataset.caption || '';
-    }
-
-    figures.forEach((fig, i) => {
-      fig.addEventListener('click', () => open(i));
-      fig.setAttribute('tabindex', '0');
-      fig.addEventListener('keydown', e => { if (e.key === 'Enter') open(i); });
-    });
-
-    btnClose.addEventListener('click', close);
-    btnPrev.addEventListener('click', () => step(-1));
-    btnNext.addEventListener('click', () => step(1));
-
-    overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
-
-    document.addEventListener('keydown', e => {
-      if (!overlay.classList.contains('active')) return;
-      if (e.key === 'Escape')     close();
-      if (e.key === 'ArrowLeft')  step(-1);
-      if (e.key === 'ArrowRight') step(1);
-    });
-  })();
-</script>
+<script src="assets/site.js"></script>
+</body>
 </html>

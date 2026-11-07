@@ -1,0 +1,23 @@
+<!-- BULLETIN -->
+<div class="schedule-bg" id="bulletin">
+  <div class="section">
+    <div class="divider"></div>
+    <h2 class="section-title">{{calendar_title}}</h2>
+    <p class="section-subtitle" style="color:rgba(255,255,255,0.85);">{{calendar_subtitle}}</p>
+    <div class="featured-newsletter">
+      <h3>Latest Parish Newsletter &mdash; {{newsletter_month}}</h3>
+      <p>Download the {{newsletter_month_name}} issue of <em>The Flame</em>, featuring {{newsletter_summary}}. Items for the {{newsletter_next_edition}} edition should be sent to <a href="mailto:{{newsletter_email}}" style="color:var(--gold);">{{newsletter_email}}</a> by {{newsletter_deadline}}.</p>
+      <a class="newsletter-link" href="{{newsletter_file}}" download>Download Newsletter PDF</a>
+    </div>
+
+    <div class="month-heading">{{calendar_month_heading}}</div>
+    <div class="schedule-table-wrap"><table class="schedule-table">
+      <thead><tr><th style="width:155px">Date</th><th>Observance</th><th>Details</th></tr></thead>
+      <tbody>
+{{calendar_rows}}
+      </tbody>
+    </table></div>
+
+  </div>
+</div>
+

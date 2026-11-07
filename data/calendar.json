@@ -1,0 +1,145 @@
+{
+  "title": "November 2026 Calendar",
+  "subtitle": "Ordinary Time and the start of Advent — November 2026",
+  "month_heading": "November 2026",
+  "entries": [
+    {
+      "date": "2026-11-01",
+      "badge": {
+        "text": "Solemnity of All Saints",
+        "style": "feast"
+      },
+      "observance": "31st Sunday in Ordinary Time",
+      "details": "Bangor: 10:00 & 17:00 Holy Mass"
+    },
+    {
+      "date": "2026-11-02",
+      "badge": {
+        "text": "All Souls’ Day",
+        "style": "feast"
+      },
+      "details": "Bangor: 19:00 Holy Mass"
+    },
+    {
+      "date": "2026-11-03",
+      "observance": "Morning Prayer & Mass",
+      "details": "Bangor: 09:45 Morning Prayer & 10:00 Holy Mass"
+    },
+    {
+      "date": "2026-11-05",
+      "observance": "Weekday Mass",
+      "details": "Bangor: 12:15 Holy Mass"
+    },
+    {
+      "date": "2026-11-07",
+      "observance": "Vigil Mass",
+      "details": "Caernarfon: 17:00 Vigil Mass"
+    },
+    {
+      "date": "2026-11-08",
+      "observance": "32nd Sunday in Ordinary Time",
+      "details": "Bangor: 10:00 & 17:00 Holy Mass"
+    },
+    {
+      "date": "2026-11-09",
+      "observance": "Weekday Mass",
+      "details": "Bangor: 19:00 Holy Mass"
+    },
+    {
+      "date": "2026-11-10",
+      "observance": "Morning Prayer & Mass",
+      "details": "Bangor: 09:45 Morning Prayer & 10:00 Holy Mass"
+    },
+    {
+      "date": "2026-11-12",
+      "observance": "Weekday Mass",
+      "details": "Bangor: 12:15 Holy Mass"
+    },
+    {
+      "date": "2026-11-14",
+      "badge": {
+        "text": "Mass time change",
+        "style": "feast"
+      },
+      "observance": "Vigil Mass",
+      "details": "Bangor: 17:00 Vigil Mass — no Vigil Mass in Caernarfon this week"
+    },
+    {
+      "date": "2026-11-15",
+      "badge": {
+        "text": "First Holy Communion",
+        "style": "feast"
+      },
+      "observance": "33rd Sunday in Ordinary Time",
+      "details": "Bangor: 10:00 Holy Mass only (no 17:00 Mass) — Caernarfon: 12:30 First Holy Communion Mass"
+    },
+    {
+      "date": "2026-11-16",
+      "observance": "Weekday Mass",
+      "details": "Bangor: 19:00 Holy Mass"
+    },
+    {
+      "date": "2026-11-17",
+      "observance": "Morning Prayer & Mass",
+      "details": "Bangor: 09:45 Morning Prayer & 10:00 Holy Mass"
+    },
+    {
+      "date": "2026-11-19",
+      "observance": "Weekday Mass",
+      "details": "Bangor: 12:15 Holy Mass"
+    },
+    {
+      "date": "2026-11-21",
+      "observance": "Vigil Mass",
+      "details": "Caernarfon: 17:00 Vigil Mass"
+    },
+    {
+      "date": "2026-11-22",
+      "badge": {
+        "text": "Christ the King",
+        "style": "feast"
+      },
+      "observance": "34th Sunday in Ordinary Time",
+      "details": "Bangor: 10:00 & 17:00 Holy Mass — Thanksgiving Mass for Married Couples at 10:00"
+    },
+    {
+      "date": "2026-11-23",
+      "observance": "Weekday Mass",
+      "details": "Bangor: 19:00 Holy Mass"
+    },
+    {
+      "date": "2026-11-24",
+      "badge": {
+        "text": "No Holy Mass",
+        "style": "none"
+      },
+      "details": "Bangor: 09:45 volunteer-led Rosary — no Holy Mass because of the priests’ retreat"
+    },
+    {
+      "date": "2026-11-26",
+      "observance": "Weekday Mass",
+      "details": "Bangor: 12:15 Holy Mass"
+    },
+    {
+      "date": "2026-11-28",
+      "observance": "Vigil Mass",
+      "details": "Caernarfon: 17:00 Vigil Mass"
+    },
+    {
+      "date": "2026-11-29",
+      "badge": {
+        "text": "First Sunday of Advent",
+        "style": "feast"
+      },
+      "details": "Bangor: 10:00 & 17:00 Holy Mass — Family Eucharist at 10:00 with a blessing for birthdays"
+    },
+    {
+      "date": "2026-11-30",
+      "badge": {
+        "text": "St. Andrew, Apostle",
+        "style": "feast"
+      },
+      "details": "Bangor: 19:00 Holy Mass"
+    }
+  ]
+}
