@@ -406,3 +406,16 @@
     .notice-card { padding: 14px 14px; }
     .music-link { font-size: 0.93rem; }
   }
+
+  /* Recent photos strip */
+  .photos-bg { background: var(--cream); padding: 56px 0; border-bottom: 1px solid #d8d8d8; }
+  .photos-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+  .photos-grid a { display: block; background: #fff; border: 1px solid #d8d8d8; color: inherit; text-decoration: none; }
+  .photos-grid a:hover { border-color: var(--gold); }
+  .photos-grid img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: #ddd; }
+  .photos-grid div { padding: 12px 14px 16px; }
+  .photos-grid h3 { font-family: 'Cormorant Garamond', serif; color: var(--navy); font-size: 1.25rem; line-height: 1.2; }
+  .photos-grid p { font-size: 0.9rem; margin-top: 4px; }
+  .photos-more { margin-top: 20px; font-weight: 700; }
+  @media (max-width: 900px) { .photos-grid { grid-template-columns: 1fr 1fr; } .photos-bg { padding: 40px 0; } }
+  @media (max-width: 640px) { .photos-grid { grid-template-columns: 1fr; } .photos-bg { padding: 28px 0; } }
